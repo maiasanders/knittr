@@ -14,6 +14,4 @@ public interface PatternDao {
     Pattern createPattern(Pattern pattern);
 
     List<Pattern> getPatterns();
-
-    List<Pattern> getPatternsWithQuery(String query);
 }

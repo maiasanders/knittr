@@ -20,8 +20,9 @@ public class Step {
     private String title;
     private List<String> desc;
     private int orderNum;
-    private int startRow;
-//   TODO Does end row mean end of single repeat or end of all repeats?
-    private int endRow;
-    private int repeats;
+    private List<String> rows;
+//    private int startRow;
+////   TODO Does end row mean end of single repeat or end of all repeats?
+//    private int endRow;
+//    private int repeats;
 }

@@ -61,13 +61,12 @@ public class UserDaoJdbc implements UserDao {
             String passwordHash = new BCryptPasswordEncoder().encode(user.getPassword());
 
             int id = template.queryForObject(sql, int.class, user.getUsername(), passwordHash);
-            returnedUser = getUserById(id);
+            return getUserById(id);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect");
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
-        return null;
     }
 
     private User mapRowToUser(SqlRowSet rs) {

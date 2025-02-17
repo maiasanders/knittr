@@ -21,4 +21,5 @@ public class Pattern {
     private List<Category> categories;
     private List<Image> images;
     private List<Size> sizes;
+    private List<Yarn> yarns;
 }

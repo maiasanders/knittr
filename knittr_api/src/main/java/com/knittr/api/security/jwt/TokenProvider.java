@@ -40,6 +40,6 @@ public class TokenProvider implements InitializingBean {
     }
 
     public String createToken(Authentication auth, boolean rememberMe) {
-
+        return null;
     }
 }
