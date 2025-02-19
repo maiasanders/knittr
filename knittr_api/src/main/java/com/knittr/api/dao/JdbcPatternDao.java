@@ -19,13 +19,11 @@ import java.util.List;
 @AllArgsConstructor
 public class JdbcPatternDao implements PatternDao{
     private JdbcTemplate template;
-    private CategoryDao catDao;
 
     private final String NOT_FOUND = "Unable to find pattern(s)";
     private final String CONNECT_ERR = "Unable to Connect";
-
-    //    TODO !!!!!finish SELECT statement for sizes and yarns once I have nailed down implementation of steps & how it links to patterns!!!!
-    private final String SELECT_CLAUSE = "SELECT pattern_id, author, username, pattern_name, desc, public, " +
+    private final String SELECT_CLAUSE = "SELECT p.pattern_id, p.author, u.username, p.pattern_name, p.desc, p.public, " +
+            "i.image_id, i.image_link, i.desc " +
             "STRING_AGG(c.category_id, ',') AS cat_ids, STRING_AGG(c.cat_names, ',') AS cat_names " +
             "STRING_AGG(st.yarn_id, ',') AS yarn_ids, STRING_AGG(y.yarn_name, ',') AS yarn_names " +
             "STRING_AGG(st.size_id, ',') AS size_ids, STRING_AGG(s.size_name, ',') AS size_names, " +
@@ -35,14 +33,14 @@ public class JdbcPatternDao implements PatternDao{
             "JOIN categories AS c ON c.category_id = pc.category_id " +
             "JOIN steps AS st ON p.pattern_id = st.pattern_id " +
             "JOIN yarn_type AS y ON st.yarn_id = y.yarn_id " +
-            "JOIN sizes AS s ON st.size_id = sizes.size_id ";
+            "JOIN sizes AS s ON st.size_id = sizes.size_id " +
+            "JOIN images AS i ON p.default_image = i.image_id ";
 //    TODO add order = 1 to WHERE clause to remove duplicate yarn/size combos?
-//    TODO add images here or in service layer?
+
     @Override
     public Pattern getPatternById(int id) {
         String sql = SELECT_CLAUSE +
                 "WHERE pattern_id = ?";
-        Pattern pattern = null;
 
         try {
             return template.queryForObject(sql, this::mapRowToPattern, id);
@@ -55,7 +53,6 @@ public class JdbcPatternDao implements PatternDao{
 
     @Override
     public List<Pattern> getPatternsByAuthor(int id) {
-//        TODO
         String sql = SELECT_CLAUSE + "WHERE author_id = ?";
         try {
             return template.query(sql, this::mapRowToPattern, id);
@@ -113,8 +110,22 @@ public class JdbcPatternDao implements PatternDao{
 
     @Override
     public List<Pattern> getPatterns() {
-//        TODO
-        return null;
+        String sql = SELECT_CLAUSE + "ORDER BY pattern_id LIMIT 20";
+        try {
+            return template.query(sql, this::mapRowToPattern);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException(CONNECT_ERR);
+        }
+    }
+
+    @Override
+    public List<Pattern> getPatterns(int offset) {
+        String sql = SELECT_CLAUSE + "WHERE pattern_id > ? ORDER BY pattern_id LIMIT 20";
+        try {
+            return template.query(sql, this::mapRowToPattern, offset);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException(CONNECT_ERR);
+        }
     }
 
     private Pattern mapRowToPattern(ResultSet set, int rowNum) throws SQLException {
@@ -162,6 +173,13 @@ public class JdbcPatternDao implements PatternDao{
             yarns.add( new Yarn( Integer.parseInt( yarnIds[i] ), yarnNames[i] ) );
         }
         pattern.setYarns(yarns);
+
+        // process and set default image
+        Image image = new Image();
+        image.setImageId(set.getInt("i.image_id"));
+        image.setImageLink(set.getString("i.image_link"));
+        image.setDesc(set.getString("i.desc"));
+        pattern.setDefaultImage(image);
 
         return pattern;
     }

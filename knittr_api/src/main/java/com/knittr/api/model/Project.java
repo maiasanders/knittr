@@ -17,6 +17,7 @@ public class Project {
     private Pattern pattern;
     private Yarn yarn;
     private Size size;
+    private String yarnsUsed;
     private int currentRow;
     private boolean isCompleted;
     private List<Note> notes;

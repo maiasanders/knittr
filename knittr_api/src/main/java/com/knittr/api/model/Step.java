@@ -18,9 +18,8 @@ public class Step {
     private int sizeId;
     private int yarnId;
     private String title;
-    private List<String> desc;
-    private int orderNum;
-    private List<String> rows;
+    private int stepNum;
+    private List<Row> rows;
 //    private int startRow;
 ////   TODO Does end row mean end of single repeat or end of all repeats?
 //    private int endRow;

@@ -11,7 +11,7 @@ public interface ProjectDao {
 
     List<Project> getCurrentProjectsByUser(int userId);
 
-    List<Project> getCompletedProjectsByUSer(int userId);
+    List<Project> getCompletedProjectsByUser(int userId);
 
     /**
      * Updates the current row of a project without changing other details

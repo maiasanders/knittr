@@ -1,17 +1,21 @@
 package com.knittr.api.service;
 
+import com.knittr.api.dao.ImageDao;
 import com.knittr.api.dao.PatternDao;
 import com.knittr.api.dao.UserDao;
 import com.knittr.api.model.Pattern;
 import com.knittr.api.model.User;
 import com.knittr.api.model.dto.PatternDto;
+import org.springframework.stereotype.Component;
 
 import java.security.Principal;
 import java.util.List;
 
+@Component
 public class PatternService {
     private PatternDao dao;
     private UserDao userDao;
+    private ImageDao imageDao;
 
     public List<Pattern> getPatterns() {
         return dao.getPatterns();

@@ -6,10 +6,12 @@ import com.knittr.api.model.Image;
 import com.knittr.api.model.User;
 import com.knittr.api.model.dto.ImageDto;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.security.Principal;
 
 @AllArgsConstructor
+@Component
 public class ImageService {
     private ImageDao dao;
     private UserDao userDao;

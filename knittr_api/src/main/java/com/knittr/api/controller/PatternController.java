@@ -5,13 +5,16 @@ import com.knittr.api.model.Pattern;
 import com.knittr.api.model.dto.PatternDto;
 import com.knittr.api.service.PatternService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
 
-@Controller
+@RestController
+@CrossOrigin
 public class PatternController {
     private PatternDao dao;
     private PatternService service;
@@ -36,6 +39,8 @@ public class PatternController {
         return service.getSavedPatterns(principal);
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/patterns")
     public Pattern createPattern(Principal principal, @RequestBody @Valid PatternDto dto) {
         return service.createPattern(principal, dto);

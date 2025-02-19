@@ -6,21 +6,23 @@ import com.knittr.api.model.dto.ImageDto;
 import com.knittr.api.service.ImageService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
 
 @AllArgsConstructor
-@Controller
+@RestController
+@CrossOrigin
 public class ImageController {
     private ImageDao dao;
     private ImageService service;
 
+    @PreAuthorize("isAuthenticated()")
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/images")
     public Image addImage(Principal principal, @RequestBody @Valid ImageDto dto) {
         return service.addImage(principal, dto);

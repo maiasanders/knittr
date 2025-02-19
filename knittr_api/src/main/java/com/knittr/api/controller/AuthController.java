@@ -9,49 +9,57 @@ import com.knittr.api.model.dto.RegisterUserDto;
 import com.knittr.api.service.AuthService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Null;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.server.ResponseStatusException;
 
-@Controller
+@RestController
+@AllArgsConstructor
+@CrossOrigin
 public class AuthController {
     private UserDao dao;
     private AuthService service;
+//    @Autowired
+//    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+//    private final TokenProvider
+
+
 
 //    TODO add greater authorization/security checks
 
-    @PostMapping("/login")
+    @RequestMapping(path = "/login", method = RequestMethod.POST)
     public LoginResponseDto login(@Valid @RequestBody LoginDto loginDto) {
 
-        User user = dao.getUserByName(loginDto.getUsername());
+        try {
+            return service.login(loginDto);
 
-        if (user == null) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Incorrect username or password");
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
 
-        String passwordHash = new BCryptPasswordEncoder().encode(loginDto.getPassword());
-        if (passwordHash.equals(user.getPassword())) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Incorrect username or password");
-        }
 
-        return new LoginResponseDto(loginDto.getUsername());
     }
 
-    @PostMapping("/register")
-    public LoginResponseDto register(@Valid RegisterUserDto dto) {
+    @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping(path = "/register", method = RequestMethod.POST)
+    public LoginResponseDto register(@Valid @RequestBody RegisterUserDto dto) {
         User user;
         try {
             user = service.register(dto);
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error - " + e.getMessage());
         }
-        return null;
+        return new LoginResponseDto(user.getUsername());
     }
+
+
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 @Component
 @AllArgsConstructor
@@ -78,6 +79,16 @@ public class JdbcNoteDao implements NoteDao {
             throw new DaoException(CONNECT_ERR);
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Cannot delete note due to data integrity violation");
+        }
+    }
+
+    @Override
+    public List<Note> getNotesByProject(int id) {
+        String sql = "SELECT * FROM notes WHERE project_id = ?";
+        try {
+            return template.query(sql, this::mapRowToNote, id);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException(CONNECT_ERR);
         }
     }
 

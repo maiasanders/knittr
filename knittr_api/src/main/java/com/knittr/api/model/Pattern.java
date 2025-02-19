@@ -19,7 +19,7 @@ public class Pattern {
     private String desc;
     private boolean isPublic;
     private List<Category> categories;
-    private List<Image> images;
+    private Image defaultImage;
     private List<Size> sizes;
     private List<Yarn> yarns;
 }

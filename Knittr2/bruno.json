@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Knittr2",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
