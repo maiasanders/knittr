@@ -21,7 +21,7 @@ public class JdbcRowDao implements RowDao {
     private final String CONNECT_ERR = "Unable to connect to database";
     @Override
     public List<Row> getRowsByStep(int id) {
-        String sql = "SELECT * FROM rows WHERE step_id = ? ORDER BY step_num";
+        String sql = "SELECT * FROM rows WHERE step_id = ? ORDER BY row_num";
         try {
             return template.query(sql, this::mapRow, id);
         } catch (CannotGetJdbcConnectionException e) {

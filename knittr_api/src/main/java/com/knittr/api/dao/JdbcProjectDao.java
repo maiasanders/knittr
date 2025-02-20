@@ -26,13 +26,13 @@ public class JdbcProjectDao implements ProjectDao{
             "u.username, p.maker_id, p.pattern_id, " +
             "p.yarn_id, y.yarn_name, p.size_id, s.size_name, s.age_category, " +
             "p.yarns_used, p.current_row, p.completed, " +
-            "pa.default_image, i.image_link, i.desc, " +
-            "FROM projects AS p" +
-            "JOIN yarn_types AS y ON p.yarn_id = y.yarn_id " +
-            "JOIN sizes AS s ON p.size_id = s.size_id " +
-            "JOIN patterns AS pa ON p.pattern_id = pa.pattern_id " +
-            "JOIN users AS u ON pa.author = u.user_id " +
-            "JOIN images AS i ON pa.default_image = i.image_id ";
+            "pa.default_image, i.image_link, i.desc AS img_desc " +
+            "FROM projects AS p " +
+            "LEFT JOIN yarn_types AS y ON p.yarn_id = y.yarn_id " +
+            "LEFT JOIN sizes AS s ON p.size_id = s.size_id " +
+            "LEFT JOIN patterns AS pa ON p.pattern_id = pa.pattern_id " +
+            "LEFT JOIN users AS u ON pa.author = u.user_id " +
+            "LEFT JOIN images AS i ON pa.default_image = i.image_id ";
     private final String CONNECT_ERR = "Unable to connect to database";
 
     @Override
@@ -124,43 +124,45 @@ public class JdbcProjectDao implements ProjectDao{
 
     private Project mapProject(ResultSet set, int i) throws SQLException {
         Project project = new Project();
-        project.setProjectId(set.getInt("p.project_id"));
-        project.setMakerId(set.getInt("p.maker_id"));
+        project.setProjectId(set.getInt("project_id"));
+        project.setMakerId(set.getInt("maker_id"));
 
         // create and set pattern
         Pattern pattern = new Pattern();
-        pattern.setPatternId(set.getInt("p.pattern_id"));
-        pattern.setName(set.getString("pa.pattern_name"));
+        pattern.setPatternId(set.getInt("pattern_id"));
+        pattern.setName(set.getString("pattern_name"));
         // create user inst for author and set
         User author = new User(
-                set.getString("u.username"),
-                set.getInt("pa.author")
+                set.getString("username"),
+                set.getInt("author")
         );
         pattern.setAuthor(author);
-        pattern.setDesc(set.getString("pa.desc"));
-        pattern.setPublic(set.getBoolean("pa.public"));
-        // Get and add image
-         pattern.setDefaultImage(new Image(
-                set.getInt("pa.default_image"),
-                set.getString("i.image_link"),
-                pattern.getPatternId(),
-                pattern.getAuthor(),
-                set.getString("i.desc")
-        ));
+        pattern.setDesc(set.getString("desc"));
+        pattern.setPublic(set.getBoolean("public"));
+        // Get and add image TODO do I need to check a different column?
+        if (set.getInt("default_image") != 0) {
+            pattern.setDefaultImage(new Image(
+                    set.getInt("default_image"),
+                    set.getString("image_link"),
+                    pattern.getPatternId(),
+                    pattern.getAuthor(),
+                    set.getString("img_desc")
+            ));
+        }
         project.setPattern(pattern);
 
         project.setYarn( new Yarn(
-                set.getInt("p.yarn_id"),
-                set.getString("y.yarn_name") ) );
+                set.getInt("yarn_id"),
+                set.getString("yarn_name") ) );
         project.setSize( new Size(
-                set.getInt("p.size_id"),
-                set.getString("s.size_name"),
-                set.getString("s.age_category")
+                set.getInt("size_id"),
+                set.getString("size_name"),
+                set.getString("age_category")
         ) );
 
-        project.setYarnsUsed(set.getString("p.yarns_used"));
-        project.setCurrentRow(set.getInt("p.current_row"));
-        project.setCompleted(set.getBoolean("p.completed"));
+        project.setYarnsUsed(set.getString("yarns_used"));
+        project.setCurrentRow(set.getInt("current_row"));
+        project.setCompleted(set.getBoolean("completed"));
 
         return project;
     }

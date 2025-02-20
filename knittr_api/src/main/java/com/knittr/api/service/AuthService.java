@@ -6,8 +6,8 @@ import com.knittr.api.model.User;
 import com.knittr.api.model.dto.LoginDto;
 import com.knittr.api.model.dto.LoginResponseDto;
 import com.knittr.api.model.dto.RegisterUserDto;
+import com.knittr.api.security.jwt.TokenProvider;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -23,6 +23,9 @@ import org.springframework.web.server.ResponseStatusException;
 @AllArgsConstructor
 public class AuthService {
     private UserDao dao;
+
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final TokenProvider tokenProvider;
 
     public User register(RegisterUserDto dto) {
 
@@ -40,13 +43,28 @@ public class AuthService {
 
     public LoginResponseDto login(LoginDto loginDto) {
 
-        User user = dao.getUserByName(loginDto.getUsername());
+        User user;
 
-        boolean matches = new BCryptPasswordEncoder().matches(loginDto.getPassword(), user.getPassword());
+        try {
+            UsernamePasswordAuthenticationToken authenticationToken =
+                    new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
 
-        if (matches) {
-            return new LoginResponseDto(loginDto.getUsername());
+            Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String jwt = tokenProvider.createToken(authentication);
+
+            user = dao.getUserByName(loginDto.getUsername());
+
+            return new LoginResponseDto(user.getUsername(), jwt);
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error - " + e.getMessage());
         }
-        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+
+//        boolean matches = new BCryptPasswordEncoder().matches(loginDto.getPassword(), user.getPassword());
+
+//        if (matches) {
+//            return new LoginResponseDto(loginDto.getUsername());
+//        }
+//        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
     }
 }

@@ -18,15 +18,22 @@ import java.util.List;
 @Component
 @AllArgsConstructor
 public class ImageDaoJdbc implements ImageDao{
+    public final String SELECT_CLAUSE = "SELECT i.image_id, i.image_link, i.pattern_id, i.submitted_by, u.username, i.desc " +
+            "FROM images AS i JOIN users AS u ON i.submitted_by = u.user_id ";
     private JdbcTemplate template;
     private final String CONNECT_ERR = "Unable to connect to database";
     @Override
     public Image addImage(Image image) {
-        String sql = "INSERT INTO images (image_link, pattern_id, submitted_by, desc) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO images (image_link, pattern_id, submitted_by, \"desc\") VALUES (?, ?, ?, ?) " +
+                "RETURNING image_id";
         Image createdImage = null;
 
         try {
-            int id = template.queryForObject(sql, Integer.class, image.getImageLink(), image.getPatternId(), image.getSubmittedBy().getUserId(), image.getDesc());
+            int id = template.queryForObject(sql, Integer.class,
+                    image.getImageLink(),
+                    image.getPatternId(),
+                    image.getSubmittedBy().getUserId(),
+                    image.getDesc());
             return getImageById(id);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException(CONNECT_ERR);
@@ -36,8 +43,7 @@ public class ImageDaoJdbc implements ImageDao{
     }
 
     public Image getImageById(int id) {
-        String sql = "SELECT image_id, image_link, pattern_id, submitted_by, username, desc " +
-                "FROM images JOIN users ON images.submitted_by = users.user_id " +
+        String sql = SELECT_CLAUSE +
                 "WHERE image_id = ?";
         try {
             return template.queryForObject(sql, this::mapRowToImage, id);
@@ -50,7 +56,7 @@ public class ImageDaoJdbc implements ImageDao{
 
     @Override
     public List<Image> getImagesByPattern(int id) {
-        String sql = "SELECT * FROM images WHERE pattern_id = ?";
+        String sql = SELECT_CLAUSE + "WHERE pattern_id = ?";
 
         try {
             return template.query(sql, this::mapRowToImage, id);
@@ -59,6 +65,20 @@ public class ImageDaoJdbc implements ImageDao{
         } catch (EmptyResultDataAccessException e) {
             throw new NotFoundException("No images found");
         }
+    }
+
+    @Override
+    public Image setDefaultImage(int imageId, int patternId) {
+        String sql = "UPDATE patterns SET default_image = ? WHERE pattern_id = ?";
+        try {
+            int rows = template.update(sql, imageId, patternId);
+            if (rows == 1) return getImageById(imageId);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException(CONNECT_ERR);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Unable to set default image due to data integrity violation");
+        }
+        throw new DaoException("Trouble setting default image");
     }
 
     private Image mapRowToImage(ResultSet set, int rowNum) throws SQLException {

@@ -39,7 +39,7 @@ public class JdbcStepDao implements StepDao{
     public List<Step> getStepsByProject(int id) {
         String sql = "SELECT * FROM steps AS s " +
                 "JOIN projects AS p ON s.pattern_id = p.pattern_id " +
-                "WHERE s.project_id = ? AND s.yarn_id = p.yarn_id AND s.size_id = p.size_id " +
+                "WHERE project_id = ? AND s.yarn_id = p.yarn_id AND s.size_id = p.size_id " +
                 "ORDER BY step_num";
         try {
             List<Step> steps = template.query(sql, this::mapRowToStep, id);

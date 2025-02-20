@@ -3,19 +3,23 @@ package com.knittr.api.service;
 import com.knittr.api.dao.ImageDao;
 import com.knittr.api.dao.PatternDao;
 import com.knittr.api.dao.UserDao;
+import com.knittr.api.model.Category;
 import com.knittr.api.model.Pattern;
+import com.knittr.api.model.Size;
 import com.knittr.api.model.User;
 import com.knittr.api.model.dto.PatternDto;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@AllArgsConstructor
 public class PatternService {
     private PatternDao dao;
     private UserDao userDao;
-    private ImageDao imageDao;
 
     public List<Pattern> getPatterns() {
         return dao.getPatterns();
@@ -40,10 +44,19 @@ public class PatternService {
         Pattern pattern = new Pattern();
         pattern.setName(dto.getName());
         pattern.setDesc(dto.getDesc());
-        pattern.setCategories(dto.getCategories());
-        if (dto.getSizes() != null) {
-            pattern.setSizes(dto.getSizes());
+        List<Category> categories = new ArrayList<>();
+        for (int id : dto.getCatIds()) {
+            Category category = new Category();
+            category.setCategoryId(id);
+            categories.add(category);
         }
+//        pattern.setCategories(dto.getCategories());
+//        if (dto.getSizes() != null) {
+//            pattern.setSizes(dto.getSizes());
+//        }
+        pattern.setCategories(categories);
         return pattern;
     }
+
+
 }

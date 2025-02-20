@@ -19,28 +19,29 @@ import java.util.List;
 @AllArgsConstructor
 public class JdbcPatternDao implements PatternDao{
     private JdbcTemplate template;
+    private ImageDao imageDao;
 
     private final String NOT_FOUND = "Unable to find pattern(s)";
     private final String CONNECT_ERR = "Unable to Connect";
-    private final String SELECT_CLAUSE = "SELECT p.pattern_id, p.author, u.username, p.pattern_name, p.desc, p.public, " +
-            "i.image_id, i.image_link, i.desc " +
-            "STRING_AGG(c.category_id, ',') AS cat_ids, STRING_AGG(c.cat_names, ',') AS cat_names " +
-            "STRING_AGG(st.yarn_id, ',') AS yarn_ids, STRING_AGG(y.yarn_name, ',') AS yarn_names " +
-            "STRING_AGG(st.size_id, ',') AS size_ids, STRING_AGG(s.size_name, ',') AS size_names, " +
+    private final String SELECT_CLAUSE = "SELECT p.pattern_id, p.author, u.username, p.pattern_name, p.desc AS pattern_desc, p.public, " +
+            "p.default_image, " +
+            "STRING_AGG(CAST(c.category_id AS VARCHAR), ',') AS cat_ids, STRING_AGG(c.cat_name, ',') AS cat_names, " +
+            "STRING_AGG(CAST(st.yarn_id AS VARCHAR), ',') AS yarn_ids, STRING_AGG(y.yarn_name, ',') AS yarn_names, " +
+            "STRING_AGG(CAST(st.size_id AS VARCHAR), ',') AS size_ids, STRING_AGG(s.size_name, ',') AS size_names, " +
             "STRING_AGG(s.age_category, ',') AS age_cats " +
-            "FROM patterns AS p JOIN users AS u ON patterns.author = users.user_id " +
-            "JOIN pattern_categories AS pc ON pc.pattern_id = p.pattern_id " +
-            "JOIN categories AS c ON c.category_id = pc.category_id " +
-            "JOIN steps AS st ON p.pattern_id = st.pattern_id " +
-            "JOIN yarn_type AS y ON st.yarn_id = y.yarn_id " +
-            "JOIN sizes AS s ON st.size_id = sizes.size_id " +
-            "JOIN images AS i ON p.default_image = i.image_id ";
+            "FROM patterns AS p " +
+            "LEFT JOIN users AS u ON p.author = u.user_id " +
+            "LEFT JOIN pattern_categories AS pc ON pc.pattern_id = p.pattern_id " +
+            "LEFT JOIN categories AS c ON c.category_id = pc.category_id " +
+            "LEFT JOIN steps AS st ON p.pattern_id = st.pattern_id " +
+            "LEFT JOIN yarn_types AS y ON st.yarn_id = y.yarn_id " +
+            "LEFT JOIN sizes AS s ON st.size_id = s.size_id ";
+    private final String GROUP_CLAUSE = " GROUP BY p.pattern_id, u.username ";
 //    TODO add order = 1 to WHERE clause to remove duplicate yarn/size combos?
 
     @Override
     public Pattern getPatternById(int id) {
-        String sql = SELECT_CLAUSE +
-                "WHERE pattern_id = ?";
+        String sql = SELECT_CLAUSE + "WHERE p.pattern_id = ?" + GROUP_CLAUSE;
 
         try {
             return template.queryForObject(sql, this::mapRowToPattern, id);
@@ -53,7 +54,7 @@ public class JdbcPatternDao implements PatternDao{
 
     @Override
     public List<Pattern> getPatternsByAuthor(int id) {
-        String sql = SELECT_CLAUSE + "WHERE author_id = ?";
+        String sql = SELECT_CLAUSE + "WHERE p.author_id = ?" + GROUP_CLAUSE;
         try {
             return template.query(sql, this::mapRowToPattern, id);
         } catch (CannotGetJdbcConnectionException e) {
@@ -67,7 +68,7 @@ public class JdbcPatternDao implements PatternDao{
     public List<Pattern> getSavedPatternsByUserId(int userId) {
         String sql = SELECT_CLAUSE +
                 "JOIN user_patterns AS up ON p.pattern_id = up.pattern_id " +
-                "WHERE up.user_id = ?";
+                "WHERE up.user_id = ?" + GROUP_CLAUSE;
         try {
             return template.query(sql, this::mapRowToPattern, userId);
         } catch (CannotGetJdbcConnectionException e) {
@@ -79,7 +80,7 @@ public class JdbcPatternDao implements PatternDao{
 
     @Override
     public Pattern createPattern(Pattern pattern) {
-        String sql = "INSERT INTO patterns (author, pattern_name, desc) VALUES (?, ?, ?) RETURNING pattern_id;";
+        String sql = "INSERT INTO patterns (author, pattern_name, \"desc\") VALUES (?, ?, ?) RETURNING pattern_id;";
 
         try {
             int id = template.queryForObject(sql, Integer.class, pattern.getAuthor().getUserId(), pattern.getName(), pattern.getDesc());
@@ -110,7 +111,7 @@ public class JdbcPatternDao implements PatternDao{
 
     @Override
     public List<Pattern> getPatterns() {
-        String sql = SELECT_CLAUSE + "ORDER BY pattern_id LIMIT 20";
+        String sql = SELECT_CLAUSE + GROUP_CLAUSE + "ORDER BY p.pattern_id LIMIT 20";
         try {
             return template.query(sql, this::mapRowToPattern);
         } catch (CannotGetJdbcConnectionException e) {
@@ -120,7 +121,7 @@ public class JdbcPatternDao implements PatternDao{
 
     @Override
     public List<Pattern> getPatterns(int offset) {
-        String sql = SELECT_CLAUSE + "WHERE pattern_id > ? ORDER BY pattern_id LIMIT 20";
+        String sql = SELECT_CLAUSE + "WHERE p.pattern_id > ?" + GROUP_CLAUSE + "ORDER BY p.pattern_id LIMIT 20";
         try {
             return template.query(sql, this::mapRowToPattern, offset);
         } catch (CannotGetJdbcConnectionException e) {
@@ -132,7 +133,7 @@ public class JdbcPatternDao implements PatternDao{
         Pattern pattern = new Pattern();
         pattern.setPatternId(set.getInt("pattern_id"));
         pattern.setName(set.getString("pattern_name"));
-        pattern.setDesc(set.getString("desc"));
+        pattern.setDesc(set.getString("pattern_desc"));
         pattern.setPublic(set.getBoolean("public"));
 
         // Create a user instance to assign to author
@@ -143,44 +144,49 @@ public class JdbcPatternDao implements PatternDao{
 
         // Process and match up ids and names for categories to add to list
         List<Category> categories = new ArrayList<>();
-        String[] catIds = set.getString("cat_ids").split(",");
-        String[] catNames = set.getString("cat_names").split(",");
-        for (int i = 0; i < catIds.length; i++) {
-            categories.add(new Category(
-                    Integer.parseInt(catIds[i]),
-                    catNames[i]
-            ));
+        if (set.getString("cat_ids") != null) {
+            String[] catIds = set.getString("cat_ids").split(",");
+            String[] catNames = set.getString("cat_names").split(",");
+            for (int i = 0; i < catIds.length; i++) {
+                categories.add(new Category(
+                        Integer.parseInt(catIds[i]),
+                        catNames[i]
+                ));
+            }
         }
         pattern.setCategories(categories);
 
         // process and match info to add sizes to list
         List<Size> sizes = new ArrayList<>();
-        String[] sizeIds  = set.getString("size_ids").split(",");
-        String[] sizeNames = set.getString("size_names").split(",");
-        String[] ageCats = set.getString("age_cats").split(",");
-        for (int i = 0; i < sizeIds.length; i++) {
-            sizes.add(new Size(
-                    Integer.parseInt(sizeIds[i]), sizeNames[i], ageCats[i]
-            ));
+        if (set.getString("size_ids") != null) {
+            String[] sizeIds = set.getString("size_ids").split(",");
+            String[] sizeNames = set.getString("size_names").split(",");
+            String[] ageCats = set.getString("age_cats").split(",");
+            for (int i = 0; i < sizeIds.length; i++) {
+                sizes.add(new Size(
+                        Integer.parseInt(sizeIds[i]), sizeNames[i], ageCats[i]
+                ));
+            }
         }
         pattern.setSizes(sizes);
 
         // process and match info to add yarns to list
         List<Yarn> yarns = new ArrayList<>();
-        String[] yarnIds = set.getString("yarn_ids").split(",");
-        String[] yarnNames = set.getString("yarn_names").split(",");
-        for (int i = 0; i < yarnIds.length; i++) {
-            yarns.add( new Yarn( Integer.parseInt( yarnIds[i] ), yarnNames[i] ) );
+        if (set.getString("yarn_ids") != null) {
+            String[] yarnIds = set.getString("yarn_ids").split(",");
+            String[] yarnNames = set.getString("yarn_names").split(",");
+            for (int i = 0; i < yarnIds.length; i++) {
+                yarns.add(new Yarn(Integer.parseInt(yarnIds[i]), yarnNames[i]));
+            }
         }
         pattern.setYarns(yarns);
 
         // process and set default image
-        Image image = new Image();
-        image.setImageId(set.getInt("i.image_id"));
-        image.setImageLink(set.getString("i.image_link"));
-        image.setDesc(set.getString("i.desc"));
-        pattern.setDefaultImage(image);
+        if (set.getInt("default_image") != 0) {
+            pattern.setDefaultImage(imageDao.getImageById(set.getInt("p.default_image")));
+        }
 
         return pattern;
     }
+
 }

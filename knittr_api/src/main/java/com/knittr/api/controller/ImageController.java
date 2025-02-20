@@ -2,6 +2,7 @@ package com.knittr.api.controller;
 
 import com.knittr.api.dao.ImageDao;
 import com.knittr.api.model.Image;
+import com.knittr.api.model.dto.DefaultImageDto;
 import com.knittr.api.model.dto.ImageDto;
 import com.knittr.api.service.ImageService;
 import jakarta.validation.Valid;
@@ -31,5 +32,10 @@ public class ImageController {
     @GetMapping("/patterns/{id}/images")
     public List<Image> getImagesByPattern(@PathVariable int id) {
         return dao.getImagesByPattern(id);
+    }
+
+    @PutMapping("/images/default")
+    public Image setDefaultImage(Principal principal, @RequestBody DefaultImageDto dto) {
+        return service.setDefaultImage(principal, dto);
     }
 }

@@ -10,4 +10,6 @@ public interface ImageDao {
     Image getImageById(int id);
 
     List<Image> getImagesByPattern(int id);
+
+    Image setDefaultImage(int imageId, int patternId);
 }

@@ -16,6 +16,5 @@ public class PatternDto {
     private String name;
     @NonNull
     private String desc;
-    private List<Category> categories;
-    private List<Size> sizes;
+    private int[] catIds;
 }

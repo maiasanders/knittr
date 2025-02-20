@@ -12,6 +12,7 @@ import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -25,6 +26,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @AllArgsConstructor
 @CrossOrigin
+//@PreAuthorize("permitAll()")
 public class AuthController {
     private UserDao dao;
     private AuthService service;
@@ -38,7 +40,7 @@ public class AuthController {
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public LoginResponseDto login(@Valid @RequestBody LoginDto loginDto) {
-
+        System.out.println("I'm in");
         try {
             return service.login(loginDto);
 
@@ -58,7 +60,7 @@ public class AuthController {
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error - " + e.getMessage());
         }
-        return new LoginResponseDto(user.getUsername());
+        return login(new LoginDto(dto.getUsername(), dto.getPassword()));
     }
 
 

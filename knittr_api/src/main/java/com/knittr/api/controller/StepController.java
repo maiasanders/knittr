@@ -3,6 +3,7 @@ package com.knittr.api.controller;
 import com.knittr.api.dao.StepDao;
 import com.knittr.api.model.Pattern;
 import com.knittr.api.model.Step;
+import com.knittr.api.model.dto.StepDto;
 import com.knittr.api.service.StepService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,12 +25,13 @@ public class StepController {
     private StepService service;
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/steps")
-    public Step addStep(@RequestBody Step step, Principal principal) {
-        return service.addStep(step, principal);
+    public Step addStep(@RequestBody StepDto dto, Principal principal) {
+        return service.addStep(dto, principal);
     }
 
     @GetMapping("/projects/{id}/steps")
     public List<Step> getStepsByProject(@PathVariable int id, Principal principal) {
+//        TODO logic for adding rows separately
         return service.getStepsByProject(id, principal);
     }
 }

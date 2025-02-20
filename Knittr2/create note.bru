@@ -1,0 +1,22 @@
+meta {
+  name: create note
+  type: http
+  seq: 15
+}
+
+post {
+  url: http://localhost:8080/api/projects
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNzQwMTgwMDY3fQ.QGz8KWRA6ZURDHlvd_-dRo4rcm6ricCu37Ks5WEvNA8
+}
+
+body:json {
+  {
+    "patternId": 2,
+    "yarnId": 8
+  }
+}

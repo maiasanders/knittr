@@ -1,0 +1,23 @@
+meta {
+  name: add row
+  type: http
+  seq: 11
+}
+
+post {
+  url: http://localhost:8080/api/rows
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNzQwMTgzMzM1fQ.YBRmQszsrV0g_hyQfNm-bhN46igH-5V2QdSBxb5sU9I
+}
+
+body:json {
+  {
+    "stepId": 1,
+    "directions": "string",
+    "rowNum": 1
+  }
+}

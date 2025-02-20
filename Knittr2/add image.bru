@@ -1,0 +1,23 @@
+meta {
+  name: add image
+  type: http
+  seq: 12
+}
+
+post {
+  url: http://localhost:8080/api/images
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNzQwMTg1MzMzfQ.sC9gQ7DGMlqO0pC-4J_K7RzLsa7VDliihi0_f-da2VA
+}
+
+body:json {
+  {
+    "imageLink": "https://placehold.com/600x400/blue/white",
+    "desc": "placeholder",
+    "patternId": 1
+  }
+}

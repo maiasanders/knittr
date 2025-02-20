@@ -10,9 +10,14 @@ import org.springframework.lang.NonNull;
 @NoArgsConstructor
 @Getter
 public class ProjectStartDto {
-    @NonNull
     @Positive
     private int patternId;
     private int yarnId;
     private int sizeId;
+
+    public ProjectStartDto(int patternId, int yarnId) {
+        this.patternId = patternId;
+        this.yarnId = yarnId;
+        this.sizeId = 1;
+    }
 }

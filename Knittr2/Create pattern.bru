@@ -5,7 +5,23 @@ meta {
 }
 
 post {
-  url: http://localhost:8080/patterns
-  body: none
-  auth: none
+  url: http://localhost:8080/api/patterns
+  body: json
+  auth: bearer
+}
+
+headers {
+  : 
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNzQwMTcyODA0fQ.nHUfv05iStBEXbLNi20MA7yWLX8rGTSd9lbblLOkgsM
+}
+
+body:json {
+  {
+    "name": "test",
+    "desc": "this is a test",
+    "catIds": [1]
+  }
 }

@@ -38,11 +38,13 @@ public class ProjectService {
             newProject.setYarn(yarn);
         }
 
+        Size size = new Size();
         if (dto.getSizeId() != 0 ) {
-            Size size = new Size();
             size.setSizeId(dto.getSizeId());
-            newProject.setSize(size);
+        } else {
+            size.setSizeId(1);
         }
+        newProject.setSize(size);
 
         return dao.createProject(newProject);
     }

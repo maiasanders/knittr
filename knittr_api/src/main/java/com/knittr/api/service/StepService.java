@@ -8,6 +8,8 @@ import com.knittr.api.model.Pattern;
 import com.knittr.api.model.Project;
 import com.knittr.api.model.Step;
 import com.knittr.api.model.User;
+import com.knittr.api.model.dto.StepDto;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,19 +18,30 @@ import java.security.Principal;
 import java.util.List;
 
 @Component
+@AllArgsConstructor
 public class StepService {
     private StepDao dao;
     private UserDao userDao;
     private ProjectDao projectDao;
     private PatternDao patternDao;
 
-    public Step addStep(Step step, Principal principal) {
-        Pattern pattern = patternDao.getPatternById(step.getPatternId());
+    public Step addStep(StepDto dto, Principal principal) {
+        Pattern pattern = patternDao.getPatternById(dto.getPatternId());
         if (isAuthUser(principal, pattern.getAuthor().getUserId())){
-            return dao.createStep(step);
+            return dao.createStep(stepFromDto(dto));
         } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
+    }
+
+    private Step stepFromDto(StepDto dto) {
+        Step step = new Step();
+        step.setPatternId(dto.getPatternId());
+        if (dto.getSizeId() != 0) step.setSizeId(dto.getSizeId());
+        step.setYarnId(dto.getYarnId());
+        step.setTitle(dto.getTitle());
+        step.setStepNum(dto.getStepNum());
+        return step;
     }
 
     public List<Step> getStepsByProject(int id, Principal principal) {

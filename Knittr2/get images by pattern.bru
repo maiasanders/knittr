@@ -1,0 +1,15 @@
+meta {
+  name: get images by pattern
+  type: http
+  seq: 13
+}
+
+get {
+  url: http://localhost:8080/api/patterns/1/images
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNzQwMTg1NjY4fQ.I0IH4NUvpU4SIM9-_d74JR6WyD3QMJLScaolOEGM1mM
+}

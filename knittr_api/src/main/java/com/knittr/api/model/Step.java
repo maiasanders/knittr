@@ -12,7 +12,6 @@ import java.util.List;
 @Setter
 @Getter
 public class Step {
-//    TODO Is this the best way to do it? revisit. Can I get rid of the separate tables for step vs step_by_size_yarn in my DB?
     private int stepId;
     private int patternId;
     private int sizeId;
@@ -20,8 +19,4 @@ public class Step {
     private String title;
     private int stepNum;
     private List<Row> rows;
-//    private int startRow;
-////   TODO Does end row mean end of single repeat or end of all repeats?
-//    private int endRow;
-//    private int repeats;
 }

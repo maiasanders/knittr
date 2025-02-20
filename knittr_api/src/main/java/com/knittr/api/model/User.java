@@ -1,5 +1,6 @@
 package com.knittr.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.Setter;
 @Setter
 public class User {
     private String username;
+    @JsonIgnore
     private String password;
     private int userId;
 

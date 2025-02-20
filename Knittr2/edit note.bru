@@ -1,0 +1,22 @@
+meta {
+  name: edit note
+  type: http
+  seq: 17
+}
+
+post {
+  url: http://localhost:8080/api/notes
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNzQwMTg1NjY4fQ.I0IH4NUvpU4SIM9-_d74JR6WyD3QMJLScaolOEGM1mM
+}
+
+body:json {
+  {
+    "body": "This is also a test",
+    "projectId": 1
+  }
+}

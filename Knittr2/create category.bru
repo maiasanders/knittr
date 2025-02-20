@@ -1,0 +1,21 @@
+meta {
+  name: create category
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://localhost:8080/api/categories
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNzQwMTY1OTUzfQ.7oMySZOg_IBGpPAjU-rUcu-qYGtsa3LjZdyZ7lz-K_w
+}
+
+body:json {
+  {
+    "categoryName": "blanket"
+  }
+}
