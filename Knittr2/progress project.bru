@@ -1,0 +1,22 @@
+meta {
+  name: progress project
+  type: http
+  seq: 20
+}
+
+put {
+  url: http://localhost:8080/api/projects/1/progress
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNzQwMTg2OTYxfQ.58Y7cQ9nWZeDdTlCvj-IkWW3hRoHiBt3nFGlqMwksRk
+}
+
+body:json {
+  {
+    "makerId": 1,
+    "newRow": 3
+  }
+}

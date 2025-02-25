@@ -4,8 +4,8 @@ meta {
   seq: 17
 }
 
-post {
-  url: http://localhost:8080/api/notes
+put {
+  url: http://localhost:8080/api/notes/2
   body: json
   auth: bearer
 }
@@ -16,7 +16,7 @@ auth:bearer {
 
 body:json {
   {
-    "body": "This is also a test",
+    "body": "This is changed",
     "projectId": 1
   }
 }
