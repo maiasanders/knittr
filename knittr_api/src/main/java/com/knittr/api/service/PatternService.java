@@ -59,4 +59,7 @@ public class PatternService {
     }
 
 
+    public List<Pattern> getPatternsByAuthor(Principal principal) {
+        return dao.getPatternsByAuthor(getUserId(principal));
+    }
 }

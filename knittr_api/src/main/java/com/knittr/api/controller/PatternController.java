@@ -31,9 +31,14 @@ public class PatternController {
         return service.getPatterns();
     }
 
-    @GetMapping("/users/{id}/patterns")
-    public List<Pattern> getPatternsByUser(@PathVariable int id) {
-        return dao.getPatternsByAuthor(id);
+    /**
+     * Gets patterns created by logged-in user
+     * @param principal user
+     * @return list of patterns
+     */
+    @GetMapping("/patterns/mine")
+    public List<Pattern> getPatternsByUser(Principal principal) {
+        return service.getPatternsByAuthor(principal);
     }
 
     @GetMapping("/patterns/saved")

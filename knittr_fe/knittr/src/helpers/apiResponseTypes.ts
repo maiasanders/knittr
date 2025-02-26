@@ -25,6 +25,11 @@ export interface User {
     userId: number;
 }
 
+export interface LoginDto {
+    username: string;
+    password: string;
+}
+
 export interface Pattern {
     patternId: number;
     name: string;
@@ -40,4 +45,48 @@ export interface Pattern {
 export interface Category {
     categoryId: number;
     category_name: string;
+}
+
+export type loadingStatus = 'Error' | boolean;
+
+export interface Project {
+    projectId: number;
+    makerId: number;
+    pattern: Pattern;
+    yarn?: Yarn;
+    size: Size;
+    yarnsUsed?: string;
+    currentRow: number;
+    isCompleted: boolean;
+    notes: Note[];
+    steps: Step[];
+}
+
+export interface Note {
+    noteId: number;
+    body: string;
+    projectId: number;
+}
+
+export interface Step {
+    stepId: number;
+    patternId: number;
+    sizeId: number;
+    yarnId: number;
+    title: string;
+    stepNum: number;
+    rows: Row[];
+}
+
+export interface Row {
+    rowId: number;
+    stepId: number;
+    directions: string;
+    rowNum: number;
+}
+
+export interface Auth {
+    userId: 0,
+    username: '',
+    token: ''
 }
