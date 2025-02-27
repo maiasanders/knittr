@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import useNotes from "../hooks/noteHooks";
 
-const NotesSection = (projId: number) => {
+const NotesSection = ({ projId }: { projId: number }) => {
     const [notes, setNotes] = useState<Note[]>([])
     const [showNewNote, setShowNewNote] = useState(false)
     const [newNote, setNewNote] = useState('')

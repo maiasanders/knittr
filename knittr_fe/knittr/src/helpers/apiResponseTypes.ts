@@ -53,7 +53,7 @@ export interface Project {
     projectId: number;
     makerId: number;
     pattern: Pattern;
-    yarn?: Yarn;
+    yarn: Yarn;
     size: Size;
     yarnsUsed?: string;
     currentRow: number;

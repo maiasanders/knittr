@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { MouseEventHandler } from "react";
 
-const AddStepButton = () => (<button>Steps <FontAwesomeIcon icon={faPlus} /></button>)
+const AddStepButton = ({ onClick }: { onClick: MouseEventHandler }) => (<button onClick={onClick}>Steps <FontAwesomeIcon icon={faPlus} /></button>)
 export default AddStepButton

@@ -1,6 +1,5 @@
 import { ChangeEvent, MouseEventHandler, useState } from "react"
 import { Step, Row, StepDto } from "../helpers/apiResponseTypes"
-import stepService from "../services/stepService"
 import useSteps from "../hooks/stepHooks"
 import useRows from "../hooks/useRows"
 
@@ -61,7 +60,7 @@ const AddStepPopup = ({ currentStep, stepNum, patternId, yarnId, sizeId, onClose
             postStep(newStep)
         }
         rows.forEach(r => postRow(r))
-        // figure out logic to close dialog
+        //  TODOfigure out logic to close dialog
     }
 
 

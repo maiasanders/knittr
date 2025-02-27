@@ -1,7 +1,7 @@
 import { Step } from "../helpers/apiResponseTypes";
 import RowByRowItem from "./rowByRowItem";
 
-const StepAccordian = (step: Step) => {
+const StepAccordian = ({ step }: { step: Step }) => {
     // TODO fix offset once I've nailed down context
 
     return (
