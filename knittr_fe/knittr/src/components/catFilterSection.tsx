@@ -1,8 +1,8 @@
-import { ToggleEventHandler } from "react";
+import { ChangeEventHandler } from "react";
 import { Category } from "../helpers/apiResponseTypes";
 import FilterToggle from "./FilterToggle";
 
-const CatFilterSection = ({ cats, selectedCats, handleToggle }: { cats: Category[], selectedCats: Set<number>, handleToggle: ToggleEventHandler }) => {
+const CatFilterSection = ({ cats, selectedCats, handleToggle }: { cats: Category[], selectedCats: Set<number>, handleToggle: ChangeEventHandler }) => {
     return (
         <section>
             <h3>Categories</h3>

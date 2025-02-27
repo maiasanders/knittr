@@ -1,8 +1,8 @@
-import { ToggleEventHandler } from "react"
+import { ChangeEventHandler } from "react"
 import { Yarn } from "../helpers/apiResponseTypes"
 import FilterToggle from "./FilterToggle"
 
-const YarnFilterSection = ({ yarns, selectedYarns, handleToggle }: { yarns: Yarn[], selectedYarns: Set<number>, handleToggle: ToggleEventHandler }) => {
+const YarnFilterSection = ({ yarns, selectedYarns, handleToggle }: { yarns: Yarn[], selectedYarns: Set<number>, handleToggle: ChangeEventHandler }) => {
     return (
         <section>
             <h3>Yarns</h3>

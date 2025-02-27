@@ -1,8 +1,8 @@
-import { ToggleEventHandler } from "react"
+import { ChangeEventHandler } from "react"
 import { Size } from "../helpers/apiResponseTypes"
 import FilterToggle from "./FilterToggle"
 
-const SizeFilterSection = ({ sizes, selectedSizes, handleToggle }: { sizes: Size[], selectedSizes: Set<number>, handleToggle: ToggleEventHandler }) => {
+const SizeFilterSection = ({ sizes, selectedSizes, handleToggle }: { sizes: Size[], selectedSizes: Set<number>, handleToggle: ChangeEventHandler }) => {
 
     return (
         <section>

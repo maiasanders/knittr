@@ -78,6 +78,14 @@ export interface Step {
     rows: Row[];
 }
 
+export interface StepDto {
+    patternId: number,
+    yarnId: number,
+    sizeId: number,
+    title: string,
+    stepNum: number
+}
+
 export interface Row {
     rowId: number;
     stepId: number;
@@ -86,7 +94,7 @@ export interface Row {
 }
 
 export interface Auth {
-    userId: 0,
-    username: '',
-    token: ''
+    userId: number,
+    username: string,
+    token: string
 }
