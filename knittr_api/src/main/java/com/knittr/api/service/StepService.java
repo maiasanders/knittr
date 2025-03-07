@@ -4,10 +4,7 @@ import com.knittr.api.dao.PatternDao;
 import com.knittr.api.dao.ProjectDao;
 import com.knittr.api.dao.StepDao;
 import com.knittr.api.dao.UserDao;
-import com.knittr.api.model.Pattern;
-import com.knittr.api.model.Project;
-import com.knittr.api.model.Step;
-import com.knittr.api.model.User;
+import com.knittr.api.model.*;
 import com.knittr.api.model.dto.StepDto;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,7 +23,7 @@ public class StepService {
     private PatternDao patternDao;
 
     public Step addStep(StepDto dto, Principal principal) {
-        Pattern pattern = patternDao.getPatternById(dto.getPatternId());
+        Pattern pattern = patternDao.getPatternByVariant(dto.getVariantId());
         if (isAuthUser(principal, pattern.getAuthor().getUserId())){
             return dao.createStep(stepFromDto(dto));
         } else {
@@ -36,9 +33,7 @@ public class StepService {
 
     private Step stepFromDto(StepDto dto) {
         Step step = new Step();
-        step.setPatternId(dto.getPatternId());
-        if (dto.getSizeId() != 0) step.setSizeId(dto.getSizeId());
-        step.setYarnId(dto.getYarnId());
+        step.setVariantId(dto.getVariantId());
         step.setTitle(dto.getTitle());
         step.setStepNum(dto.getStepNum());
         return step;

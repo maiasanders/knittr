@@ -2,6 +2,7 @@ package com.knittr.api.dao;
 
 import com.knittr.api.exception.DaoException;
 import com.knittr.api.exception.NotFoundException;
+import com.knittr.api.model.PatternVariant;
 import com.knittr.api.model.Step;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,11 +23,10 @@ public class JdbcStepDao implements StepDao{
     private final String CONNECT_ERR = "Unable to connect to database";
     @Override
     public Step createStep(Step step) {
-        String sql = "INSERT INTO steps (pattern_id, yarn_id, size_id, title, step_num) " +
-                "VALUES (?,?,?,?,?) RETURNING step_id";
+        String sql = "INSERT INTO steps (variant_id, title, step_num) " +
+                "VALUES (?,?,?) RETURNING step_id";
         try {
-            int id = template.queryForObject(sql, Integer.class, step.getPatternId(),
-                    step.getYarnId(), step.getSizeId(), step.getTitle(), step.getStepNum());
+            int id = template.queryForObject(sql, Integer.class, step.getVariantId(), step.getTitle(), step.getStepNum());
             return getStepById(id);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException(CONNECT_ERR);
@@ -38,9 +38,10 @@ public class JdbcStepDao implements StepDao{
     @Override
     public List<Step> getStepsByProject(int id) {
         String sql = "SELECT * FROM steps AS s " +
-                "JOIN projects AS p ON s.pattern_id = p.pattern_id " +
-                "WHERE project_id = ? AND s.yarn_id = p.yarn_id AND s.size_id = p.size_id " +
-                "ORDER BY step_num";
+                "JOIN pattern_variants AS v ON s.variant_id = v.variant_id " +
+                "JOIN projects AS p ON v.variant_id = p.variant_id" +
+                "WHERE p.project_id = ? " +
+                "ORDER BY s.step_num";
         try {
             List<Step> steps = template.query(sql, this::mapRowToStep, id);
 
@@ -52,6 +53,24 @@ public class JdbcStepDao implements StepDao{
             throw new DaoException(CONNECT_ERR);
         }
     }
+
+    @Override
+    public List<Step> getStepsByVariant(int id) {
+        String sql = "SELECT * " +
+                "FROM steps " +
+                "WHERE variant_id = ? ORDER BY step_num";
+        try {
+            List<Step> steps = template.query(sql, this::mapRowToStep, id);
+
+            for (Step step : steps) {
+                step.setRows( rowDao.getRowsByStep( step.getStepId() ) );
+            }
+            return steps;
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException(CONNECT_ERR);
+        }
+    }
+
 
     private Step getStepById(int id) {
         String sql = "SELECT * FROM steps WHERE step_id = ?";
@@ -69,9 +88,7 @@ public class JdbcStepDao implements StepDao{
     private Step mapRowToStep(ResultSet res, int row) throws SQLException {
         Step step = new Step();
         step.setStepId(res.getInt("step_id"));
-        step.setPatternId(res.getInt("pattern_id"));
-        step.setYarnId(res.getInt("yarn_id"));
-        step.setSizeId(res.getInt("size_id"));
+        step.setVariantId(res.getInt("variant_id"));
         step.setTitle(res.getString("title"));
         step.setStepNum(res.getInt("step_num"));
         return step;

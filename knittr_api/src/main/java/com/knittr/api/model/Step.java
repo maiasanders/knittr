@@ -13,9 +13,7 @@ import java.util.List;
 @Getter
 public class Step {
     private int stepId;
-    private int patternId;
-    private int sizeId;
-    private int yarnId;
+    private int variantId;
     private String title;
     private int stepNum;
     private List<Row> rows;

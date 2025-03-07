@@ -34,4 +34,9 @@ public class StepController {
 //        TODO logic for adding rows separately
         return service.getStepsByProject(id, principal);
     }
+
+    @GetMapping("/patterns/variants/{id}")
+    public List<Step> getStepsByVariant(@PathVariable int id) {
+        return dao.getStepsByVariant(id);
+    }
 }

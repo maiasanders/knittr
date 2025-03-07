@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS user_patterns, pattern_categories, categories, notes, step_by_size_yarn, projects, "rows", steps, sizes, yarn_types, images, patterns, users;
+DROP TABLE IF EXISTS user_patterns, pattern_categories, categories, notes, steps, projects, "rows", pattern_variants, steps, sizes, yarn_types, images, patterns, users CASCADE;
 
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
@@ -39,11 +39,30 @@ CREATE TABLE sizes (
     age_category VARCHAR(100)
 );
 
+CREATE TABLE pattern_variants (
+    variant_id SERIAL PRIMARY KEY,
+    pattern_id INTEGER NOT NULL REFERENCES patterns(pattern_id),
+    yarn_id INTEGER NOT NULL REFERENCES yarn_types(yarn_id),
+    size_id INTEGER NOT NULL REFERENCES sizes(size_id),
+    CONSTRAINT uq_pattern_yarn_size UNIQUE (pattern_id, yarn_id, size_id)
+);
+
+CREATE TABLE projects (
+    project_id SERIAL PRIMARY KEY,
+    maker_id INTEGER NOT NULL REFERENCES users(user_id),
+    variant_id INTEGER NOT NULL REFERENCES pattern_variants,
+    yarns_used VARCHAR(300),
+    current_row INTEGER DEFAULT 0,
+    completed BOOLEAN DEFAULT FALSE,
+    template_project BOOLEAN DEFAULT FALSE
+);
+
 CREATE TABLE steps (
     step_id SERIAL PRIMARY KEY,
-    pattern_id INTEGER NOT NULL REFERENCES patterns(pattern_id),
-    yarn_id INTEGER REFERENCES yarn_types(yarn_id),
-    size_id INTEGER REFERENCES sizes(size_id),
+    -- pattern_id INTEGER NOT NULL REFERENCES patterns(pattern_id),
+    -- yarn_id INTEGER REFERENCES yarn_types(yarn_id),
+    -- size_id INTEGER REFERENCES sizes(size_id),
+    variant_id INTEGER REFERENCES pattern_variants(variant_id)
     title VARCHAR(100),
     step_num INTEGER NOT NULL
 );
@@ -55,16 +74,6 @@ CREATE TABLE "rows" (
     row_num INTEGER NOT NULL
 );
 
-CREATE TABLE projects (
-    project_id SERIAL PRIMARY KEY,
-    maker_id INTEGER NOT NULL REFERENCES users(user_id),
-    pattern_id INTEGER NOT NULL REFERENCES patterns(pattern_id),
-    yarn_id INTEGER REFERENCES yarn_types(yarn_id),
-    size_id INTEGER REFERENCES sizes(size_id),
-    yarns_used VARCHAR(300),
-    current_row INTEGER DEFAULT 0,
-    completed BOOLEAN DEFAULT FALSE
-);
 
 CREATE TABLE notes (
     note_id SERIAL PRIMARY KEY,

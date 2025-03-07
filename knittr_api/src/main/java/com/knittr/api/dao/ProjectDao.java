@@ -27,4 +27,6 @@ public interface ProjectDao {
      * @return project with completed flag set to true
      */
     Project completeProject(int id);
+
+    Project getTemplateProject(int varId);
 }

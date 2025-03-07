@@ -13,19 +13,10 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
 @NoArgsConstructor
 public class StepDto {
     @Positive
-    private int patternId;
-    private int yarnId;
-    private int sizeId;
+    private int variantId;
     @NotEmpty
     private String title;
     @Positive
     private int stepNum;
 
-    public StepDto(int patternId, int yarnId, String title, int stepNum) {
-        this.patternId = patternId;
-        this.yarnId = yarnId;
-        this.sizeId = 1;
-        this.title = title;
-        this.stepNum = stepNum;
-    }
 }

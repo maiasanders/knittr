@@ -45,10 +45,12 @@ public class PatternService {
         pattern.setName(dto.getName());
         pattern.setDesc(dto.getDesc());
         List<Category> categories = new ArrayList<>();
-        for (int id : dto.getCatIds()) {
-            Category category = new Category();
-            category.setCategoryId(id);
-            categories.add(category);
+        if (dto.getCatIds() != null) {
+            for (int id : dto.getCatIds()) {
+                Category category = new Category();
+                category.setCategoryId(id);
+                categories.add(category);
+            }
         }
 //        pattern.setCategories(dto.getCategories());
 //        if (dto.getSizes() != null) {
@@ -61,5 +63,14 @@ public class PatternService {
 
     public List<Pattern> getPatternsByAuthor(Principal principal) {
         return dao.getPatternsByAuthor(getUserId(principal));
+    }
+
+    public void savePattern(Principal principal, int id) {
+        int userId = getUserId(principal);
+        dao.savePattern(userId, id);
+    }
+
+    public void unsavePattern(Principal principal, int id) {
+        dao.unsavePattern(getUserId(principal), id);
     }
 }

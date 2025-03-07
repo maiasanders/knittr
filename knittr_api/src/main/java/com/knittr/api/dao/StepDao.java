@@ -8,4 +8,6 @@ public interface StepDao {
     Step createStep(Step step);
 
     List<Step> getStepsByProject(int id);
+
+    List<Step> getStepsByVariant(int id);
 }

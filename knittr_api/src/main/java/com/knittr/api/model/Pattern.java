@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @AllArgsConstructor
@@ -22,4 +24,5 @@ public class Pattern {
     private Image defaultImage;
     private List<Size> sizes;
     private List<Yarn> yarns;
+    private List<PatternVariant> variants;
 }

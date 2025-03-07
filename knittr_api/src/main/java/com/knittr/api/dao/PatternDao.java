@@ -14,5 +14,12 @@ public interface PatternDao {
     Pattern createPattern(Pattern pattern);
 
     List<Pattern> getPatterns();
+
     List<Pattern> getPatterns(int offset);
+
+    void savePattern(int userId, int patternId);
+
+    void unsavePattern(int userId, int patternId);
+
+    Pattern getPatternByVariant(int variantId);
 }

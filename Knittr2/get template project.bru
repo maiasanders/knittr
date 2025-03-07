@@ -1,0 +1,22 @@
+meta {
+  name: get template project
+  type: http
+  seq: 27
+}
+
+get {
+  url: http://localhost:8080/api/projects/2
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNzQxNDE0OTIyfQ.OuIuWw6uhY3x0CXessJq_LXcrmU6Qrj1nkufQu5EMlg
+}
+
+body:json {
+  {
+    "patternId": 2,
+    "yarnId": 8
+  }
+}

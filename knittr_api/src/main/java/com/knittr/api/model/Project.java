@@ -15,11 +15,13 @@ public class Project {
     private int projectId;
     private int makerId;
     private Pattern pattern;
-    private Yarn yarn;
-    private Size size;
+//    private Yarn yarn;
+//    private Size size;
+    private PatternVariant variant;
     private String yarnsUsed;
     private int currentRow;
     private boolean isCompleted;
     private List<Note> notes;
     private List<Step> steps;
+    private boolean isTemplate;
 }

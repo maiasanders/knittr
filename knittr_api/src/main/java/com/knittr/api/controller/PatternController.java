@@ -36,11 +36,13 @@ public class PatternController {
      * @param principal user
      * @return list of patterns
      */
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/patterns/mine")
     public List<Pattern> getPatternsByUser(Principal principal) {
         return service.getPatternsByAuthor(principal);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/patterns/saved")
     public List<Pattern> getSavedPatterns(Principal principal) {
         return service.getSavedPatterns(principal);
@@ -51,5 +53,19 @@ public class PatternController {
     @PostMapping("/patterns")
     public Pattern createPattern(Principal principal, @RequestBody @Valid PatternDto dto) {
         return service.createPattern(principal, dto);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/patterns/{id}/save")
+    public void savePattern(Principal principal, @PathVariable int id) {
+        service.savePattern(principal, id);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/patterns/{id}/save")
+    public void unsavePattern(Principal principal, @PathVariable int id) {
+        service.unsavePattern(principal, id);
     }
 }

@@ -25,6 +25,7 @@ public class ImageController {
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/images")
+    @CrossOrigin
     public Image addImage(Principal principal, @RequestBody @Valid ImageDto dto) {
         return service.addImage(principal, dto);
     }

@@ -11,13 +11,6 @@ import org.springframework.lang.NonNull;
 @Getter
 public class ProjectStartDto {
     @Positive
-    private int patternId;
-    private int yarnId;
-    private int sizeId;
-
-    public ProjectStartDto(int patternId, int yarnId) {
-        this.patternId = patternId;
-        this.yarnId = yarnId;
-        this.sizeId = 1;
-    }
+    private int variantId;
+    private boolean isTemplate;
 }

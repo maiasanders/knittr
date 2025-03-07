@@ -17,47 +17,56 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/projects")
-@PreAuthorize("isAuthenticated()")
 @CrossOrigin
 @AllArgsConstructor
 public class ProjectController {
     private ProjectDao dao;
     private ProjectService service;
 
-    @GetMapping("/{id}")
+    @GetMapping("/projects/{id}")
     public Project getProject(@PathVariable int id) {
         return dao.getProjectById(id);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
+    @PostMapping("/projects")
     public Project createProject(@RequestBody ProjectStartDto dto, Principal principal) {
         return service.createProject(dto, principal);
     }
 
 //    Get current projects
-    @GetMapping
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/projects")
     public List<Project> getProjects(Principal principal) {
         return service.getProjects(principal);
     }
 
 //    Get completed projects
-    @GetMapping("/completed")
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/projects/completed")
     public List<Project> getCompletedProjects(Principal principal) {
         return service.getCompletedProjects(principal);
     }
 
 //    Mark a project as completed
-    @PutMapping("/{id}/complete")
+    @PreAuthorize("isAuthenticated()")
+    @PutMapping("/projects/{id}/complete")
     public Project completeProject(@PathVariable int id, Principal principal) {
         return service.completeProject(id, principal);
     }
 
-    @PutMapping("/{id}/progress")
+    @PreAuthorize("isAuthenticated()")
+    @PutMapping("/projects/{id}/progress")
     public Project updateProjectProgress(@PathVariable int id,
                                          @RequestBody @Valid UpdateProjectProgressDto dto,
                                          Principal principal) {
         return service.updateProgress(id, dto, principal);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/variants/{id}/template")
+    public Project getTemplateProject(@PathVariable int id, Principal principal) {
+        return service.getTemplatePattern(id, principal);
     }
 }

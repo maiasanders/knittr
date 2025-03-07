@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class TokenProvider implements InitializingBean {
     private SecretKey key = Jwts.SIG.HS256.key().build();
 
-    private String jws = Jwts.builder().subject("Joe").signWith(key).compact();
+//    private String jws = Jwts.builder().subject("Joe").signWith(key).compact();
     private final long tokenValidityInMillisec = 108000 * 1000;
     private static final String AUTH_KEY = "auth";
     @Override
