@@ -1,15 +1,14 @@
-import apiAccess from "../services/axiosConfig"
 import { Row } from "../helpers/apiResponseTypes"
 import { useState } from "react"
+import rowService from "../services/rowService"
 
 const useRows = () => {
 
     const [row, setRow] = useState<Row>()
 
     const postRow = async (newRow: Row) => {
-        apiAccess.post("/rows", newRow).then((res) => {
+        await rowService.createRow(newRow).then((res) => {
             setRow(res.data)
-            return row
         })
     }
 

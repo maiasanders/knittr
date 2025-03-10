@@ -13,7 +13,9 @@ const useSteps = (variantId: number) => {
     }, [])
 
     const postStep = async (step: StepDto) => {
-        await stepService.createStep(step).then(res => setSteps([...steps, res.data]))
+        const newStep = await stepService.createStep(step).then((res) => {
+            setSteps([...steps, res.data])
+        })
     }
 
     return { steps, postStep }

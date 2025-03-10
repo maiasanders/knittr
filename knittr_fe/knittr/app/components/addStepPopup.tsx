@@ -3,16 +3,17 @@ import { Step, Row, StepDto } from "../helpers/apiResponseTypes"
 import useSteps from "../hooks/useSteps"
 import useRows from "../hooks/useRows"
 import AddRowElement from "./addRowElement"
+import ClickableIcon from "./clickableIcon"
+import { faPlus } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 // TODO make me work next!!!!
 
-const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, handleChange, firstRowNum }: {
-    currentStep?: Step,
+const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, firstRowNum }: {
+    currentStep: Step,
     stepNum: number,
     variantId: number,
     onClose: MouseEventHandler,
-    // handleSubmit: FormEventHandler,
-    handleChange: ChangeEventHandler,
     firstRowNum: number
 }) => {
     // TODO prompt add to current step or create new
@@ -20,69 +21,73 @@ const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, handleChange, 
 
     const [title, setTitle] = useState(currentStep?.title || '')
     const [rows, setRows] = useState<Row[]>([])
-    const [nextRow, setNextRow] = useState('')
+    const [nextRow, setNextRow] = useState<Row>({
+        rowId: 0,
+        rowNum: firstRowNum,
+        stepId: currentStep?.stepId || 0,
+        directions: ''
+    })
     const [repeats, setRepeats] = useState(1)
 
-    const { postStep } = useSteps(variantId)
+    const { steps, postStep } = useSteps(variantId)
     const { postRow } = useRows()
 
-    const minRow = Math.min(...rows.map(r => r.rowNum)) || firstRowNum
-    const maxRow = Math.max(...rows.map(r => r.rowNum)) || firstRowNum
-    let currentRowNum = firstRowNum;
+    const currentRowNum = firstRowNum + rows.length + 1
 
-    // const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    //     const newRows = rows.map((row) => {
-    //         if (parseInt(e.target.id) === row.rowNum) {
-    //             row.directions = e.target.value
-    //             return row
-    //         }
-    //         return row
-    //     })
-    //     setRows([...newRows])
-    // }
     const handleSubmit = (e: FormEvent) => {
+        if (rows.length === 0 && !nextRow.directions) return
+
         postStep({
             stepNum,
             variantId,
             title
         })
-        let currentRowNum = firstRowNum
+        const newStepId = steps[steps.length - 1].stepId
+
+        if (nextRow.directions) setRows([...rows, nextRow])
+
         for (let i = 0; i < repeats; i++) {
-            rows.forEach(r => {
-                r.rowNum = currentRowNum
-                postRow(r)
+            rows.forEach((row) => {
+                postRow({
+                    rowId: 0,
+                    rowNum: row.rowNum + (i * rows.length),
+                    stepId: newStepId,
+                    directions: row.directions
+                })
             })
-            currentRowNum++
         }
+    }
+
+    const updateExistingRow = (e: ChangeEvent<HTMLInputElement>, row: Row) => {
+        const updatedRow: Row = { ...row, directions: e.currentTarget.value }
+        const updatedRows = [...rows]
+        for (let i = 0; i < updatedRows.length; i++) {
+            if (updatedRows[i].rowNum === updatedRow.rowNum) updatedRows[i] = { ...updatedRow }
+        }
+        setRows([...updatedRows])
     }
 
     const addNewRow = () => {
-        const newRow: Row = {
+        setRows([...rows, nextRow])
+
+        setNextRow({
             rowId: 0,
-            rowNum: currentRowNum + 1,
+            rowNum: currentRowNum,
             stepId: currentStep?.stepId || 0,
-            directions: nextRow
-        }
-        setRows([...rows, newRow])
-        currentRowNum++
-        setNextRow('')
+            directions: ''
+        })
     }
 
-    // const handleSubmit = (event: React.FormEvent) => {
-    //     event.preventDefault()
-    //     if (!currentStep) {
-    //         const newStep: StepDto = {
-    //             patternId,
-    //             yarnId,
-    //             sizeId,
-    //             title,
-    //             stepNum
-    //         }
-    //         postStep(newStep)
-    //     }
-    //     rows.forEach(r => postRow(r))
-    //     //  TODOfigure out logic to close dialog
-    // }
+
+    const updateNextRow = (e: ChangeEvent<HTMLInputElement>) => {
+        const updatedRow: Row = {
+            rowId: 0,
+            rowNum: nextRow.rowNum,
+            stepId: currentStep.stepId,
+            directions: e.currentTarget.value
+        }
+        setNextRow(updatedRow)
+    }
 
 
     return (
@@ -95,17 +100,19 @@ const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, handleChange, 
                     onChange={e => setTitle(e.target.value)}
                     placeholder="Step Title"
                 />
-                {rows.map(row => (<AddRowElement key={row.rowNum} row={row} handleChange={handleChange} />))}
-                <div>
-                    <label htmlFor={'' + (maxRow + 1)}>{maxRow + 1}</label>
-                    <input
-                        type="text"
-                        id={'' + (maxRow + 1)}
-                        value={nextRow}
-                        onChange={e => setNextRow(e.target.value)}
-                        onBlur={addNewRow}
-                    />
-                </div>
+                {rows.map(row => (<AddRowElement key={row.rowNum} row={row} handleChange={(e: ChangeEvent<HTMLInputElement>) => updateExistingRow(e, row)} />))}
+                <AddRowElement
+                    key={currentRowNum}
+                    row={nextRow}
+                    handleChange={updateNextRow}
+                />
+                <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={addNewRow}
+                >
+                    Row <FontAwesomeIcon icon={faPlus} />
+                </button>
                 <div>
                     <label htmlFor="repeats">Repeats</label>
                     <input type="number" name="repeats" id="repeats" value={repeats} onChange={e => setRepeats(parseInt(e.target.value))} />
