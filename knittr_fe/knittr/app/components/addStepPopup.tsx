@@ -48,7 +48,7 @@ const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, firstRowNum, i
             stepId = steps[steps.length - 1].stepId
         }
 
-        if (nextRow.directions) setRows([...rows, nextRow])
+        if (nextRow.directions.length > 0) addNewRow()
 
         for (let i = 0; i < repeats; i++) {
             rows.forEach((row) => {
@@ -77,7 +77,7 @@ const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, firstRowNum, i
         setNextRow({
             rowId: 0,
             rowNum: currentRowNum,
-            stepId: currentStep?.stepId || 0,
+            stepId: currentStep.stepId || 0,
             directions: ''
         })
     }

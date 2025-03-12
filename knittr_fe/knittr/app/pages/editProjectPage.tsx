@@ -36,8 +36,11 @@ const EditPatternPage = ({ loaderData }: Route.LoaderArgs<Project>) => {
 
     // Get the last row of each step, then find the max number to determine last row so far
     // const lastRow = Math.max(...project.steps.map(s => s.rows.length > 0 ? s.rows[s.rows.length - 1].rowNum : 0))
-    const lastRow = project.steps.map(s => s.rows).flat().length > 0 ?
-        Math.max(...project.steps.map(s => s.rows).flat(r => r.rowNum)) : 0
+    let lastRow = 0;
+    let allRows = project.steps.map(s => s.rows).flat()
+    if (allRows.length > 0) lastRow = Math.max(...project.steps.map(s => s.rows).flat().map(r => r.rowNum))
+    // let lastRow = project.steps.map(s => s.rows).flat().length > 0 ?
+    //     Math.max(...project.steps.map(s => s.rows).flat(r => r.rowNum)) : 0
 
     return (
         <>
@@ -48,7 +51,7 @@ const EditPatternPage = ({ loaderData }: Route.LoaderArgs<Project>) => {
                 stepNum={steps[steps.length - 1].stepNum}
                 variantId={project.variant.variantId}
                 onClose={() => setShowAddToStep(false)}
-                firstRowNum={Math.max(...steps[steps.length - 1].rows.map(r => r.rowNum))}
+                firstRowNum={lastRow + 1}
                 isNew={false}
             /> : null}
             {showAddSteps ? <AddStepPopup
