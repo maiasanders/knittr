@@ -12,15 +12,17 @@ export default [
     route("/register", "pages/registerPage.tsx"),
     route("/patterns/:id", "pages/patternDetailsPage.tsx"),
     route("/patterns/discover", "pages/publicPatternPage.tsx"),
-    // TODO update when I come up with a better path
-
-    route("/projects/:id", "pages/projectPage.tsx"),
     layout("layouts/createPattern.tsx", [
         route("/patterns/new", "pages/newPatternPage.tsx"),
-        route("patterns/new/:id/variants", "pages/createVariant.tsx")
+        route("/patterns/new/:id/variants", "pages/createVariant.tsx")
     ]),
-    // layout("/layouts/projectLayout.tsx", [
+    layout("layouts/projectLayout.tsx", [
+        route("/projects/:id/edit", "pages/editProjectPage.tsx"),
+        route("/projects/:id", "pages/projectPage.tsx"),
+    ]),
+    route("/variants/:id/template", "pages/variantRedirect.tsx"),
+    route("/logout", "pages/logout.tsx"),
+    // layout("layouts/loginRequired.tsx", [
     // ]),
-    route("/variants/:id/template", "pages/editProjectPage.tsx"),
     route("/*", "pages/notFoundPage.tsx")
 ] satisfies RouteConfig

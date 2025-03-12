@@ -9,6 +9,6 @@ export default {
         return apiAccess.post('/login', user);
     },
     register(user: LoginDto) {
-        return apiAccess.post('/register', { user })
+        return apiAccess.post('/register', user)
     }
 }

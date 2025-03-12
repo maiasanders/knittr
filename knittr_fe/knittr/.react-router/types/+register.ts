@@ -17,16 +17,20 @@ type Params = {
     "id": string;
   };
   "/patterns/discover": {};
-  "/projects/:id": {
-    "id": string;
-  };
   "/patterns/new": {};
   "/patterns/new/:id/variants": {
+    "id": string;
+  };
+  "/projects/:id/edit": {
+    "id": string;
+  };
+  "/projects/:id": {
     "id": string;
   };
   "/variants/:id/template": {
     "id": string;
   };
+  "/logout": {};
   "/*": {
     "*": string;
   };

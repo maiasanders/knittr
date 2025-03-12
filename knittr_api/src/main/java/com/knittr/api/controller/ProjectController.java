@@ -1,8 +1,8 @@
 package com.knittr.api.controller;
 
 import com.knittr.api.dao.ProjectDao;
+import com.knittr.api.exception.NotFoundException;
 import com.knittr.api.model.Project;
-import com.knittr.api.model.dto.ProgressProjectDto;
 import com.knittr.api.model.dto.ProjectStartDto;
 import com.knittr.api.model.dto.UpdateProjectProgressDto;
 import com.knittr.api.service.ProjectService;
@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.util.List;
@@ -25,7 +26,11 @@ public class ProjectController {
 
     @GetMapping("/projects/{id}")
     public Project getProject(@PathVariable int id) {
-        return dao.getProjectById(id);
+        try {
+            return dao.getProjectById(id);
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -67,6 +72,10 @@ public class ProjectController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/variants/{id}/template")
     public Project getTemplateProject(@PathVariable int id, Principal principal) {
-        return service.getTemplatePattern(id, principal);
+        try {
+            return service.getTemplatePattern(id, principal);
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 }

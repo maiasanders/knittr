@@ -1,5 +1,16 @@
+import { data } from "react-router"
+import { Project } from "../helpers/apiResponseTypes"
+import projectService from "../services/projectService"
+import type { Route } from "./+types/projectPage"
 
-export default function ProjectPage() {
-    // TODO all this junk
-    return (<h4>Build me</h4>)
+export async function clientLoader({ params }: { params: Route.LoaderArgs }) {
+    const project = await projectService.getById(params.id).then(r => r.data)
+
+    if (!project) throw data("Project Not Found", { status: 404 });
+
+    return { project }
+}
+
+export default function ProjectPage({ loaderData }: Route.LoaderArgs<Project>) {
+    return (<></>)
 }

@@ -1,14 +1,15 @@
 
 
-import { isRouteErrorResponse, Outlet, ScrollRestoration } from 'react-router'
+import { isRouteErrorResponse, Outlet, ScrollRestoration, useNavigate } from 'react-router'
 import './App.css'
-import NavBar from './components/navBar'
+import NavBar from './components/navBar/navBar'
 import { Scripts } from 'react-router'
 import type { Route } from "./+types/root"
 import { redirect } from 'react-router-dom'
 
 import baseStyleHref from "./base.css?url"
 import LoadingSpinner from './components/loadingSpinner'
+import { useEffect } from 'react'
 
 
 export default function App() {
@@ -43,24 +44,29 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-// TODO error boundary
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   let message = "oops"
   let details = "An error occured"
   let stack: string | undefined
-  if (isRouteErrorResponse(error)) {
-    if (error.status === 401) {
-      return redirect("/login")
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isRouteErrorResponse(error)) {
+      if (error.status === 401) {
+        navigate("/login")
+      }
+      if (error.status === 404) {
+        navigate("/404")
+      }
+      message = error.statusText
+      details = error.statusText || details
+    } else if (import.meta.env.DEV && error && error instanceof Error) {
+      details = error.message;
+      stack = error.stack;
     }
-    if (error.status === 404) {
-      return redirect("/404")
-    }
-    message = error.statusText
-    details = error.statusText || details
-  } else if (import.meta.env.DEV && error && error instanceof Error) {
-    details = error.message;
-    stack = error.stack;
-  }
+
+  }, [])
 
   return (
     <main id='error-page'>
@@ -75,7 +81,6 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   )
 }
 
-// TODO fallback
 export function HydrateFallback() {
   return (
     <LoadingSpinner />

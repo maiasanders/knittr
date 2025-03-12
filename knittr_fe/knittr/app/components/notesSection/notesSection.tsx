@@ -1,7 +1,8 @@
 import { FormEvent, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
-import useNotes from "../hooks/noteHooks";
+import useNotes from "../../hooks/noteHooks";
+import "./notesSection.css"
 
 export default function NotesSection({ projId }: { projId: number }) {
     const [showNewNote, setShowNewNote] = useState(false)

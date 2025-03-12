@@ -4,6 +4,7 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router";
 
 const MyPatternItem = ({ pattern }: { pattern: Pattern }) => {
+
     return (
         <li>
             <img src={pattern.defaultImage ? pattern.defaultImage.imageLink : './vite.svg'} alt={pattern.defaultImage ? pattern.defaultImage.desc : ""} />

@@ -1,0 +1,15 @@
+meta {
+  name: unsave pattern
+  type: http
+  seq: 28
+}
+
+delete {
+  url: http://localhost:8080/api/patterns/2/save
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNzQxNzE0NTQzfQ.OdKHa9pZHthFzkE316b19LHsfyGdbfpRQKEhBELaHBw
+}

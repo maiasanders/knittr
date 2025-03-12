@@ -68,6 +68,10 @@ export interface Project {
     steps: Step[];
 }
 
+export interface ProjectStartDto {
+    variantId: number;
+    isTemplate: boolean;
+}
 
 export interface Variant {
     variantId: number;

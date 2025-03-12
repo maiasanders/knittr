@@ -4,14 +4,13 @@ import patternService from "../services/patternService"
 
 const usePatterns = () => {
     const [savedPatterns, setSavedPatterns] = useState<Pattern[]>([])
-    // const [allPatterns, setAllPatterns] = useState<Pattern[]>([])
     const [loading, setLoading] = useState<loadingStatus>(true)
 
     useEffect(() => {
         const getPatterns = async () => {
             try {
                 const retrievedPatterns = await patternService.getSaved()
-                setSavedPatterns(retrievedPatterns.data.items)
+                setSavedPatterns(retrievedPatterns.data)
                 setLoading(false)
             } catch {
                 setLoading('Error')
@@ -20,12 +19,12 @@ const usePatterns = () => {
         getPatterns()
     }, [])
 
-    const savePattern = (pattern: Pattern) => {
+    const savePattern = async (pattern: Pattern) => {
         setLoading(true)
-        patternService.save(pattern.patternId)
+        await patternService.save(pattern.patternId)
             .then((res) => {
                 if (res.status === 201) {
-                    setSavedPatterns([...savedPatterns, pattern])
+                    savedPatterns ? setSavedPatterns([...savedPatterns, pattern]) : setSavedPatterns([pattern])
                     setLoading(false)
                 } else {
                     setLoading('Error')
@@ -34,9 +33,9 @@ const usePatterns = () => {
     }
 
 
-    const unsavePattern = (pattern: Pattern) => {
+    const unsavePattern = async (pattern: Pattern) => {
         setLoading(true)
-        patternService.unsave(pattern.patternId)
+        await patternService.unsave(pattern.patternId)
             .then((res) => {
                 if (res.status === 204) {
                     setSavedPatterns(savedPatterns.filter(p => p.patternId !== pattern.patternId))

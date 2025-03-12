@@ -1,0 +1,68 @@
+/* TODO add independant scrolling here and to notes */
+.accordion-body {
+    padding: 0;
+}
+
+.accordion {
+    border-color: var(--color-astronaut-blue-700);
+}
+
+.accordion-button {
+    background-color: var(--color-astronaut-blue-700);
+    color: var(--primary-text);
+    border-color: var(--color-astronaut-blue-300);
+
+    &:not(.collapsed) {
+        background-color: var(--color-astronaut-blue-800);
+        color: var(--primary-text);
+    }
+
+    ;
+
+    /* TODO fix caret on accordian header */
+    &::after(.collapsed) {
+        color: var(--primary-text);
+    }
+
+    ;
+
+    &:focus {
+        border-bottom-color: var(--color-astronaut-blue-300);
+    }
+
+    ;
+}
+
+.accordion-item {
+    background-color: var(--color-astronaut-blue-600);
+    border-color: var(--color-astronaut-blue-600);
+}
+
+.accordion-collapse {
+    padding: 0;
+}
+
+td {
+    padding: .5rem;
+}
+
+/* TODO fix padding to make less wonky */
+td:first-child {
+    width: 4rem;
+    border-right: 1px solid
+}
+
+td:last-child {
+    padding: 1rem;
+    width: 100%;
+}
+
+tr {}
+
+tr:not(:last-child) {
+    border-bottom: 1px solid var(--color-astronaut-blue-300);
+}
+
+tr * {
+    color: var(--primary-text);
+}

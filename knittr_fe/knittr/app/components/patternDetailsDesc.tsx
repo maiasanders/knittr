@@ -9,7 +9,11 @@ const PatternDetailsDesc = ({ pattern }: { pattern: Pattern }) => {
         <div id="pattern-desc" >
             <div id="size-list">
                 <h4>Sizes: </h4>
-                {Object.keys(sizesByAge).map(age => (<p>{`${age !== 'none' ? `${age}: ` : ''}${sizesByAge.age?.join(", ")}`}</p>))}
+                {pattern.sizes.length > 1 ?
+                    Object.keys(sizesByAge)
+                        .map(age => (<p key={age}>{`${age !== 'none' ? `${age}: ` : ''}${sizesByAge.age?.map(s => s.name).join(", ")}`}</p>))
+                    : <p>{pattern.sizes.length ? pattern.sizes[0].name : "n/a"}</p>
+                }
             </div>
             <div id="yarn-list">
                 <h4>Yarns: </h4>

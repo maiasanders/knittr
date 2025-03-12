@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("/categories")
@@ -18,5 +20,10 @@ public class CategoryController {
     @PostMapping
     public Category addCategory(@RequestBody CategoryDto dto ) {
         return dao.createCategory(new Category(0, dto.getCategoryName()));
+    }
+
+    @GetMapping
+    public List<Category> getCategories() {
+        return dao.getCategories();
     }
 }

@@ -1,5 +1,5 @@
 import { Project } from "../helpers/apiResponseTypes"
-import ProjectItem from "./projectItem"
+import ProjectItem from "./projectItem/projectItem"
 
 
 const ProjectList = ({ projects, isAuthor }: { projects: Project[], isAuthor: boolean }) => {

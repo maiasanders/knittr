@@ -1,6 +1,7 @@
 package com.knittr.api.controller;
 
 import com.knittr.api.dao.PatternDao;
+import com.knittr.api.exception.NotFoundException;
 import com.knittr.api.model.Pattern;
 import com.knittr.api.model.dto.PatternDto;
 import com.knittr.api.service.PatternService;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.util.List;
@@ -23,7 +25,11 @@ public class PatternController {
 
     @GetMapping("/patterns/{id}")
     public Pattern getPattern(@PathVariable int id) {
-        return dao.getPatternById(id);
+        try {
+            return dao.getPatternById(id);
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
 
     @GetMapping("/patterns")

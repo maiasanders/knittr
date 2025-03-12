@@ -9,4 +9,7 @@ public interface CategoryDao {
     List<Category> getCategoriesByPattern(int id);
 
     Category createCategory(Category category);
+
+    List<Category> getCategories();
+
 }

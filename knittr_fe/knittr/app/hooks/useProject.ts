@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
-import { Project } from "../helpers/apiResponseTypes"
+import { Project, ProjectStartDto } from "../helpers/apiResponseTypes"
 import projectService from "../services/projectService"
 import { redirect } from "react-router-dom"
 
 const useProject = (id: number) => {
-    const [project, setProject] = useState<Project>()
+    const [project, setProject] = useState<Project>();
+    const [newProject, setNewProject] = useState<Project>();
 
     useEffect(() => {
         const getProject = async () => {
@@ -24,6 +25,8 @@ const useProject = (id: number) => {
 
         getProject()
     })
+
+
 
     return { project }
 }

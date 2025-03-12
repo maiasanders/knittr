@@ -1,0 +1,24 @@
+#project-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "name name" "size yarn";
+}
+
+h1 {
+    grid-area: name;
+    text-align: end;
+}
+
+#size-head {
+    grid-area: size;
+}
+
+#yarn-head {
+    grid-area: yarn;
+    text-align: end;
+}
+
+h2 {
+    color: rgb(from var(--primary-text) r g b / 70%);
+    font-weight: 200;
+}

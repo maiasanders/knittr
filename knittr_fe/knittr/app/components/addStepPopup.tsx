@@ -9,12 +9,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 // TODO make me work next!!!!
 
-const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, firstRowNum }: {
+const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, firstRowNum, isNew }: {
     currentStep: Step,
     stepNum: number,
     variantId: number,
     onClose: MouseEventHandler,
-    firstRowNum: number
+    firstRowNum: number,
+    isNew: boolean
 }) => {
     // TODO prompt add to current step or create new
     //  TODO how do I maintain editting and state for text of multiple rows simultaneously
@@ -24,7 +25,7 @@ const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, firstRowNum }:
     const [nextRow, setNextRow] = useState<Row>({
         rowId: 0,
         rowNum: firstRowNum,
-        stepId: currentStep?.stepId || 0,
+        stepId: currentStep.stepId || 0,
         directions: ''
     })
     const [repeats, setRepeats] = useState(1)
@@ -36,13 +37,16 @@ const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, firstRowNum }:
 
     const handleSubmit = (e: FormEvent) => {
         if (rows.length === 0 && !nextRow.directions) return
+        let stepId: number = currentStep.stepId || 0;
 
-        postStep({
-            stepNum,
-            variantId,
-            title
-        })
-        const newStepId = steps[steps.length - 1].stepId
+        if (isNew) {
+            postStep({
+                stepNum,
+                variantId,
+                title
+            })
+            stepId = steps[steps.length - 1].stepId
+        }
 
         if (nextRow.directions) setRows([...rows, nextRow])
 
@@ -51,7 +55,7 @@ const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, firstRowNum }:
                 postRow({
                     rowId: 0,
                     rowNum: row.rowNum + (i * rows.length),
-                    stepId: newStepId,
+                    stepId: stepId,
                     directions: row.directions
                 })
             })
@@ -81,9 +85,7 @@ const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, firstRowNum }:
 
     const updateNextRow = (e: ChangeEvent<HTMLInputElement>) => {
         const updatedRow: Row = {
-            rowId: 0,
-            rowNum: nextRow.rowNum,
-            stepId: currentStep.stepId,
+            ...nextRow,
             directions: e.currentTarget.value
         }
         setNextRow(updatedRow)
@@ -93,13 +95,18 @@ const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, firstRowNum }:
     return (
         <div id="add-edit-step">
             <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    id="step-title-edit"
-                    value={title}
-                    onChange={e => setTitle(e.target.value)}
-                    placeholder="Step Title"
-                />
+                <div className="form-floating">
+                    <input
+                        type="text"
+                        id="step-title-edit"
+                        value={title}
+                        onChange={e => setTitle(e.target.value)}
+                        placeholder="Title"
+                        className="form-control"
+                        name="step-title-edit"
+                    />
+                    <label htmlFor="step-title-edit">Title</label>
+                </div>
                 {rows.map(row => (<AddRowElement key={row.rowNum} row={row} handleChange={(e: ChangeEvent<HTMLInputElement>) => updateExistingRow(e, row)} />))}
                 <AddRowElement
                     key={currentRowNum}
@@ -115,11 +122,11 @@ const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, firstRowNum }:
                 </button>
                 <div>
                     <label htmlFor="repeats">Repeats</label>
-                    <input type="number" name="repeats" id="repeats" value={repeats} onChange={e => setRepeats(parseInt(e.target.value))} />
+                    <input type="number" name="repeats" id="repeats" value={repeats} onChange={e => setRepeats(parseInt(e.target.value))} className="form-control" />
                 </div>
                 <div>
-                    <button type="button" onClick={onClose}>Cancel</button>
-                    <button type="submit">Save</button>
+                    <button type="button" onClick={onClose} className="btn btn-warning">Cancel</button>
+                    <button type="submit" className="btn btn-primary">Save</button>
                 </div>
             </form>
         </div>

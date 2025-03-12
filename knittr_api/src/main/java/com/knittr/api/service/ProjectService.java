@@ -22,33 +22,10 @@ public class ProjectService {
 
     public Project createProject( ProjectStartDto dto, Principal principal ) {
         Project newProject = new Project();
-
-//        newProject.setMakerId( getUserId(principal) );
-////        TODO do I need these lines?
-//        newProject.setCurrentRow(0);
-//        newProject.setCompleted(false);
-//
-//        Pattern pattern = new Pattern();
-//        pattern.setPatternId(dto.getPatternId());
-//        newProject.setPattern(pattern);
-//
-//        if ( dto.getYarnId() != 0 ){
-//            Yarn yarn = new Yarn();
-//            yarn.setYarnId(dto.getYarnId());
-//            newProject.setYarn(yarn);
-//        }
-//
-//        Size size = new Size();
-//        if (dto.getSizeId() != 0 ) {
-//            size.setSizeId(dto.getSizeId());
-//        } else {
-//            size.setSizeId(1);
-//        }
-//        newProject.setSize(size);
         PatternVariant variant = new PatternVariant();
         variant.setVariantId(dto.getVariantId());
         newProject.setVariant(variant);
-        newProject.setTemplate(dto.isTemplate());
+        newProject.setTemplate(dto.getIsTemplate());
         newProject.setMakerId(getUserId(principal));
 
         return dao.createProject(newProject);

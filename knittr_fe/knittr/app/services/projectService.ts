@@ -1,10 +1,5 @@
-import { Project } from "../helpers/apiResponseTypes"
+import { ProjectStartDto } from "../helpers/apiResponseTypes"
 import apiAccess from "./axiosConfig"
-
-type ProjectStartDto = {
-    variantId: number,
-    isTemplate: boolean
-}
 
 type UpdateProgressDto = {
     newRow: number,

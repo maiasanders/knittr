@@ -1,0 +1,38 @@
+#stitch-counter {
+    background-color: var(--btn-prim-bg);
+    border-color: var(--btn-border);
+    justify-self: end;
+    gap: 0;
+    width: 15rem;
+    justify-content: end;
+    padding-left: 1rem;
+}
+
+#count-steps {
+    background-color: var(--color-cannon-pink-700);
+    border: none;
+    width: 4rem;
+    text-align: end;
+    height: fit-content;
+    padding: 0;
+    color: var(--color-cannon-pink-400);
+
+    font-size: 2rem;
+
+    &:focus {
+        background-color: var(--color-cannon-pink-500);
+        color: var(--color-cannon-pink-300);
+        box-shadow: inset .25rem .25rem .25rem #83537195;
+    }
+}
+
+#add-stitches {
+    padding: 0;
+}
+
+h3 {
+    font-size: calc(2.3rem + .6vw);
+    margin: 0;
+    color: var(--color-cannon-pink-100);
+    margin-right: auto;
+}

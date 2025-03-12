@@ -12,7 +12,7 @@ export type Info = {
   parents: [Parent0, Parent1],
   id: "pages/createVariant"
   file: "pages/createVariant.tsx"
-  path: "patterns/new/:id/variants"
+  path: "/patterns/new/:id/variants"
   params: {"id": string} & { [key: string]: string | undefined }
   module: Module
   loaderData: T.CreateLoaderData<Module>

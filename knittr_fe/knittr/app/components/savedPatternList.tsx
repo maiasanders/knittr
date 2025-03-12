@@ -9,17 +9,9 @@ export async function clientLoader() {
 
 const SavedPatternList = ({ patterns }: { patterns: Pattern[] }) => {
 
-    // const { patterns } = loaderData
-
-    // if (loading === true) return <LoadingSpinner />
-
     return (
-
-        // <ul>
-        //     {patterns.map(pattern => (<SavedPatternItem pattern={pattern} />))}
-        // </ul>
         <>
-            {patterns ? (<ul>{patterns.map(p => <SavedPatternItem pattern={p} />)}</ul>) : null}
+            {patterns ? (<ul>{patterns.map(p => <SavedPatternItem key={p.patternId} pattern={p} />)}</ul>) : null}
         </>
     )
 

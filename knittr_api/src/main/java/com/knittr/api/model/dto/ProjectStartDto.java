@@ -4,13 +4,14 @@ import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.NonNull;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 public class ProjectStartDto {
     @Positive
     private int variantId;
-    private boolean isTemplate;
+    private Boolean isTemplate;
 }

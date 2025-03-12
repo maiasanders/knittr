@@ -4,7 +4,7 @@ import type { Route } from "./+types/createVariant"
 import { Form } from "react-router";
 import { redirect } from "react-router-dom";
 // import { useState } from "react";
-import { VariantDto, Yarn } from "../helpers/apiResponseTypes";
+import { ProjectStartDto, VariantDto } from "../helpers/apiResponseTypes";
 import variantService from "../services/variantService";
 import projectService from "../services/projectService";
 
@@ -24,15 +24,15 @@ export async function clientAction({ params, request }: Route.ClientActionArgs) 
         sizeId: parseInt(reqData.sizeId)
     }
     const result = await variantService.addVariant(dto).then(r => r.data)
-    // const dto = {
-    //     variantId: result.variantId
-    // }
 
-    const newProj = await projectService.create({
-        variantId: result.variantId,
+    const projectDto: ProjectStartDto = {
+        variantId: parseInt(result.variantId),
         isTemplate: true
-    }).then(r => r.data)
-    return redirect(`/variants/${result.variantId}/template`)
+    }
+
+
+    const newProj = await projectService.create(projectDto).then(r => r.data)
+    return redirect(`/projects/${newProj.projectId}/edit`)
 }
 
 export default function CreateVariant({ loaderData }: Route.ClientLoaderArgs) {
@@ -41,12 +41,17 @@ export default function CreateVariant({ loaderData }: Route.ClientLoaderArgs) {
 
     return (
         <Form method="post">
-            <select className="form-select" aria-label="Yarn Selection" name="yarnId">
-                <option selected>Select yarn</option>
+            <select
+                className="form-select"
+                aria-label="Yarn Selection"
+                name="yarnId"
+                defaultValue={"Select Yarn"}
+            >
+                <option value={"Select yarn"} selected disabled>Select yarn</option>
                 {yarns.map(y => (<option key={y.yarnId} value={y.yarnId}>{y.name}</option>))}
             </select>
             <select className="form-select" aria-label="Size Selection" name="sizeId">
-                <option selected>Select size</option>
+                <option selected disabled>Select size</option>
                 {sizes.map(s => (<option key={s.sizeId} value={s.sizeId}>{s.name}</option>))}
             </select>
             <button type="submit" className="btn btn-primary">Start knitting!</button>

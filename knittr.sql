@@ -35,8 +35,8 @@ CREATE TABLE yarn_types (
 
 CREATE TABLE sizes (
     size_id SERIAL PRIMARY KEY,
-    size_name VARCHAR(100),
-    age_category VARCHAR(100)
+    size_name VARCHAR(100) NOT NULL,
+    age_category VARCHAR(100) DEFAULT 'n/a'
 );
 
 CREATE TABLE pattern_variants (
@@ -54,14 +54,11 @@ CREATE TABLE projects (
     yarns_used VARCHAR(300),
     current_row INTEGER DEFAULT 0,
     completed BOOLEAN DEFAULT FALSE,
-    template_project BOOLEAN DEFAULT FALSE
+    template_project BOOLEAN
 );
 
 CREATE TABLE steps (
     step_id SERIAL PRIMARY KEY,
-    -- pattern_id INTEGER NOT NULL REFERENCES patterns(pattern_id),
-    -- yarn_id INTEGER REFERENCES yarn_types(yarn_id),
-    -- size_id INTEGER REFERENCES sizes(size_id),
     variant_id INTEGER REFERENCES pattern_variants(variant_id)
     title VARCHAR(100),
     step_num INTEGER NOT NULL

@@ -1,4 +1,4 @@
-import { Project } from "../helpers/apiResponseTypes";
+import { Project } from "../../helpers/apiResponseTypes";
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'

@@ -1,12 +1,14 @@
 import { MouseEventHandler } from "react";
 import ClickableIcon from "./clickableIcon";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const DisplayNotesButton = ({ handleShow }: { handleShow: MouseEventHandler }) => (
-    <div>
-        <ClickableIcon icon={faEye} handleClick={handleShow} />
+    <button type="button" id="dispaly-notes" className="btn btn-secondary" onClick={handleShow}>
+        {/* <ClickableIcon icon={faEye} handleClick={handleShow} /> */}
+        <FontAwesomeIcon icon={faEye} />
         Notes
-    </div>
+    </button>
 )
 
 export default DisplayNotesButton

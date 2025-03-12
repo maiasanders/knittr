@@ -14,6 +14,7 @@ const AddRowElement = ({ row, handleChange }: { row: Row, handleChange: ChangeEv
                 key={row.rowNum}
                 value={row.directions}
                 onChange={handleChange}
+                className="form-control"
             />
         </div>
     </div>)

@@ -58,6 +58,16 @@ public class JdbcCategoryDao implements CategoryDao {
         }
     }
 
+    @Override
+    public List<Category> getCategories() {
+        String sql = "SELECT * FROM categories";
+        try {
+            return template.query(sql, this::mapRowToCat);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException(CONNECT_ERR);
+        }
+    }
+
     private Category mapRowToCat(ResultSet set, int i) throws SQLException {
         Category category = new Category();
         category.setCategoryId(set.getInt("category_id"));

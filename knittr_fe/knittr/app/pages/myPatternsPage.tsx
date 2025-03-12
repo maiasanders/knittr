@@ -2,7 +2,6 @@ import MyPatternsList from "../components/myPatternsList"
 import type { Route } from "./+types/myPatternsPage"
 import patternService from "../services/patternService"
 import { Pattern } from "../helpers/apiResponseTypes"
-import MyPatternItem from "../components/myPatternItem"
 import { Link } from "react-router-dom"
 
 
@@ -14,8 +13,6 @@ export async function clientLoader() {
 const MyPatternsPage = ({ loaderData }: Route.ComponentProps<Pattern[]>) => {
 
     const { patterns } = loaderData
-
-    const patternArr = patterns as Pattern[]
 
     return (
         <>

@@ -1,0 +1,25 @@
+main {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 10fr 60px;
+    grid-template-areas: "head head head" "steps steps notes" "edit . stitch";
+    gap: 2rem;
+}
+
+#project-header {
+    grid-area: head;
+    height: fit-content;
+}
+
+#steps {
+    grid-area: steps;
+}
+
+#notes-section {
+    grid-area: notes;
+    height: 100%;
+}
+
+#stitch-counter {
+    grid-area: stitch;
+}
