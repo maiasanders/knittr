@@ -21,13 +21,12 @@ const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, firstRowNum, i
     //  TODO how do I maintain editting and state for text of multiple rows simultaneously
 
     const [title, setTitle] = useState(currentStep?.title || '')
-    const [rows, setRows] = useState<Row[]>([])
-    const [nextRow, setNextRow] = useState<Row>({
+    const [rows, setRows] = useState<Row[]>([{
         rowId: 0,
         rowNum: firstRowNum,
         stepId: currentStep.stepId || 0,
         directions: ''
-    })
+    }])
     const [repeats, setRepeats] = useState(1)
 
     const { steps, postStep } = useSteps(variantId)
@@ -36,7 +35,7 @@ const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, firstRowNum, i
     const currentRowNum = firstRowNum + rows.length + 1
 
     const handleSubmit = (e: FormEvent) => {
-        if (rows.length === 0 && !nextRow.directions) return
+        if (rows.length === 1 && rows[0].directions.length === 0) return
         let stepId: number = currentStep.stepId || 0;
 
         if (isNew) {
@@ -48,7 +47,6 @@ const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, firstRowNum, i
             stepId = steps[steps.length - 1].stepId
         }
 
-        if (nextRow.directions.length > 0) addNewRow()
 
         for (let i = 0; i < repeats; i++) {
             rows.forEach((row) => {
@@ -72,25 +70,15 @@ const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, firstRowNum, i
     }
 
     const addNewRow = () => {
-        setRows([...rows, nextRow])
-
-        setNextRow({
+        const newRow: Row = {
             rowId: 0,
             rowNum: currentRowNum,
             stepId: currentStep.stepId || 0,
             directions: ''
-        })
-    }
-
-
-    const updateNextRow = (e: ChangeEvent<HTMLInputElement>) => {
-        const updatedRow: Row = {
-            ...nextRow,
-            directions: e.currentTarget.value
         }
-        setNextRow(updatedRow)
-    }
 
+        setRows([...rows, newRow])
+    }
 
     return (
         <div id="add-edit-step">
@@ -108,11 +96,6 @@ const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, firstRowNum, i
                     <label htmlFor="step-title-edit">Title</label>
                 </div>
                 {rows.map(row => (<AddRowElement key={row.rowNum} row={row} handleChange={(e: ChangeEvent<HTMLInputElement>) => updateExistingRow(e, row)} />))}
-                <AddRowElement
-                    key={currentRowNum}
-                    row={nextRow}
-                    handleChange={updateNextRow}
-                />
                 <button
                     type="button"
                     className="btn btn-primary"
