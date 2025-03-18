@@ -1,0 +1,12 @@
+#saved-tabs {
+    position: fixed;
+    top: 0;
+    display: flex;
+    width: calc(100vw - 4rem);
+}
+
+.saved-and-mine {
+    overflow-y: auto;
+    margin-top: calc(1.8rem + .6vw);
+    padding-bottom: 6rem;
+}

@@ -1,0 +1,57 @@
+#add-edit-step {
+    background-color: var(--color-astronaut-blue-600);
+    border: .1rem solid var(--color-astronaut-blue-900);
+    border-radius: var(--div-border-rad) var(--div-border-rad) 0 0;
+    padding: .5rem;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-areas:
+        "title repeats"
+        "rows btns";
+}
+
+/*
+#add-edit-step>form {
+    grid-template-columns: 3fr 1fr;
+    grid-template-areas:
+        "title repeats"
+        "rows btns";
+} */
+
+#step-title-edit {
+    background-color: var(--color-astronaut-blue-600);
+    border: none;
+    font-size: 1.5rem;
+
+    &:focus {
+        background-color: var(--color-astronaut-blue-300);
+    }
+}
+
+#title-form {
+    grid-area: title;
+}
+
+#repeats-input {
+    grid-area: repeats;
+    align-self: flex-end;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+#repeats {
+    width: 5rem;
+}
+
+#add-edit-step-btns {
+    grid-area: btns;
+    display: flex;
+    gap: 1.5rem;
+    align-items: end;
+}
+
+#rows {
+    grid-area: rows;
+    padding: 0;
+}

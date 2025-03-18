@@ -1,6 +1,6 @@
 import { Step } from "../../helpers/apiResponseTypes";
 import Accordion from 'react-bootstrap/Accordion';
-import RowByRowItem from "../rowByRowItem";
+import RowByRowItem from "../rowByRowItem/rowByRowItem";
 import "./stepAccordion.css"
 
 const StepAccordion = ({ step, currentRow }: { step: Step, currentRow: number }) => {

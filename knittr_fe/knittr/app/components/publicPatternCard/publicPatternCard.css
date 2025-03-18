@@ -1,0 +1,24 @@
+.pat-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "name name" " author sizes";
+    padding: .5rem 0 0 0;
+}
+
+h4 {
+    grid-area: name;
+}
+
+h5 {
+    grid-area: author;
+}
+
+h6 {
+    grid-area: sizes;
+}
+
+h5,
+h6 {
+    margin-bottom: 0;
+    align-self: flex-end;
+}

@@ -51,18 +51,34 @@
     --color-flush-mahogany-900: #712b2b;
     --color-flush-mahogany-950: #3d1212;
 
-
-
+    /* In app color constants for easy update */
     --bg-main: #0D1C2C;
     --nav-bg: #1C3E5E;
     --primary-text: rgb(233, 219, 230);
     --btn-prim-bg: var(--color-cannon-pink-700);
     --btn-border: var(--color-cannon-pink-900);
-    --btn-warning-bg: var(var(--color-flush-mahogany-500))
+    --btn-warning-bg: var(var(--color-flush-mahogany-500));
+    --form-bg: var(var(--color-astronaut-blue-300));
+    /* In app measurement constants */
+    --div-border-rad: 20px;
+
+    box-sizing: border-box;
 }
 
 a {
     text-decoration: none;
+
+    &:hover {
+        color: var(--color-cannon-pink-100);
+    }
+}
+
+svg.fa-arrow-left:hover {
+    filter: drop-shadow(0 0 1rem var(--color-cannon-pink-100));
+}
+
+img {
+    object-fit: cover;
 }
 
 body {
@@ -70,12 +86,8 @@ body {
 }
 
 main {
-    padding: 2rem;
-    padding-bottom: 4rem;
-    height: 90vh;
-    /* height: calc(100vh - 4rem);
-    position: fixed;
-    top: 0; */
+    padding: 2rem 2rem 4rem 2rem;
+    height: calc(100vh - 4rem);
 }
 
 div {
@@ -104,7 +116,13 @@ pre code {
     color: var(--color-shamrock-400)
 }
 
+ul {
+    padding: 0;
+}
 
+li {
+    list-style: none;
+}
 
 .svg-inline--fa {
     height: 2rem;
@@ -129,6 +147,8 @@ a {
     text-decoration: underline;
 }
 
+/* Button styles */
+
 .btn {
     display: flex;
     border-radius: 30px;
@@ -138,9 +158,31 @@ a {
     color: var(--primary-text);
 }
 
+.btn-big {
+    font-size: 1.5rem;
+}
+
 .btn-primary {
     background-color: var(--btn-prim-bg);
     border-color: var(--btn-border);
+
+    & :hover {
+        background-color: var(--color-cannon-pink-600);
+    }
+}
+
+.btn.btn-primary {
+    background-color: var(--btn-prim-bg);
+
+    &:hover {
+        background-color: var(--color-cannon-pink-600);
+        border-color: var(--color-cannon-pink-400);
+    }
+
+    &:active {
+        background-color: var(--color-cannon-pink-500);
+        border-color: var(--color-astronaut-blue-300);
+    }
 }
 
 .btn.btn-secondary {
@@ -173,5 +215,142 @@ a {
     padding: 0;
 }
 
+/* Cards base styles */
+
+
+.card-content {
+    border-radius: var(--div-border-rad);
+    background-color: var(--color-astronaut-blue-700);
+    width: 15rem;
+    height: 20rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem .75rem;
+    transition: .5s;
+
+    &:hover {
+        transform: scale(1.05);
+        background-color: var(--color-astronaut-blue-600);
+    }
+}
+
+.pattern-card img {
+    width: 13rem;
+    height: 15rem;
+    object-fit: cover;
+    border-radius: calc(var(--div-border-rad) - .5rem);
+}
+
+.pattern-card .fa-xmark {
+    position: relative;
+    top: 4.3rem;
+    right: -11.1rem;
+    z-index: 4;
+}
+
+.card-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem
+}
 
 /* Form base styles */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    max-width: 100vw;
+}
+
+
+.form-control,
+.form-select {
+    background-color: var(--color-astronaut-blue-300);
+    border-color: var(--color-astronaut-blue-400);
+    border-radius: var(--div-border-rad);
+    color: var(--color-cannon-pink-950);
+
+    &:focus,
+    :focus-visible {
+        color: var(--color-cannon-pink-950);
+        background-color: var(--color-astronaut-blue-200);
+        border: .25rem solid var(--color-cannon-pink-400);
+    }
+}
+
+label {
+    color: var(--primary-text);
+}
+
+textarea {
+    height: 4rem;
+    width: 100%;
+    min-height: fit-content;
+    scrollbar-color: var(--color-astronaut-blue-600) rgba(0, 0, 0, 0);
+}
+
+.form-floating>label {
+    top: 1rem;
+    left: 1rem;
+    color: var(--color-cannon-pink-900);
+}
+
+.form-floating .form-control {
+
+    &:focus,
+    :focus-visible {
+        background-color: var(--color-astronaut-blue-200);
+        border: .25rem solid var(--color-cannon-pink-400);
+    }
+}
+
+.btn-check:checked+.btn {
+    background-color: var(--color-shamrock-500);
+    border-color: var(--color-shamrock-200);
+    box-shadow: 0 0 .4rem var(--color-shamrock-200);
+}
+
+
+fieldset {
+    border: 1px solid rgba(233, 219, 230, 0.5);
+    border-radius: var(--div-border-rad);
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 10rem;
+}
+
+legend {
+    float: none;
+    width: auto;
+    margin-bottom: auto;
+    margin-left: calc(var(--div-border-rad) + .5rem);
+    padding: auto;
+    color: rgba(233, 219, 230, 0.5);
+}
+
+/* Shared styles for login/register pages */
+
+.auth-page,
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.auth-form {
+    margin-bottom: 2rem;
+}
+
+.auth-form input {
+    width: 20rem;
+}
+
+.auth-page a {
+    color: var(--color-cannon-pink-500);
+
+    &:hover {
+        color: var(--color-cannon-pink-400);
+    }
+}

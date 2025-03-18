@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Project, ProjectStartDto, VariantDto } from "../helpers/apiResponseTypes";
+import { Project, ProjectStartDto } from "../helpers/apiResponseTypes";
 import projectService from "../services/projectService";
 
 const useVariant = () => {

@@ -1,8 +1,8 @@
-main {
+#project-layout {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr 2fr;
     grid-template-rows: 1fr 10fr 60px;
-    grid-template-areas: "head head head" "steps steps notes" "edit . stitch";
+    grid-template-areas: "head head head head" "steps steps steps notes" "edit edit . stitch";
     gap: 2rem;
 }
 
@@ -13,6 +13,9 @@ main {
 
 #steps {
     grid-area: steps;
+    padding: 0;
+    overflow: auto;
+    scrollbar-color: var(--color-astronaut-blue-500) var(--bg-main);
 }
 
 #notes-section {
@@ -22,4 +25,18 @@ main {
 
 #stitch-counter {
     grid-area: stitch;
+}
+
+#step-edit-btns {
+    grid-area: edit;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+#add-edit-step {
+    z-index: 50;
+    position: fixed;
+    bottom: 3rem;
+    width: 70vw;
 }

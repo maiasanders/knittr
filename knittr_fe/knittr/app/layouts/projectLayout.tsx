@@ -6,14 +6,12 @@ import useViewport from "../hooks/useViewport";
 import DisplayNotesButton from "../components/displayNotesButton";
 import StitchCounter from "../components/stitchCounter/stitchCounter";
 import { Outlet, redirect, useNavigate } from "react-router-dom";
-import type { Route } from "./+types/editProjectPage";
+import type { Route } from "./+types/projectLayout";
 import projectService from "../services/projectService";
 import "./projectLayout.css"
 import ClickableIcon from "../components/clickableIcon";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import StepAccordion from "../components/stepAccordion/stepAccordion";
-
-// TODO add logic to determine rows based on repeats
 
 export async function clientLoader({ params }: { params: Route.LoaderArgs }) {
 
@@ -38,15 +36,15 @@ const EditPatternPage = ({ loaderData }: Route.LoaderArgs<Project>) => {
     const [showNotes, setShowNotes] = useState(false)
 
     const handleStitch = () => {
+        projectService.updateProgess(project.projectId, { newRow: currentRow + countStep, makerId: project.makerId })
         setCurrentRow(currentRow + countStep)
-        projectService.updateProgess(project.projectId, { newRow: currentRow, makerId: project.makerId })
     }
     const handleCountStep = (e: ChangeEvent<HTMLInputElement>) => {
         setCountStep(parseInt(e.target.value))
     }
 
     return (
-        <main>
+        <main id="project-layout">
             <ProjectHeader
                 name={pattern.name}
                 yarn={project.variant.yarn}
@@ -62,7 +60,7 @@ const EditPatternPage = ({ loaderData }: Route.LoaderArgs<Project>) => {
             {project.notes !== null && (viewport.w > 768 || showNotes) ? (<NotesSection projId={project.projectId} />) : null}
 
             <Outlet />
-            <ClickableIcon icon={faArrowLeft} handleClick={() => navigate(-1)} />
+            {viewport.w <= 768 ? (<ClickableIcon icon={faArrowLeft} handleClick={() => navigate(-1)} />) : null}
             <StitchCounter
                 count={currentRow}
                 countStep={countStep}

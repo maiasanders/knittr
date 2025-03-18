@@ -20,14 +20,19 @@ export default function NotesSection({ projId }: { projId: number }) {
     return (
         <div id="notes-section">
             <h2>Notes</h2>
-            {typeof allNotes !== 'undefined' ? (<ul>
+            {typeof allNotes !== 'undefined' ? (<ul id="saved-notes">
                 {allNotes.map(note => (<li key={note.noteId}>{note.body}</li>))}
             </ul>) : null}
 
             {showNewNote ? (
-                <form onSubmit={handleSubmit}>
-                    <textarea name="body" value={newNote} onChange={e => setNewNote(e.target.value)} />
-                    <button type="submit">Save</button>
+                <form onSubmit={handleSubmit} id="new-note">
+                    <textarea
+                        name="body"
+                        value={newNote}
+                        onChange={e => setNewNote(e.target.value)}
+                        className="form-control"
+                    />
+                    <button type="submit" className="btn btn-primary">Save</button>
                 </form>
             ) : (<div id="add-note-btn" onClick={() => setShowNewNote(true)}><FontAwesomeIcon icon={faPlus} /></div>)}
         </div>

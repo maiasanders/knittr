@@ -5,7 +5,11 @@ meta {
 }
 
 get {
-  url: http://localhost:8080/api/patterns
+  url: http://localhost:8080/api/patterns/mine
   body: none
-  auth: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNzQxMzE1ODM5fQ.bNtm4B4MHl1y3Ht6QNulPCyVAjcNxEX7ax7dlTFuzT0
 }

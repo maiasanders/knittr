@@ -31,9 +31,9 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
 
 const RegisterPage = () => {
     return (
-        <>
+        <main className="auth-page">
             {/* <RegisterForm /> */}
-            <Form method="post">
+            <Form method="post" className="auth-form">
                 {/* TODO replace with bootstrap components */}
                 <div className="form-floating">
                     <input
@@ -69,7 +69,7 @@ const RegisterPage = () => {
             </Form>
             <p>Already have an account?</p>
             <Link to="/login">Login in!</Link>
-        </>
+        </ main>
     )
 }
 

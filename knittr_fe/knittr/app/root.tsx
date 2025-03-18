@@ -9,7 +9,7 @@ import { redirect } from 'react-router-dom'
 
 import baseStyleHref from "./base.css?url"
 import LoadingSpinner from './components/loadingSpinner'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 
 
 export default function App() {
@@ -17,7 +17,9 @@ export default function App() {
   return (
     <>
       <NavBar />
-      <Outlet />
+      <React.Suspense fallback={<LoadingSpinner />}>
+        <Outlet />
+      </React.Suspense>
     </>
   )
 }
@@ -52,20 +54,18 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (isRouteErrorResponse(error)) {
-      if (error.status === 401) {
-        navigate("/login")
-      }
-      if (error.status === 404) {
-        navigate("/404")
-      }
-      message = error.statusText
-      details = error.statusText || details
-    } else if (import.meta.env.DEV && error && error instanceof Error) {
-      details = error.message;
-      stack = error.stack;
+    // if (isRouteErrorResponse(error)) {
+    if (error.status === 401) {
+      navigate("/login")
     }
-
+    if (error.status === 404) {
+      navigate("/404")
+    }
+    message = error.statusText
+    details = error.statusText || details
+    // } else if (import.meta.env.DEV && error && error instanceof Error) {
+    details = error.message;
+    stack = error.stack;
   }, [])
 
   return (

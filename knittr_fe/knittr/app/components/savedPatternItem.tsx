@@ -19,14 +19,15 @@ const SavedPatternItem = ({ pattern }: { pattern: Pattern }) => {
 
     return (
         <>
-            {showItem ? <li>
-                <Link to={`/patterns/${pattern.patternId}`}>
-                    {pattern.defaultImage && (<img src={pattern.defaultImage.imageLink} alt={pattern.defaultImage.desc} />)}
+            {showItem ?
+                (<li className="pattern-card">
+                    <ClickableIcon icon={faXmark} handleClick={handleClick} />
+                    <Link to={`/patterns/${pattern.patternId}`} className="card-content">
+                        {pattern.defaultImage ? (<img src={pattern.defaultImage.imageLink} alt={pattern.defaultImage.desc} />) : (<img src="../placeholder.svg" alt="No image found" />)}
 
-                    <h3>{pattern.name}</h3>
-                </Link>
-                <ClickableIcon icon={faXmark} handleClick={handleClick} />
-            </li> : null}
+                        <h4>{pattern.name}</h4>
+                    </Link>
+                </li>) : null}
         </>
     )
 }

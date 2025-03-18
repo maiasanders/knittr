@@ -13,11 +13,12 @@ import './navBar.css'
 // TODO add scoped styling
 const NavBar = () => {
 
-    const [loggedIn, setLoggedIn] = useState<boolean>();
+    const [loggedIn, setLoggedIn] = useState<boolean>(false);
 
     useEffect(() => {
-        localStorage.getItem("token") ? setLoggedIn(true) : setLoggedIn(false)
+        if (localStorage.getItem("token")) setLoggedIn(true)
     }, [])
+    // TODO add text for larger screens?
 
     return (
         <nav>

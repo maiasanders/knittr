@@ -20,7 +20,10 @@ export default function StartProject({ pattern }: { pattern: Pattern }) {
         e.preventDefault();
         const variant: Variant = pattern.variants
             .filter(v => v.size.sizeId === sizeId && v.yarn.yarnId === yarnId)[0]
-        const dto: ProjectStartDto = { variantId: variant.variantId, isTemplate: false }
+        const dto: ProjectStartDto = {
+            variantId: variant.variantId,
+            isTemplate: false
+        }
         startProject(dto)
         if (typeof project !== 'undefined') navigate(`/projects/${project.projectId}`)
     }

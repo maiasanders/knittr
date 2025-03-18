@@ -1,0 +1,36 @@
+li.my-ptrn {
+    background-color: var(--color-astronaut-blue-900);
+    padding: 2rem;
+    display: flex;
+    margin-bottom: 2rem;
+    border-radius: var(--div-border-rad);
+}
+
+.my-ptrn>img {
+    min-height: 10rem;
+    width: 10rem;
+    object-fit: cover;
+    border-radius: calc(var(--div-border-rad) - .5rem);
+}
+
+ul.pattern-vars {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.pattern-vars>li:last-child {
+    margin-bottom: .5rem;
+}
+
+.ptrn-container {
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.add-var {
+    margin-top: auto;
+}

@@ -12,10 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 @AllArgsConstructor
@@ -214,17 +211,20 @@ public class JdbcPatternDao implements PatternDao{
         pattern.setVariants(variants);
 
         // Process and match up ids and names for categories to add to list
-        List<Category> categories = new ArrayList<>();
+        Set<Category> uniqueCats = new HashSet<>();
         if (set.getString("cat_ids") != null) {
             String[] catIds = set.getString("cat_ids").split(",");
             String[] catNames = set.getString("cat_names").split(",");
             for (int i = 0; i < catIds.length; i++) {
-                categories.add(new Category(
+                Category cat = new Category(
                         Integer.parseInt(catIds[i]),
                         catNames[i]
-                ));
+                );
+                uniqueCats.add(cat);
             }
         }
+        List<Category> categories = new ArrayList<>(uniqueCats);
+
         pattern.setCategories(categories);
 
 
@@ -255,22 +255,6 @@ public class JdbcPatternDao implements PatternDao{
             }
         }
         pattern.setYarns(yarns);
-//        Map<Integer, List<Yarn>> sizesWithYarns = new HashMap<>();
-//
-//        for (int i = 0; i < sizes.size(); i++) {
-//            if (!sizesWithYarns.containsKey(sizes.get(i).getSizeId())) {
-//                List<Yarn> sizedYarns = new ArrayList<>();
-//                sizedYarns.add(yarns.get(i));
-//                sizesWithYarns.put(sizes.get(i).getSizeId(), sizedYarns);
-//            } else {
-//                List<Yarn> sizedYarns = sizesWithYarns.get(sizes.get(i).getSizeId());
-//                sizedYarns.add(yarns.get(i));
-//                sizesWithYarns.put(sizes.get(i).getSizeId(), sizedYarns);
-//            }
-//        }
-
-
-//        pattern.setSizesWithYarns(sizesWithYarns);
 
         // process and set default image
         if (set.getInt("default_image") != 0) {

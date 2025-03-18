@@ -4,7 +4,7 @@
 import type * as T from "react-router/route-module"
 
 import type { Info as Parent0 } from "../../+types/root.js"
-import type { Info as Parent1 } from "../../layouts/+types/savedOptions.js"
+import type { Info as Parent1 } from "../../layouts/savedOptions/+types/savedOptions.js"
 
 type Module = typeof import("../projectsListPage.js")
 

@@ -18,10 +18,10 @@ const ProjectsListPage = ({ loaderData }: Route.ComponentProps) => {
     const { projects } = loaderData
 
     return (
-        <>
+        <main>
             <ProjectList isAuthor={false} projects={projects} />
 
-        </>
+        </main>
     )
 }
 export default ProjectsListPage

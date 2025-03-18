@@ -1,7 +1,7 @@
 #project-header {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: "name name" "size yarn";
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: "back name name" "size . yarn";
 }
 
 h1 {
@@ -21,4 +21,10 @@ h1 {
 h2 {
     color: rgb(from var(--primary-text) r g b / 70%);
     font-weight: 200;
+}
+
+svg.fa-arrow-left {
+    &:hover {
+        color: var(--color-cannon-pink-100);
+    }
 }

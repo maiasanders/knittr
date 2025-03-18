@@ -1,0 +1,15 @@
+#name-auth-fav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+h1 {
+    margin-right: auto;
+}
+
+#categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}

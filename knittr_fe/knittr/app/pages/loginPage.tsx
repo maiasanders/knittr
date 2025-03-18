@@ -17,8 +17,8 @@ const LoginPage = () => {
 
     return (
 
-        <>
-            <Form method="post">
+        <main className="auth-page">
+            <Form method="post" className="auth-form">
                 <div className="form-floating">
                     <input
                         type="text"
@@ -43,7 +43,7 @@ const LoginPage = () => {
             </Form>
             <p>No account?</p>
             <Link to="/register">Register!</Link>
-        </>
+        </main>
     )
 }
 

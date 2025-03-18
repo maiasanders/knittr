@@ -2,9 +2,9 @@ import { Project } from "../helpers/apiResponseTypes"
 import ProjectItem from "./projectItem/projectItem"
 
 
-const ProjectList = ({ projects, isAuthor }: { projects: Project[], isAuthor: boolean }) => {
+const ProjectList = ({ projects }: { projects: Project[], isAuthor: boolean }) => {
     return (
-        <ul>
+        <ul className="card-list">
             {projects.map(project => (<ProjectItem key={project.projectId} project={project} />))}
         </ul>
     )

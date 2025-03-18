@@ -40,21 +40,23 @@ export default function CreateVariant({ loaderData }: Route.ClientLoaderArgs) {
     // const [selectedYarn, setSelectedYarn] = useState<Yarn>();
 
     return (
-        <Form method="post">
-            <select
-                className="form-select"
-                aria-label="Yarn Selection"
-                name="yarnId"
-                defaultValue={"Select Yarn"}
-            >
-                <option value={"Select yarn"} selected disabled>Select yarn</option>
-                {yarns.map(y => (<option key={y.yarnId} value={y.yarnId}>{y.name}</option>))}
-            </select>
-            <select className="form-select" aria-label="Size Selection" name="sizeId">
-                <option selected disabled>Select size</option>
-                {sizes.map(s => (<option key={s.sizeId} value={s.sizeId}>{s.name}</option>))}
-            </select>
-            <button type="submit" className="btn btn-primary">Start knitting!</button>
-        </Form>
+        <main>
+            <Form method="post">
+                <select
+                    className="form-select"
+                    aria-label="Yarn Selection"
+                    name="yarnId"
+                    defaultValue={"Select Yarn"}
+                >
+                    <option value={"Select yarn"} selected disabled>Select yarn</option>
+                    {yarns.map(y => (<option key={y.yarnId} value={y.yarnId}>{y.name}</option>))}
+                </select>
+                <select className="form-select" aria-label="Size Selection" name="sizeId">
+                    <option selected disabled>Select size</option>
+                    {sizes.map(s => (<option key={s.sizeId} value={s.sizeId}>{s.name}</option>))}
+                </select>
+                <button type="submit" className="btn btn-primary">Start knitting!</button>
+            </Form>
+        </main>
     )
 }

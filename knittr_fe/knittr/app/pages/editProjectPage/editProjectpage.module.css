@@ -1,0 +1,5 @@
+#step-edit-btns {
+    grid-area: edit;
+    display: flex;
+    justify-content: space-between;
+}
