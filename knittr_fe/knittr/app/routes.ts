@@ -1,6 +1,7 @@
 import type { RouteConfig } from "@react-router/dev/routes"
 import { index, layout, route } from "@react-router/dev/routes"
 
+// TODO fix index
 export default [
     index("pages/home.tsx"),
     layout("layouts/savedOptions/savedOptions.tsx", [

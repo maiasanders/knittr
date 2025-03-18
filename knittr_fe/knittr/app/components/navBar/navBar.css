@@ -14,9 +14,19 @@ nav {
 
 nav a {
     color: var(--primary-text);
-}
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: .2s;
 
-/* TODO fix hover/active styling */
-svg:hover {
-    /* box-shadow: 0 0 .5rem var(--color-cannon-pink-500) */
+    &:hover,
+    &:focus {
+        color: var(--color-cannon-pink-100);
+        filter: drop-shadow(0 0 .5rem var(--color-cannon-pink-300)) drop-shadow(0 0 .1rem var(--bg-main));
+    }
+
+    &:active {
+        color: var(--color-cannon-pink-50);
+        filter: drop-shadow(0 0 .5rem var(--color-shamrock-100)) drop-shadow(0 0 .1rem var(--bg-main));
+    }
 }

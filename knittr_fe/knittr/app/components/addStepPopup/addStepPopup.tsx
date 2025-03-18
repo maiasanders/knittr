@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, MouseEventHandler, useState } from "react"
+import { ChangeEvent, MouseEventHandler, useState } from "react"
 import { Step, Row, StepDto } from "../../helpers/apiResponseTypes"
 import useSteps from "../../hooks/useSteps"
 import useRows from "../../hooks/useRows"
@@ -24,14 +24,14 @@ const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, firstRowNum, i
         directions: ''
     }])
     const [repeats, setRepeats] = useState(1)
-    const [stepId, setStepId] = useState(currentStep.stepId || 0)
+    // const [stepId, setStepId] = useState(currentStep.stepId || 0)
 
-    const { postStep, newStep } = useSteps(variantId)
+    const { postStep } = useSteps(variantId)
     const { postRow } = useRows()
 
     const currentRowNum = firstRowNum + rows.length + 1
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = () => {
         if (rows.length === 1 && rows[0].directions.length === 0) return
 
         const rowsWithRepeats: Row[] = []
@@ -41,7 +41,7 @@ const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, firstRowNum, i
                 const rowToAdd = {
                     rowId: 0,
                     rowNum: row.rowNum + (i * rows.length),
-                    stepId: stepId,
+                    stepId: currentStep.stepId || 0,
                     directions: row.directions
                 }
                 rowsWithRepeats.push(rowToAdd)

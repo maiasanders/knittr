@@ -1,6 +1,4 @@
 import { Pattern } from "../../helpers/apiResponseTypes";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPenToSquare, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router";
 import './myPatternItem.css'
 
@@ -11,7 +9,6 @@ const MyPatternItem = ({ pattern }: { pattern: Pattern }) => {
             <img src={pattern.defaultImage ? pattern.defaultImage.imageLink : '../placeholder.svg'} alt={pattern.defaultImage ? pattern.defaultImage.desc : ""} />
             <div className="ptrn-container">
                 <h3>{pattern.name}</h3>
-                {/* TODO add size/yarn options */}
                 <ul className="pattern-vars">
                     {pattern.variants.map(v => (
                         <li key={v.variantId}>
@@ -20,12 +17,9 @@ const MyPatternItem = ({ pattern }: { pattern: Pattern }) => {
                     ))}
                 </ul>
                 <Link to={`/patterns/new/${pattern.patternId}/variants`} className="add-var">+ Add variant</Link>
-                {/* <FontAwesomeIcon icon={faPenToSquare} /> */}
             </div>
         </li>
     )
 }
 
 export default MyPatternItem
-
-// TODO come up with how I'm going to handle yarns/size variants

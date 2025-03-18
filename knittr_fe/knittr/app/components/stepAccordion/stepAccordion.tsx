@@ -4,7 +4,6 @@ import RowByRowItem from "../rowByRowItem/rowByRowItem";
 import "./stepAccordion.css"
 
 const StepAccordion = ({ step, currentRow }: { step: Step, currentRow: number }) => {
-    // TODO fix offset once I've nailed down context
 
     return (
         <Accordion>

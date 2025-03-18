@@ -1,9 +1,6 @@
-import { data, redirect, useParams } from "react-router-dom"
+import { data } from "react-router-dom"
 import PatternDetailHeader from "../../components/patternDetailHeader/patternDetailHeader"
 import PatternDetailsDesc from "../../components/patternDetailsDesc"
-import { Pattern, Image } from "../../helpers/apiResponseTypes"
-import useImages from "../../hooks/useImages"
-import usePatternDetails from "../../hooks/usePatternDetails"
 import type { Route } from "../+types/root";
 import patternService from "../../services/patternService"
 import imageService from "../../services/imageService"

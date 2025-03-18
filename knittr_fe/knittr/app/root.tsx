@@ -5,10 +5,9 @@ import './App.css'
 import NavBar from './components/navBar/navBar'
 import { Scripts } from 'react-router'
 import type { Route } from "./+types/root"
-import { redirect } from 'react-router-dom'
 
 import baseStyleHref from "./base.css?url"
-import LoadingSpinner from './components/loadingSpinner'
+import LoadingSpinner from './components/loadingSpinner/loadingSpinner'
 import React, { useEffect } from 'react'
 
 
@@ -54,18 +53,22 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   const navigate = useNavigate()
 
   useEffect(() => {
-    // if (isRouteErrorResponse(error)) {
+
     if (error.status === 401) {
       navigate("/login")
     }
     if (error.status === 404) {
       navigate("/404")
     }
-    message = error.statusText
-    details = error.statusText || details
-    // } else if (import.meta.env.DEV && error && error instanceof Error) {
-    details = error.message;
-    stack = error.stack;
+
+    if (isRouteErrorResponse(error)) {
+      message = error.statusText
+      details = error.statusText || details
+
+    } else if (import.meta.env.DEV && error && error instanceof Error) {
+      details = error.message;
+      stack = error.stack;
+    }
   }, [])
 
   return (

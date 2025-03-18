@@ -1,0 +1,13 @@
+svg.loading-spinner {
+    animation: spin 3s linear infinite normal;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg)
+    }
+
+    to {
+        transform: rotate(180deg);
+    }
+}

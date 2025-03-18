@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Project, Step } from "../../helpers/apiResponseTypes";
+import { Project } from "../../helpers/apiResponseTypes";
 import AddStepPopup from "../../components/addStepPopup/addStepPopup";
 import { data, redirect } from "react-router-dom";
 import type { Route } from "./+types/editProjectPage";

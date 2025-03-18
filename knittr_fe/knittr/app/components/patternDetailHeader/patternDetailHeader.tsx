@@ -5,7 +5,6 @@ import ClickableIcon from "../clickableIcon";
 import usePatterns from "../../hooks/usePatterns";
 import CategoryTag from "../categorytag/categoryTag";
 import './patternDetailHeader.css'
-import useUsername from "../../hooks/useUsername";
 
 const PatternDetailHeader = ({ pattern, isLoggedIn }: { pattern: Pattern, isLoggedIn: boolean }) => {
 

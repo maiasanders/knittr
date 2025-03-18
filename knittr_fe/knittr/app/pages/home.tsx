@@ -1,4 +1,6 @@
+import LoadingSpinner from "../components/loadingSpinner/loadingSpinner";
 
 export default function Home() {
-    return (<h1>Welcome to Knittr</h1>)
+    return (<main>Welcome to Knittr</main>)
+    // return (<LoadingSpinner />)
 }
