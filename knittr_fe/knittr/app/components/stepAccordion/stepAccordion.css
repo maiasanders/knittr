@@ -68,3 +68,9 @@ tr:not(:last-child) {
 tr * {
     color: var(--primary-text);
 }
+
+@media screen and (max-width: 768px) {
+    .accordion {
+        width: calc(100vw - 2rem);
+    }
+}

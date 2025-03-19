@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { LoginDto } from "../helpers/apiResponseTypes";
 import authService from "../services/authService";
 import type { Route } from "./+types/loginPage";
@@ -7,7 +8,8 @@ import { redirect, Link } from "react-router-dom";
 export async function clientAction({ request }: Route.ClientActionArgs) {
     const formData = await request.formData();
     const loginInfo = Object.fromEntries(formData) as LoginDto;
-    const res = await authService.login(loginInfo).then(r => r.data)
+    const res = await authService.login(loginInfo)
+        .then(r => r.data)
     localStorage.setItem("token", res.token)
     localStorage.setItem("user", res.username)
     return redirect("/projects")
@@ -15,9 +17,17 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
 
 const LoginPage = () => {
 
-    return (
+    const [alertMsg, setAlertMsg] = useState('')
 
+    return (
         <main className="auth-page">
+            {alertMsg && (
+                <div className="alert alert-danger" role="alert">
+                    <svg className="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"><use xlinkHref="#exclamation-triangle-fill" /></svg>
+                    <div>{alertMsg}</div>
+                </div>
+            )}
+            {/* TODO add in error handling to action */}
             <Form method="post" className="auth-form">
                 <div className="form-floating">
                     <input

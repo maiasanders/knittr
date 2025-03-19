@@ -14,12 +14,12 @@ const PublicPatternPage = ({ loaderData }: Route.ComponentProps) => {
     const { patterns } = loaderData
 
     return (
-        <>
+        <main>
             <h1>Discover new patterns</h1>
             <PublicPatternList
                 patterns={patterns}
             />
-        </>
+        </main>
     )
 }
 

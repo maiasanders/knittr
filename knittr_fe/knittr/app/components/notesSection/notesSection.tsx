@@ -1,10 +1,12 @@
-import { FormEvent, useState } from "react"
+import React, { FormEvent, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import useNotes from "../../hooks/noteHooks";
 import "./notesSection.css"
+import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import ClickableIcon from "../clickableIcon";
 
-export default function NotesSection({ projId }: { projId: number }) {
+export default function NotesSection({ projId, onClose }: { projId: number, onClose: React.MouseEventHandler }) {
     const [showNewNote, setShowNewNote] = useState(false)
     const [newNote, setNewNote] = useState('')
 
@@ -19,7 +21,12 @@ export default function NotesSection({ projId }: { projId: number }) {
 
     return (
         <div id="notes-section">
-            <h2>Notes</h2>
+            <div id="notes-head">
+                <h2>Notes</h2>
+                <ClickableIcon icon={faEyeSlash} handleClick={onClose} />
+                {/* <FontAwesomeIcon icon={faEyeSlash} /> */}
+            </div>
+
             {typeof allNotes !== 'undefined' ? (<ul id="saved-notes">
                 {allNotes.map(note => (<li key={note.noteId}>{note.body}</li>))}
             </ul>) : null}

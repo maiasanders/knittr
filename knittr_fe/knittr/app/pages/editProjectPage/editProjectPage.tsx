@@ -6,6 +6,8 @@ import type { Route } from "./+types/editProjectPage";
 import projectService from "../../services/projectService";
 import useSteps from "../../hooks/useSteps";
 import './editProjectpage.module.css'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 
 export async function clientLoader({ params }: { params: Route.LoaderArgs }) {
@@ -15,7 +17,8 @@ export async function clientLoader({ params }: { params: Route.LoaderArgs }) {
 
     return { project }
 }
-// const EditPatternPage = ({ loaderData }: Route.LoaderArgs<Project>) => {
+
+
 const EditPatternPage = ({ loaderData }: Route.LoaderArgs<Project>) => {
 
     const { project } = loaderData
@@ -36,18 +39,24 @@ const EditPatternPage = ({ loaderData }: Route.LoaderArgs<Project>) => {
     }
 
     // Get the last row of each step, then find the max number to determine last row so far
-    // const lastRow = Math.max(...project.steps.map(s => s.rows.length > 0 ? s.rows[s.rows.length - 1].rowNum : 0))
     let lastRow = 0;
     let allRows = project.steps.map(s => s.rows).flat()
     if (allRows.length > 0) lastRow = Math.max(...project.steps.map(s => s.rows).flat().map(r => r.rowNum))
-    // let lastRow = project.steps.map(s => s.rows).flat().length > 0 ?
-    //     Math.max(...project.steps.map(s => s.rows).flat(r => r.rowNum)) : 0
 
     return (
         <>
             <div id="step-edit-btns">
-                <button type="button" className="btn btn-primary" onClick={() => setShowAddToStep(true)} >Add to step</button>
-                <button type="button" className="btn btn-primary" onClick={() => setShowAddSteps(true)}>Create new step</button>
+                <button type="button" className="btn btn-primary hide-in-small" onClick={() => setShowAddToStep(true)} >Add to step</button>
+                <button type="button" className="btn btn-primary small-only" onClick={() => setShowAddToStep(true)} >
+                    <FontAwesomeIcon icon={faPenToSquare} />
+                    Step
+                </button>
+
+                <button type="button" className="btn btn-primary hide-in-small" onClick={() => setShowAddSteps(true)}>Create new step</button>
+                <button type="button" className="btn btn-primary small-only" onClick={() => setShowAddSteps(true)}>
+                    <FontAwesomeIcon icon={faPlus} />
+                    Step
+                </button>
             </div>
             {showAddToStep ? <AddStepPopup
                 currentStep={steps[steps.length - 1]}

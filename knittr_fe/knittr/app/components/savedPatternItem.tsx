@@ -1,5 +1,4 @@
 import { Pattern } from "../helpers/apiResponseTypes";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router";
 import ClickableIcon from "./clickableIcon";

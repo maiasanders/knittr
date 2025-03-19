@@ -2,9 +2,9 @@ import { useEffect, useState } from "react"
 import { Auth } from "../helpers/apiResponseTypes"
 import authService from "../services/authService"
 
+// TODO should be able to delete
 const useRegister = (user: { username: string, password: string }) => {
     const [auth, setAuth] = useState<Auth>({
-        // userId: 0,
         username: '',
         token: ''
     })
@@ -21,7 +21,6 @@ const useRegister = (user: { username: string, password: string }) => {
         }
         register()
     }, [])
-    // TODO do I need auth/setAuth in dep. array?
     return { auth, setAuth }
 
 }

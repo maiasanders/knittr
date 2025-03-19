@@ -5,6 +5,7 @@ import ClickableIcon from "../clickableIcon";
 import usePatterns from "../../hooks/usePatterns";
 import CategoryTag from "../categorytag/categoryTag";
 import './patternDetailHeader.css'
+import { useState } from "react";
 
 const PatternDetailHeader = ({ pattern, isLoggedIn }: { pattern: Pattern, isLoggedIn: boolean }) => {
 
@@ -29,13 +30,3 @@ const PatternDetailHeader = ({ pattern, isLoggedIn }: { pattern: Pattern, isLogg
 }
 
 export default PatternDetailHeader
-
-// function ToggleSaved({ pattern }: Pick<, "isSaved">) {
-//     const fetcher = useFetcher();
-
-//     return (
-//         <fetcher.Form method={"post"}>
-//             <
-//         </fetcher.Form>
-//     )
-// }

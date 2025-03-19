@@ -12,4 +12,27 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
+    padding: 1rem 0;
+}
+
+@media screen and (max-width: 768px) {
+    #name-auth-fav {
+        display: grid;
+        grid-template-columns: 1fr 1rem;
+        grid-template-areas: "name name" "author fav";
+        gap: 0;
+        padding: 0;
+    }
+
+    h1 {
+        grid-area: name;
+    }
+
+    h2 {
+        grid-area: author;
+    }
+
+    .icon-btn {
+        grid-area: fav;
+    }
 }

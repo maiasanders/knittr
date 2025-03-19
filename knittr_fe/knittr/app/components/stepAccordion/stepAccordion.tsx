@@ -6,7 +6,7 @@ import "./stepAccordion.css"
 const StepAccordion = ({ step, currentRow }: { step: Step, currentRow: number }) => {
 
     return (
-        <Accordion>
+        <Accordion defaultActiveKey={step.rows.map(r => r.rowNum).includes(currentRow) ? `${step.stepId}` : ''}>
             <Accordion.Item eventKey={`${step.stepId}`} >
                 <Accordion.Header>{step.title}</Accordion.Header>
                 <Accordion.Body>

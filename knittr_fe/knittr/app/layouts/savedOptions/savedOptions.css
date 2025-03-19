@@ -3,10 +3,23 @@
     top: 0;
     display: flex;
     width: calc(100vw - 4rem);
+    z-index: 100;
+}
+
+#mobile-dropdown {
+    position: fixed;
+    top: 0;
+    z-index: 100;
 }
 
 .saved-and-mine {
-    overflow-y: auto;
+    /* overflow-y: auto; */
     margin-top: calc(1.8rem + .6vw);
     padding-bottom: 6rem;
+}
+
+@media screen and (max-width: 768px) {
+    #saved-tabs {
+        display: none;
+    }
 }

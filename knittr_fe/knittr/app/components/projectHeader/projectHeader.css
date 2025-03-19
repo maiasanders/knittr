@@ -28,3 +28,10 @@ svg.fa-arrow-left {
         color: var(--color-cannon-pink-100);
     }
 }
+
+@media screen and (max-width: 768px) {
+    #project-header {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: "name name" "size yarn";
+    }
+}

@@ -19,13 +19,20 @@ const NavBar = () => {
         if (localStorage.getItem("token")) setLoggedIn(true)
     }, [])
 
-    const { w } = useViewport()
-
     return (
         <nav>
-            <NavLink to="/projects" ><FontAwesomeIcon icon={faBookOpen} />{w > 768 && '  My Projects & Patterns'}</NavLink>
-            <NavLink to="/patterns/discover"><FontAwesomeIcon icon={faMagnifyingGlass} />{w > 768 && ' Discover Patterns'}</NavLink>
-            <NavLink to={!loggedIn ? "/login" : "/logout"}>{w > 768 && ` ${loggedIn ? 'Logout' : 'Login'}`}<FontAwesomeIcon icon={faRightToBracket} /></NavLink>
+            <NavLink to="/projects" >
+                <FontAwesomeIcon icon={faBookOpen} />
+                <span className='hide-in-small'>  My Projects & Patterns</span>
+            </NavLink>
+            <NavLink to="/patterns/discover">
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
+                <span className="hide-in-small">Discover Patterns</span>
+            </NavLink>
+            <NavLink to={!loggedIn ? "/login" : "/logout"}>
+                <FontAwesomeIcon icon={faRightToBracket} />
+                <span className="hide-in-small">{loggedIn ? 'Logout' : 'Login'}</span>
+            </NavLink>
         </nav>
     )
 }

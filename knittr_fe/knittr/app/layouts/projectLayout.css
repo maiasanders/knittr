@@ -40,3 +40,34 @@
     bottom: 3rem;
     width: 70vw;
 }
+
+@media screen and (max-width: 768px) {
+
+    #project-layout {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas: "head head head" "steps steps steps" "edit edit notes-btn" "back stitch stitch";
+        padding: 1rem;
+        column-gap: 0;
+        /* height: calc(100vh - 2rem); */
+    }
+
+    #back-btn {
+        grid-area: back;
+    }
+
+    #display-notes {
+        grid-area: notes-btn;
+        justify-self: end;
+    }
+
+    #notes-section {
+        /* TODO fix small screen layout */
+        position: absolute;
+        bottom: 3rem;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+        width: calc(100vw - 2rem);
+        height: fit-content;
+
+    }
+}

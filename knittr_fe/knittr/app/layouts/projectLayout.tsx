@@ -10,15 +10,15 @@ import type { Route } from "./+types/projectLayout";
 import projectService from "../services/projectService";
 import "./projectLayout.css"
 import ClickableIcon from "../components/clickableIcon";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faEye } from "@fortawesome/free-solid-svg-icons";
 import StepAccordion from "../components/stepAccordion/stepAccordion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export async function clientLoader({ params }: { params: Route.LoaderArgs }) {
 
     const project = await projectService.getById(params.id).then(r => r.data)
     return { project }
 
-    // TODO error handling
 }
 
 const EditPatternPage = ({ loaderData }: Route.LoaderArgs<Project>) => {
@@ -26,6 +26,8 @@ const EditPatternPage = ({ loaderData }: Route.LoaderArgs<Project>) => {
     const viewport = useViewport()
     const { project } = loaderData
     const navigate = useNavigate();
+
+    // TODO add in cloudinary for image upload ??
 
     const pattern = project.pattern
     if (project === undefined) throw redirect('/404')
@@ -55,12 +57,19 @@ const EditPatternPage = ({ loaderData }: Route.LoaderArgs<Project>) => {
             </div>
 
             {/* TODO adjust breakpoint as needed */}
-            {viewport.w <= 768 ? <DisplayNotesButton handleShow={() => setShowNotes(showNotes ? false : true)} /> : null}
 
-            {project.notes !== null && (viewport.w > 768 || showNotes) ? (<NotesSection projId={project.projectId} />) : null}
+            {!showNotes && (
+                <button type="button" id="display-notes" className="btn btn-secondary small-only" onClick={() => setShowNotes(true)}>
+                    <FontAwesomeIcon icon={faEye} />
+                    Notes
+                </button>
+            )}
+
+
+            {project.notes !== null && (viewport.w > 768 || showNotes) ? (<NotesSection projId={project.projectId} onClose={() => setShowNotes(false)} />) : null}
 
             <Outlet />
-            {viewport.w <= 768 ? (<ClickableIcon icon={faArrowLeft} handleClick={() => navigate(-1)} />) : null}
+            <div id="back-btn" className="small-only"><ClickableIcon icon={faArrowLeft} handleClick={() => navigate(-1)} /></div>
             <StitchCounter
                 count={currentRow}
                 countStep={countStep}

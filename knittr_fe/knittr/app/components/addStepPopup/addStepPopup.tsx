@@ -55,10 +55,6 @@ const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, firstRowNum, i
                 title
             }
             postStep(dto, rowsWithRepeats)
-            // .then(res => { if (res?.stepId) setStepId(res?.stepId) })
-            // const nextStep = steps[steps.length - 1]
-            // if (typeof newStep !== 'undefined') setStepId(newStep.stepId)
-
         } else {
             rowsWithRepeats.forEach(row => postRow(row))
         }

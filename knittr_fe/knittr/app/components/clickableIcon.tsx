@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { MouseEventHandler } from "react";
 
 const ClickableIcon = ({ icon, handleClick }: { icon: IconDefinition, handleClick: MouseEventHandler }) => (
-    <div onClick={handleClick}><FontAwesomeIcon icon={icon} /></div>
+    <div className="icon-btn" onClick={handleClick}><FontAwesomeIcon icon={icon} /></div>
 )
 
 export default ClickableIcon

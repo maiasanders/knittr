@@ -12,7 +12,7 @@ const ProjectHeader = ({ name, yarn, size }: { name: string, yarn: Yarn, size: S
 
     return (
         <div id="project-header">
-            {viewport.w > 768 ? (<ClickableIcon icon={faArrowLeft} handleClick={() => navigate('/projects')} />) : null}
+            <div className="hide-in-small"><ClickableIcon icon={faArrowLeft} handleClick={() => navigate('/projects')} /></div>
             <h1>{name}</h1>
             {size.sizeId !== 1 ? (<h2 id="size-head">{size.name}{size.ageRange ? ` (${size.ageRange})` : ''}</h2>) : null}
             <h2 id="yarn-head">{yarn.name}</h2>

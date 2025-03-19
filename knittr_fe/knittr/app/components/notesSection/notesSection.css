@@ -29,5 +29,24 @@
 
 #new-note {
     margin-top: auto;
+}
 
+.fa-eye-slash {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    #notes-section {
+        border: .25rem solid var(--color-astronaut-blue-400);
+        border-bottom: 0;
+    }
+
+    .fa-eye-slash {
+        display: inline;
+    }
+
+    #notes-head {
+        display: flex;
+        justify-content: space-between;
+    }
 }

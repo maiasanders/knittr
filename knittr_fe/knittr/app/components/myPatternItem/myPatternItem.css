@@ -34,3 +34,25 @@ ul.pattern-vars {
 .add-var {
     margin-top: auto;
 }
+
+@media screen and (max-width: 890px) {
+    ul.pattern-vars {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 790px) {
+    .my-ptrn>img {
+        display: none;
+    }
+
+    .ptrn-container {
+        padding: 0;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    ul.pattern-vars {
+        grid-template-columns: 1fr;
+    }
+}

@@ -19,6 +19,7 @@ const useSteps = (variantId: number) => {
                 }
             })
             .catch(e => window.alert("Oops! Trouble saving that step"))
+        console.log(stepId)
         if (stepId > 0) {
             for (let row of rows) {
                 row.stepId = stepId

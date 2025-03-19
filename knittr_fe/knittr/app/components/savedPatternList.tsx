@@ -11,7 +11,7 @@ const SavedPatternList = ({ patterns }: { patterns: Pattern[] }) => {
 
     return (
         <>
-            {patterns ? (<ul className="card-list">{patterns.map(p => <SavedPatternItem key={p.patternId} pattern={p} />)}</ul>) : null}
+            {patterns ? (<ul className="card-list saved-and-mine">{patterns.map(p => <SavedPatternItem key={p.patternId} pattern={p} />)}</ul>) : null}
         </>
     )
 
