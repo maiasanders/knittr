@@ -84,9 +84,14 @@ img {
         aspect-ratio: auto;
     }
 
+    #pattern-desc,
+    #pattern-desc div,
+    #pattern-desc p {
+        padding: 1rem 0;
+    }
+
     #pattern-desc p {
         word-wrap: normal;
-        padding: 1rem 0;
     }
 
     #all-pics {

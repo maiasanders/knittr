@@ -3,3 +3,15 @@
     display: flex;
     justify-content: space-between;
 }
+
+@media screen and (max-width: 768px) {
+
+    #step-edit-btns {
+        justify-content: space-evenly;
+    }
+
+    #add-edit-step {
+        width: 90vw;
+    }
+
+}

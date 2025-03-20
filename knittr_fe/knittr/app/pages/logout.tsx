@@ -1,11 +1,14 @@
 import { redirect } from "react-router-dom"
 
-export async function loader() {
+export async function clientLoader() {
     localStorage.removeItem("token")
     localStorage.removeItem("user")
-    redirect("/login")
+
+    console.log("aaah")
+
+    return redirect("/login")
 }
 
 export default function Logout() {
-    return (<>Logging out...</>)
+    return (<main>Logging out...</main>)
 }

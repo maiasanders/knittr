@@ -219,6 +219,7 @@ li {
     background-color: var(--color-astronaut-blue-700);
     position: relative;
     width: 15rem;
+    height: 20rem;
     aspect-ratio: 4 / 5;
     display: flex;
     flex-direction: column;
@@ -251,14 +252,12 @@ li {
 }
 
 .card-list {
-    /* display: flex;
+    justify-self: center;
+    display: flex;
     flex-wrap: wrap;
-    gap: 1rem */
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: calc((100vw - 64rem) / 3);
-    justify-items: center;
-    row-gap: 2rem;
+    gap: 2rem;
+    justify-content: space-evenly;
+    padding-bottom: 5rem;
 }
 
 /* Form base styles */

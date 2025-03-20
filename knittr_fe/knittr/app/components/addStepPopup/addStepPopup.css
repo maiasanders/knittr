@@ -10,14 +10,6 @@
         "rows btns";
 }
 
-/*
-#add-edit-step>form {
-    grid-template-columns: 3fr 1fr;
-    grid-template-areas:
-        "title repeats"
-        "rows btns";
-} */
-
 #step-title-edit {
     background-color: var(--color-astronaut-blue-600);
     border: none;
@@ -54,4 +46,16 @@
 #rows {
     grid-area: rows;
     padding: 0;
+}
+
+@media screen and (max-width: 768px) {
+
+    #add-edit-step {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "title title"
+            "rows rows"
+            ". repeats"
+            "btns btns";
+    }
 }

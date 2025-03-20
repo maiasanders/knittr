@@ -12,6 +12,8 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
         .then(r => r.data)
     localStorage.setItem("token", res.token)
     localStorage.setItem("user", res.username)
+
+    console.log("aaaah")
     return redirect("/projects")
 }
 

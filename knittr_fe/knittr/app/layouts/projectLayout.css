@@ -21,6 +21,7 @@
 #notes-section {
     grid-area: notes;
     height: 100%;
+    /* TODO switch to an ease-in animation in mobile */
 }
 
 #stitch-counter {
@@ -68,6 +69,11 @@
         border-bottom-left-radius: 0;
         width: calc(100vw - 2rem);
         height: fit-content;
+    }
+}
 
+@media screen and (max-width: 768px) {
+    #add-edit-step {
+        width: calc(100vw - 2rem);
     }
 }
