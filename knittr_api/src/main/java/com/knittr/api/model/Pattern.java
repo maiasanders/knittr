@@ -22,7 +22,7 @@ public class Pattern {
     private boolean isPublic;
     private List<Category> categories;
     private Image defaultImage;
-    private List<Size> sizes;
-    private List<Yarn> yarns;
+//    private List<Size> sizes;
+//    private List<Yarn> yarns;
     private List<PatternVariant> variants;
 }

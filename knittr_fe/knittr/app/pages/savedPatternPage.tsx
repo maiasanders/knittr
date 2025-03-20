@@ -1,9 +1,8 @@
 import SavedPatternList from "../components/savedPatternList";
 import patternService from "../services/patternService";
 import type { Route } from "../+types/loginPage"
-import { useState } from "react";
 
-export async function clientLoader({ params }: Route.LoaderArgs) {
+export async function clientLoader() {
     const patterns = await patternService.getSaved().then(r => r.data)
     return { patterns }
 }

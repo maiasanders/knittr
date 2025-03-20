@@ -1,11 +1,12 @@
 import { data } from "react-router-dom"
 import PatternDetailHeader from "../../components/patternDetailHeader/patternDetailHeader"
 import PatternDetailsDesc from "../../components/patternDetailsDesc"
-import type { Route } from "../+types/root";
+import type { Route } from "./+types/patternDetailsDesc";
 import patternService from "../../services/patternService"
 import imageService from "../../services/imageService"
 import { useEffect, useState } from "react"
 import StartProject from "../../components/startProject"
+import Modal from 'react-bootstrap/Modal'
 import './patternDetailPage.css'
 
 export async function loader({ params }: Route.LoaderArgs) {
@@ -41,20 +42,32 @@ const PatternDetailsPage = ({ loaderData }: Route.ComponentProps) => {
 
     return (<main id="pat-detail">
         <PatternDetailHeader pattern={pattern} isLoggedIn={isLoggedIn} />
-        <img src={pattern.defaultImage ? pattern.defaultImage.imageLink : '/placeholder.svg'} alt={pattern.defaultImage ? pattern.defaultImage.desc : "No images found"} />
-        <PatternDetailsDesc pattern={pattern} />
+        <img
+            src={pattern.defaultImage ? pattern.defaultImage.imageLink : '/placeholder.svg'}
+            alt={pattern.defaultImage ? pattern.defaultImage.desc : "No images found"} />
+        <PatternDetailsDesc pattern={pattern}
+        />
         {showProjectStart ?
-            <StartProject pattern={pattern} />
+            (<Modal show={showProjectStart} onHide={() => setShowProjectStart(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Select size and yarn</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <StartProject pattern={pattern} />
+                </Modal.Body>
+            </Modal>)
             : <button
                 id="make-it-btn"
                 type="button"
                 className="btn btn-primary"
                 hidden={!isLoggedIn}
                 onClick={() => setShowProjectStart(true)}
+                data-bs-toggle="modal"
+                data-bs-target="#project-start"
             >Make it!</button>
         }
         {images ? <div id="all-pics">
-            {images.map(image => (<img src={image.imageLink} alt={image.desc} key={image.imageId} />))}
+            {images.map(image => (<img src={image.imageLink} alt={image.desc} key={`img-${image.imageId}`} />))}
         </div> : null}
     </main>)
 }

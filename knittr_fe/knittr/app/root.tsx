@@ -9,9 +9,17 @@ import type { Route } from "./+types/root"
 import baseStyleHref from "./base.css?url"
 import LoadingSpinner from './components/loadingSpinner/loadingSpinner'
 import React, { useEffect } from 'react'
+import { Cloudinary } from '@cloudinary/url-gen'
 
 
 export default function App() {
+
+  // TODO switch to my cloudinary when I'm at home and can check
+  const cloudinary = new Cloudinary({
+    cloud: {
+      cloudName: 'demo'
+    }
+  })
 
   return (
     <>

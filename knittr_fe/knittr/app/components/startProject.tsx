@@ -29,13 +29,18 @@ export default function StartProject({ pattern }: { pattern: Pattern }) {
     }
 
     return (
-        <div>
+        <div id="project-start">
             <form onSubmit={handleSubmit}>
-                <select name="sizeId" onChange={e => setSizeId(parseInt(e.target.value))}>
+                <select
+                    id="select-size"
+                    className="form-select"
+                    name="sizeId"
+                    onChange={e => setSizeId(parseInt(e.target.value))}
+                >
                     {uniqueSizes.map(size => (
                         <option
                             value={size.sizeId}
-                            key={size.sizeId}
+                            key={`size-${size.sizeId}`}
                         >
                             {size.ageRange ? `${size.ageRange} ` : ''}{size.name}
                         </option>
@@ -45,12 +50,13 @@ export default function StartProject({ pattern }: { pattern: Pattern }) {
                     <select
                         name="yarnId"
                         id="yarnId"
+                        className="form-select"
                         onChange={e => setYarnId(parseInt(e.target.value))}
                     >
                         {pattern.variants.filter(v => v.size.sizeId === sizeId).map(v => (
                             <option
                                 value={v.yarn.yarnId}
-                                key={v.yarn.yarnId}
+                                key={`yarn-${v.yarn.yarnId}`}
                             >
                                 {v.yarn.name}
                             </option>

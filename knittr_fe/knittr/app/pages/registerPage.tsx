@@ -34,7 +34,6 @@ const RegisterPage = () => {
         <main className="auth-page">
             {/* <RegisterForm /> */}
             <Form method="post" className="auth-form">
-                {/* TODO replace with bootstrap components */}
                 <div className="form-floating">
                     <input
                         type="text"

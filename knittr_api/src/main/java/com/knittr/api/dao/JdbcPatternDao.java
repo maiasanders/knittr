@@ -179,7 +179,7 @@ public class JdbcPatternDao implements PatternDao{
         user.setUsername(set.getString("username"));
         pattern.setAuthor(user);
 
-        List<PatternVariant> variants = new ArrayList<>();
+        Set<PatternVariant> uniqueVariants = new HashSet<>();
         if (set.getString("var_ids") != null) {
             String[] varIds = set.getString("var_ids").split(",");
             String[] yarnIds = set.getString("yarn_ids").split(",");
@@ -200,7 +200,7 @@ public class JdbcPatternDao implements PatternDao{
                         Integer.parseInt(yarnIds[i]),
                         yarnNames[i]
                 );
-                variants.add(new PatternVariant(
+                uniqueVariants.add(new PatternVariant(
                         Integer.parseInt(varIds[i]),
                         size,
                         yarn,
@@ -208,6 +208,7 @@ public class JdbcPatternDao implements PatternDao{
                 ));
             }
         }
+        List<PatternVariant> variants = new ArrayList<>(uniqueVariants);
         pattern.setVariants(variants);
 
         // Process and match up ids and names for categories to add to list
@@ -229,32 +230,32 @@ public class JdbcPatternDao implements PatternDao{
 
 
         // process and match info to add sizes to list
-        List<Size> sizes = new ArrayList<>();
-        if (set.getString("size_ids") != null) {
-            String[] sizeIds = set.getString("size_ids").split(",");
-            String[] sizeNames = set.getString("size_names").split(",");
-            String[] ageCats = new String[sizeIds.length];
-            if (set.getString("age_cats") != null)  ageCats = set.getString("age_cats").split(",");
-
-
-            for (int i = 0; i < sizeIds.length; i++) {
-                sizes.add(new Size(
-                        Integer.parseInt(sizeIds[i]), sizeNames[i], ageCats[i]
-                ));
-            }
-        }
-        pattern.setSizes(sizes);
+//        List<Size> sizes = new ArrayList<>();
+//        if (set.getString("size_ids") != null) {
+//            String[] sizeIds = set.getString("size_ids").split(",");
+//            String[] sizeNames = set.getString("size_names").split(",");
+//            String[] ageCats = new String[sizeIds.length];
+//            if (set.getString("age_cats") != null)  ageCats = set.getString("age_cats").split(",");
+//
+//
+//            for (int i = 0; i < sizeIds.length; i++) {
+//                sizes.add(new Size(
+//                        Integer.parseInt(sizeIds[i]), sizeNames[i], ageCats[i]
+//                ));
+//            }
+//        }
+//        pattern.setSizes(sizes);
 
         // process and match info to add yarns to list
-        List<Yarn> yarns = new ArrayList<>();
-        if (set.getString("yarn_ids") != null) {
-            String[] yarnIds = set.getString("yarn_ids").split(",");
-            String[] yarnNames = set.getString("yarn_names").split(",");
-            for (int i = 0; i < yarnIds.length; i++) {
-                yarns.add(new Yarn(Integer.parseInt(yarnIds[i]), yarnNames[i]));
-            }
-        }
-        pattern.setYarns(yarns);
+//        List<Yarn> yarns = new ArrayList<>();
+//        if (set.getString("yarn_ids") != null) {
+//            String[] yarnIds = set.getString("yarn_ids").split(",");
+//            String[] yarnNames = set.getString("yarn_names").split(",");
+//            for (int i = 0; i < yarnIds.length; i++) {
+//                yarns.add(new Yarn(Integer.parseInt(yarnIds[i]), yarnNames[i]));
+//            }
+//        }
+//        pattern.setYarns(yarns);
 
         // process and set default image
         if (set.getInt("default_image") != 0) {

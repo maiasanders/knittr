@@ -55,7 +55,17 @@
         grid-template-areas:
             "title title"
             "rows rows"
-            ". repeats"
+            "add repeats"
             "btns btns";
+    }
+
+    #add-row {
+        grid-area: add;
+        justify-self: center;
+        align-self: center;
+    }
+
+    #add-edit-step-btns {
+        justify-content: space-evenly;
     }
 }

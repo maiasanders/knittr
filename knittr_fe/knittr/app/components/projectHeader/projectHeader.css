@@ -2,6 +2,12 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas: "back name name" "size . yarn";
+    padding: 0;
+}
+
+#project-header h1,
+h2 {
+    margin: 0;
 }
 
 h1 {

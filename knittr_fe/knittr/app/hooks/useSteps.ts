@@ -3,40 +3,59 @@ import { Row, Step, StepDto } from "../helpers/apiResponseTypes"
 import stepService from "../services/stepService"
 import rowService from "../services/rowService"
 
-const useSteps = (variantId: number) => {
-    const [steps, setSteps] = useState<Step[]>([])
-    const [newStep, setNewStep] = useState<Step>()
-    // const [newRows, setNewRows] = useState<Row[]>([])
+const useSteps = (variantId: number, rows?: Row[]) => {
+    // const [newStep, setNewStep] = useState<Step>()
+    const [stepId, setStepId] = useState(0)
 
 
     const postStep = async (step: StepDto, rows: Row[]) => {
-        let stepId = 0;
-        await stepService.createStep(step)
+        // const newStepId = await stepService.createStep(step).then(r => r.data.stepId)
+        // processSteps(rows, newStepId)
+
+        // let stepId = 0;
+        const newStep = await stepService.createStep(step)
             .then(res => {
                 if (res.status === 201) {
-                    setNewStep(res.data)
-                    stepId = res.data.stepId
+                    // setNewStep(res.data)
+                    // stepId = res.data.stepId
+                    setStepId(res.data.stepId)
+                    return res.data
                 }
             })
-            .catch(e => window.alert("Oops! Trouble saving that step"))
-        console.log(stepId)
-        if (stepId > 0) {
+        // .then(r => {
+        //     if (stepId > 0) {
+        //         for (let row of rows) {
+        //             row.stepId = stepId
+        //             rowService.createRow(row)
+        //         }
+        //     }
+        // })
+        // .catch(e => window.alert("Oops! Trouble saving that step"))
+        // console.log(stepId)
+        if (newStep.stepId) {
             for (let row of rows) {
-                row.stepId = stepId
+                row.stepId = newStep.stepId
                 await rowService.createRow(row)
             }
         }
 
     }
 
-    useEffect(() => {
-        const getSteps = async () => {
-            await stepService.getByVariant(variantId).then(res => setSteps(res.data))
+    async function processSteps(rows: Row[], stepId: number) {
+        for (let row of rows) {
+            row.stepId = stepId
+            await rowService.createRow(row)
         }
-        getSteps()
-    }, [])
+    }
+    if (rows) processSteps(rows, stepId)
 
-    return { steps, postStep, newStep }
+
+    useEffect(() => {
+
+
+    }, [stepId])
+
+    return { postStep, /*newStep*/ }
 }
 
 export default useSteps

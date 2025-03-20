@@ -29,7 +29,7 @@ const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, firstRowNum, i
     const { postStep } = useSteps(variantId)
     const { postRow } = useRows()
 
-    const currentRowNum = firstRowNum + rows.length + 1
+    const currentRowNum = firstRowNum + rows.length
 
     const handleSubmit = () => {
         if (rows.length === 1 && rows[0].directions.length === 0) return
@@ -99,14 +99,15 @@ const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, firstRowNum, i
             </div>
             <div id="rows">
                 {rows.map(row => (<AddRowElement key={row.rowNum} row={row} handleChange={(e: ChangeEvent<HTMLInputElement>) => updateExistingRow(e, row)} />))}
-                <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={addNewRow}
-                >
-                    Row <FontAwesomeIcon icon={faPlus} />
-                </button>
             </div>
+            <button
+                type="button"
+                className="btn btn-primary"
+                onClick={addNewRow}
+                id="add-row"
+            >
+                Row <FontAwesomeIcon icon={faPlus} />
+            </button>
             <div id="repeats-input">
                 <label htmlFor="repeats">Repeats</label>
                 <input type="number" name="repeats" id="repeats" value={repeats} onChange={e => setRepeats(parseInt(e.target.value))} className="form-control" />

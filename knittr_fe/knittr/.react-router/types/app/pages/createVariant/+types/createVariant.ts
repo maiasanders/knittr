@@ -1,17 +1,17 @@
 // React Router generated types for route:
-// pages/createVariant.tsx
+// pages/createVariant/createVariant.tsx
 
 import type * as T from "react-router/route-module"
 
-import type { Info as Parent0 } from "../../+types/root.js"
-import type { Info as Parent1 } from "../../layouts/+types/createPattern.js"
+import type { Info as Parent0 } from "../../../+types/root.js"
+import type { Info as Parent1 } from "../../../layouts/+types/createPattern.js"
 
 type Module = typeof import("../createVariant.js")
 
 export type Info = {
   parents: [Parent0, Parent1],
-  id: "pages/createVariant"
-  file: "pages/createVariant.tsx"
+  id: "pages/createVariant/createVariant"
+  file: "pages/createVariant/createVariant.tsx"
   path: "/patterns/new/:id/variants"
   params: {"id": string} & { [key: string]: string | undefined }
   module: Module

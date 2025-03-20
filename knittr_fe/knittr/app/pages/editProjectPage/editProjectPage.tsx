@@ -25,8 +25,6 @@ const EditPatternPage = ({ loaderData }: Route.LoaderArgs<Project>) => {
 
     if (project === undefined) throw redirect('/404')
 
-    const { steps } = useSteps(project.variant.variantId)
-
     const [showAddSteps, setShowAddSteps] = useState(false)
     const [showAddToStep, setShowAddToStep] = useState(false)
 
@@ -46,21 +44,21 @@ const EditPatternPage = ({ loaderData }: Route.LoaderArgs<Project>) => {
     return (
         <>
             <div id="step-edit-btns">
-                <button type="button" className="btn btn-primary hide-in-small" onClick={() => setShowAddToStep(true)} >Add to step</button>
+                {/* <button type="button" className="btn btn-primary hide-in-small" onClick={() => setShowAddToStep(true)} >Add to step</button> */}
                 <button type="button" className="btn btn-primary small-only" onClick={() => setShowAddToStep(true)} >
                     <FontAwesomeIcon icon={faPenToSquare} />
                     Step
                 </button>
 
-                <button type="button" className="btn btn-primary hide-in-small" onClick={() => setShowAddSteps(true)}>Create new step</button>
+                {/* <button type="button" className="btn btn-primary hide-in-small" onClick={() => setShowAddSteps(true)}>Create new step</button> */}
                 <button type="button" className="btn btn-primary small-only" onClick={() => setShowAddSteps(true)}>
                     <FontAwesomeIcon icon={faPlus} />
                     Step
                 </button>
             </div>
             {showAddToStep ? <AddStepPopup
-                currentStep={steps[steps.length - 1]}
-                stepNum={steps[steps.length - 1].stepNum}
+                currentStep={project.steps[project.steps.length - 1]}
+                stepNum={project.steps[project.steps.length - 1].stepNum}
                 variantId={project.variant.variantId}
                 onClose={() => setShowAddToStep(false)}
                 firstRowNum={lastRow + 1}

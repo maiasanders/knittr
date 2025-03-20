@@ -10,7 +10,7 @@ const PublicPatternCard = ({ pattern }: { pattern: Pattern }) => {
                 <div className="pat-info">
                     <h4>{pattern.name}</h4>
                     <h5>{pattern.author.username}</h5>
-                    <h6>{`${pattern.sizes.length || 1} Size(s)`}</h6>
+                    <h6>{`${pattern.variants.length || 1} Options`}</h6>
                 </div>
             </div>
         </Link>

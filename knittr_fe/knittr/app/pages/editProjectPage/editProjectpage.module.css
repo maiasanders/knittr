@@ -1,7 +1,7 @@
 #step-edit-btns {
     grid-area: edit;
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
 }
 
 @media screen and (max-width: 768px) {

@@ -8,9 +8,7 @@ import {
 import { NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import './navBar.css'
-import useViewport from '../../hooks/useViewport';
 
-// TODO add navigation to settings once made
 const NavBar = () => {
 
     const [loggedIn, setLoggedIn] = useState<boolean>(false);

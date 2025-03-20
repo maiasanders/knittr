@@ -8,7 +8,7 @@
 
 #project-header {
     grid-area: head;
-    height: fit-content;
+    height: 9rem;
 }
 
 #steps {
@@ -20,7 +20,8 @@
 
 #notes-section {
     grid-area: notes;
-    height: 100%;
+    height: calc(100vh - 25rem);
+    margin-bottom: 1rem;
     /* TODO switch to an ease-in animation in mobile */
 }
 
@@ -32,7 +33,8 @@
     grid-area: edit;
     padding: 0;
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
+    gap: 1rem;
 }
 
 #add-edit-step {
@@ -42,6 +44,10 @@
     width: 70vw;
 }
 
+#display-notes {
+    display: none;
+}
+
 @media screen and (max-width: 768px) {
 
     #project-layout {
@@ -49,7 +55,6 @@
         grid-template-areas: "head head head" "steps steps steps" "edit edit notes-btn" "back stitch stitch";
         padding: 1rem;
         column-gap: 0;
-        /* height: calc(100vh - 2rem); */
     }
 
     #back-btn {
@@ -62,7 +67,6 @@
     }
 
     #notes-section {
-        /* TODO fix small screen layout */
         position: absolute;
         bottom: 3rem;
         border-bottom-right-radius: 0;
@@ -75,5 +79,9 @@
 @media screen and (max-width: 768px) {
     #add-edit-step {
         width: calc(100vw - 2rem);
+    }
+
+    #step-edit-btns {
+        justify-content: space-evenly;
     }
 }

@@ -1,7 +1,7 @@
 export interface Size {
     sizeId: number;
     name: string;
-    ageRange?: string;
+    ageRange: string;
 }
 
 type YarnName = 'Fingering (Lace Weight)' | 'Sock' | 'Fingering (Super Fine Weight)' | 'Baby (Super Fine)' | 'Sport' | 'Baby (Fine)' | 'DK' | 'Light Worsted' | 'Worsted' | ' Afghan' | 'Aran' | 'Chunky' | 'Craft' | 'Rug' | 'Super Bulky' | 'Roving (Super Bulky)' | 'Jumbo' | 'Roving (Jumbo)'
@@ -38,8 +38,6 @@ export interface Pattern {
     isPublic: boolean;
     categories: Category[];
     defaultImage: Image;
-    sizes: Size[];
-    yarns: Yarn[];
     variants: Variant[];
 }
 
@@ -114,7 +112,6 @@ export interface Row {
 }
 
 export interface Auth {
-    // userId: number,
     username: string,
     token: string
 }

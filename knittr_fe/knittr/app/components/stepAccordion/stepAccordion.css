@@ -71,6 +71,6 @@ tr * {
 
 @media screen and (max-width: 768px) {
     .accordion {
-        width: calc(100vw - 2rem);
+        width: calc(100vw - 3rem);
     }
 }

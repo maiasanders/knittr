@@ -51,3 +51,7 @@ a {
     transform: translate3d(16px, 21px, 0px);
     /* width: 66vw; */
 }
+
+a.dropdown-item {
+    color: var(--primary-text);
+}

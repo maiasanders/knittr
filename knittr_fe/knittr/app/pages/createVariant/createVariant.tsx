@@ -1,12 +1,12 @@
-import sizeService from "../services/sizeService";
-import yarnService from "../services/yarnService";
-import type { Route } from "./+types/createVariant"
+import sizeService from "../../services/sizeService";
+import yarnService from "../../services/yarnService";
+import type { Route } from "./+types/createVariant/createVariant"
 import { Form } from "react-router";
 import { redirect } from "react-router-dom";
-// import { useState } from "react";
-import { ProjectStartDto, VariantDto } from "../helpers/apiResponseTypes";
-import variantService from "../services/variantService";
-import projectService from "../services/projectService";
+import { ProjectStartDto, VariantDto } from "../../helpers/apiResponseTypes";
+import variantService from "../../services/variantService";
+import projectService from "../../services/projectService";
+import './createVariant.css'
 
 export async function clientLoader() {
     const yarns = await yarnService.getYarns().then(r => r.data);
@@ -40,7 +40,8 @@ export default function CreateVariant({ loaderData }: Route.ClientLoaderArgs) {
     // const [selectedYarn, setSelectedYarn] = useState<Yarn>();
 
     return (
-        <main>
+        <main id="variant-creation">
+            <h1>Select size and yarn weight</h1>
             <Form method="post">
                 <select
                     className="form-select"
@@ -53,7 +54,8 @@ export default function CreateVariant({ loaderData }: Route.ClientLoaderArgs) {
                 </select>
                 <select className="form-select" aria-label="Size Selection" name="sizeId">
                     <option selected disabled>Select size</option>
-                    {sizes.map(s => (<option key={s.sizeId} value={s.sizeId}>{s.name}</option>))}
+                    {sizes.
+                        map(s => (<option key={s.sizeId} value={s.sizeId}>{`${s.name}${s.ageRange !== 'n/a' ? ` (${s.ageRange})` : ''}`}</option>))}
                 </select>
                 <button type="submit" className="btn btn-primary">Start knitting!</button>
             </Form>
