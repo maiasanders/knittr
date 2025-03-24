@@ -26,9 +26,10 @@ img {
 #all-pics {
     grid-area: all-pics;
     display: flex;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: calc(calc(100vw - 64rem) / 4);
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+
     padding: 2rem 0;
 }
 

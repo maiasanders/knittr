@@ -1,4 +1,5 @@
 #project-layout {
+    height: calc(100vh - 4rem);
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 2fr;
     grid-template-rows: 1fr 10fr 60px;

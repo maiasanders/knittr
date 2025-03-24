@@ -1,5 +1,5 @@
-import { ChangeEvent, lazy, Suspense, useState } from "react";
-import { Project, Step } from "../helpers/apiResponseTypes";
+import { ChangeEvent, ChangeEventHandler, lazy, Suspense, useState } from "react";
+import { ImageDto, Project, Step } from "../helpers/apiResponseTypes";
 import ProjectHeader from "../components/projectHeader/projectHeader";
 import NotesSection from "../components/notesSection/notesSection";
 import useViewport from "../hooks/useViewport";
@@ -14,6 +14,8 @@ import { faArrowLeft, faEye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from 'react-bootstrap/Modal'
 import LoadingSpinner from "../components/loadingSpinner/loadingSpinner";
+import ImageUploader from "../components/imageUploader/imageUploader";
+import ImagesForm from "../components/imagesForm/imagesForm";
 
 const StepAccordion = lazy(() => import('../components/stepAccordion/stepAccordion'))
 
@@ -24,15 +26,11 @@ export async function clientLoader({ params }: { params: Route.LoaderArgs }) {
 
 }
 
-// TODO add ability to "complete" project
-
 const ProjectLayout = ({ loaderData }: Route.LoaderArgs<Project>) => {
 
     const viewport = useViewport()
     const { project } = loaderData
     const navigate = useNavigate();
-
-    // TODO add in cloudinary for image upload ??
 
     const pattern = project.pattern
     if (project === undefined) throw redirect('/404')
@@ -41,6 +39,9 @@ const ProjectLayout = ({ loaderData }: Route.LoaderArgs<Project>) => {
     const [countStep, setCountStep] = useState(1)
 
     const [showNotes, setShowNotes] = useState(false)
+
+    const [publicId, setPublicId] = useState('')
+    const [images, setImages] = useState<ImageDto[]>([])
 
     const handleStitch = () => {
         projectService.updateProgess(project.projectId, { newRow: currentRow + countStep, makerId: project.makerId })
@@ -94,7 +95,7 @@ const ProjectLayout = ({ loaderData }: Route.LoaderArgs<Project>) => {
                     <Modal.Title>Congrats!</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {/* Insert logic to add pics or some thing here */}
+                    <ImagesForm patternId={pattern.patternId} />
                     <Link to={'/projects'} className="btn btn-primary">Back to my projects</Link>
                 </Modal.Body>
             </Modal>

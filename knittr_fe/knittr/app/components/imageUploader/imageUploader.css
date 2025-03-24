@@ -1,0 +1,15 @@
+.App__GWidgetWrap-lgtKzy {
+    border-radius: var(--div-border-rad);
+}
+
+/* TODO research how to fix button styles */
+
+#upload-widget {
+    display: flex;
+    border-radius: 30px;
+    gap: .5rem;
+    width: fit-content;
+    height: fit-content;
+    align-items: center;
+    color: var(--primary-text);
+}

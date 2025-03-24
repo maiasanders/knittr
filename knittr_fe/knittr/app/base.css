@@ -55,7 +55,8 @@
     --bg-main: #0D1C2C;
     --nav-bg: #1C3E5E;
     --primary-text: rgb(233, 219, 230);
-
+    --focus-border-color: var(--color-cannon-pink-400);
+    --container-bg-color: var(--color-astronaut-blue-800);
     --btn-prim-bg: var(--color-cannon-pink-700);
     --btn-border: var(--color-cannon-pink-900);
     --btn-warning-bg: var(--color-flush-mahogany-500);
@@ -63,7 +64,10 @@
     --btn-success-bord-col: var(--color-shamrock-700);
     --btn-success-bg-hover: var(--color-shamrock-400);
     --btn-success-bord-hover: var(--color-shamrock-200);
-    --btn-success-glow-col: var(--color-shamrock-200) --form-bg: var(--color-astronaut-blue-300);
+    --btn-success-glow-col: var(--color-shamrock-200);
+    --form-bg: var(--color-astronaut-blue-300);
+
+    --card-border: var(--color-astronaut-blue-500);
 
 
     /* In app measurement constants */
@@ -98,7 +102,6 @@ body {
 
 main {
     padding: 2rem 2rem 4rem 2rem;
-    height: calc(100vh - 4rem);
 }
 
 div {
@@ -163,6 +166,10 @@ li {
 
     & :hover {
         background-color: var(--color-cannon-pink-600);
+    }
+
+    &:disabled {
+        border-color: var(--btn-border);
     }
 }
 
@@ -238,6 +245,7 @@ li {
 }
 
 .card-content {
+    border: 1px solid var(--card-border);
     border-radius: var(--div-border-rad);
     background-color: var(--color-astronaut-blue-700);
     position: relative;
@@ -255,6 +263,7 @@ li {
         transform: scale(1.05);
         background-color: var(--color-astronaut-blue-600);
         z-index: 99;
+        border: 2px solid;
     }
 }
 
@@ -303,7 +312,7 @@ form {
     :focus-visible {
         color: var(--color-cannon-pink-950);
         background-color: var(--color-astronaut-blue-200);
-        border: .25rem solid var(--color-cannon-pink-400);
+        border: .25rem solid var(--focus-border-color);
     }
 }
 

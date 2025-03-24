@@ -9,18 +9,11 @@ import type { Route } from "./+types/root"
 import baseStyleHref from "./base.css?url"
 import LoadingSpinner from './components/loadingSpinner/loadingSpinner'
 import React, { useEffect } from 'react'
-import { Cloudinary } from '@cloudinary/url-gen'
+import ClickableIcon from './components/clickableIcon'
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 
 export default function App() {
-
-  // TODO switch to my cloudinary when I'm at home and can check
-  const cloudinary = new Cloudinary({
-    cloud: {
-      cloudName: 'demo'
-    }
-  })
-
   return (
     <>
       <NavBar />
@@ -82,6 +75,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   return (
     <main id='error-page'>
       <h1>{message}</h1>
+      <ClickableIcon icon={faArrowLeft} handleClick={() => navigate('/projects')} />
       <p>{details}</p>
       {stack && (
         <pre>

@@ -8,6 +8,7 @@ import { useEffect, useState } from "react"
 import StartProject from "../../components/startProject"
 import Modal from 'react-bootstrap/Modal'
 import './patternDetailPage.css'
+import { Image } from "../../helpers/apiResponseTypes";
 
 export async function loader({ params }: Route.LoaderArgs) {
     const pattern = await patternService.getById(params.id)
@@ -35,6 +36,7 @@ const PatternDetailsPage = ({ loaderData }: Route.ComponentProps) => {
     const { pattern, images } = loaderData
     const [showProjectStart, setShowProjectStart] = useState(false)
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [selectedImg, setSelectedImg] = useState<Image>()
 
     useEffect(() => {
         if (localStorage.getItem('token')) setIsLoggedIn(true)
@@ -66,6 +68,7 @@ const PatternDetailsPage = ({ loaderData }: Route.ComponentProps) => {
                 data-bs-target="#project-start"
             >Make it!</button>
         }
+        {/* TODO make so it shows full size img after clicking - carousel or modal maybe? */}
         {images ? <div id="all-pics">
             {images.map(image => (<img src={image.imageLink} alt={image.desc} key={`img-${image.imageId}`} />))}
         </div> : null}

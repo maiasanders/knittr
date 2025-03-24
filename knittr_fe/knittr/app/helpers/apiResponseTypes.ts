@@ -19,6 +19,12 @@ export interface Image {
     desc: string;
 }
 
+export interface ImageDto {
+    imageLink: string;
+    desc: string;
+    patternId: number;
+}
+
 export interface User {
     username: string;
     password?: string;

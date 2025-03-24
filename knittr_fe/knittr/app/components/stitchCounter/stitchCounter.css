@@ -28,6 +28,23 @@
 
 #add-stitches {
     padding: 0;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+}
+
+#add-stitches:hover,
+#add-stitches>svg:hover,
+#stitch-counter>h3:hover,
+#add-stitches>svg:hover {
+    background-color: var(--btn-prim-bg);
+}
+
+#add-stitches:hover path {
+    background-color: none;
+    /* transform: scale(1.1); */
+    filter: drop-shadow(0 0 1rem var(--color-shamrock-50)) drop-shadow(0 0 .25rem var(--bg-main));
 }
 
 h3 {
