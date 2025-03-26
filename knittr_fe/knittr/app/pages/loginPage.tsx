@@ -18,12 +18,13 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
         .then(r => {
             if (r.status === 200) return r.data
             alertMsg = "We couldn't log you in. Check username and password and try again"
+            return
         })
         .catch(e => {
             alertMsg = "We couldn't log you in. Check username and password and try again"
         })
 
-    if (res) {
+    if (res.token) {
         localStorage.setItem("token", res.token)
         localStorage.setItem("user", res.username)
 

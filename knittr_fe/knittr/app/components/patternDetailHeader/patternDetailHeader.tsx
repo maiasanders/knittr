@@ -18,7 +18,7 @@ const PatternDetailHeader = ({ pattern, isLoggedIn }: { pattern: Pattern, isLogg
 
     return (
         <header>
-            <ClickableIcon icon={faArrowLeft} handleClick={() => navigate('/projects')} />
+            <ClickableIcon icon={faArrowLeft} handleClick={() => navigate(-1)} />
             <div id="name-auth-fav">
                 <h1>{pattern.name}</h1>
                 <h2>{pattern.author.username}</h2>
