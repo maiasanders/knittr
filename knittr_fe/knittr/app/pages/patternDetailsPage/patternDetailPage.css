@@ -56,6 +56,14 @@ img {
     }
 }
 
+#carousel-modal>.modal-content {
+    justify-self: center;
+    width: 90vw;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    width: fit-content;
+}
+
 /* Media queries to adjust image thumbnails */
 
 @media screen and (max-width: 1267px) {

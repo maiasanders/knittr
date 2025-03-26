@@ -13,10 +13,9 @@
 }
 
 .saved-and-mine {
-    /* overflow-y: auto; */
     margin-top: calc(1.8rem + .6vw);
-    padding-bottom: 6rem;
 }
+
 
 @media screen and (max-width: 768px) {
     #saved-tabs {

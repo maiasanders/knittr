@@ -1,11 +1,18 @@
 import { ChangeEvent, MouseEventHandler, useState } from "react"
+import useAsync from 'react-use/lib/useAsync'
+
 import { Step, Row, StepDto } from "../../helpers/apiResponseTypes"
+
 import useSteps from "../../hooks/useSteps"
 import useRows from "../../hooks/useRows"
+
 import AddRowElement from "../addRowElement/addRowElement"
+
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+
 import './addStepPopup.css'
+import stepService from "../../services/stepService"
 
 const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, firstRowNum, isNew }: {
     currentStep: Step,
@@ -24,9 +31,8 @@ const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, firstRowNum, i
         directions: ''
     }])
     const [repeats, setRepeats] = useState(1)
-    // const [stepId, setStepId] = useState(currentStep.stepId || 0)
 
-    const { postStep } = useSteps(variantId)
+    const { postStep } = useSteps()
     const { postRow } = useRows()
 
     const currentRowNum = firstRowNum + rows.length

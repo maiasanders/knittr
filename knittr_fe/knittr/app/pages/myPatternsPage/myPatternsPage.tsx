@@ -16,7 +16,12 @@ const MyPatternsPage = ({ loaderData }: Route.ComponentProps<Pattern[]>) => {
 
     return (
         <div className="saved-and-mine">
-            <MyPatternsList patterns={patterns} />
+            {patterns.length > 0 ? (
+                <MyPatternsList patterns={patterns} />
+            ) : (
+                <p>You haven't written any patterns yet</p>
+            )}
+
             <Link to={"/patterns/new"} className="btn btn-primary" id="new-ptrn">Create new Pattern</Link >
         </div>
     )

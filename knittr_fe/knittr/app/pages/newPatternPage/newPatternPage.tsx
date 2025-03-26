@@ -69,7 +69,7 @@ export default function NewPatternPage({ loaderData }: Route.loaderData) {
                     />
                     <label htmlFor="pattern-desc">Description</label>
                 </div>
-                {/* TODO add way to de/select categories */}
+                {/* TODO add way to create new categories */}
                 <fieldset>
                     <legend>Categories</legend>
                     {categories.map(cat => (

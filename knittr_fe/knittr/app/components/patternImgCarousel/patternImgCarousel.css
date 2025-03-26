@@ -1,0 +1,22 @@
+#pattern-img-carousel,
+.carousel-inner,
+.carousel-item,
+.img-container,
+.carousel-caption {
+    padding: 0;
+}
+
+.img-container {
+    display: flex;
+    justify-content: center;
+}
+
+#pattern-img-carousel img {
+    justify-self: center;
+    max-width: 90vw;
+}
+
+.carousel-caption p {
+    margin-bottom: 0;
+    text-shadow: 0 0 2px black;
+}

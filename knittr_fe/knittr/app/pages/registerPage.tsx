@@ -1,5 +1,6 @@
 import { Form, Link, redirect } from 'react-router-dom'
 import type { Route } from './+types/registerPage'
+import Alert from 'react-bootstrap/Alert'
 import authService from "../services/authService";
 
 type RegisterInfo = {
@@ -12,8 +13,8 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
     const formData = await request.formData();
     const registerInfo = Object.fromEntries(formData) as RegisterInfo;
     if (registerInfo.password !== registerInfo.confirmPassword) {
-        // TODO better error handling
-        window.alert("Passwords must match")
+        // TODO add in more password checks
+        alertMsg = "Passwords must match"
         return;
     }
 
@@ -22,17 +23,34 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
         username: registerInfo.username,
         password: registerInfo.password
 
-    }).then((res) => res.data)
-    localStorage.setItem("token", response.token)
-    localStorage.setItem("user", response.username)
-    return redirect("/patterns/discover")
+    }).then((res) => {
+        if (res.status === 201) {
+            return res.data
+        } else {
+            alertMsg = 'We had trouble registering you, check you info and try again'
+            return
+        }
+    }).catch(e => {
+        alertMsg = 'We had trouble registering you, check your info and try again'
+    })
+
+    if (response) {
+        localStorage.setItem("token", response.token)
+        localStorage.setItem("user", response.username)
+        return redirect("/patterns/discover")
+    }
 
 }
+
+let alertMsg = ''
 
 const RegisterPage = () => {
     return (
         <main className="auth-page">
             {/* <RegisterForm /> */}
+            {alertMsg.length > 0 && (
+                <Alert variant='danger' onClose={() => alertMsg = ''} dismissible>{alertMsg}</Alert>
+            )}
             <Form method="post" className="auth-form">
                 <div className="form-floating">
                     <input

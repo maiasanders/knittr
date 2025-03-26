@@ -19,11 +19,14 @@
     scrollbar-color: var(--color-astronaut-blue-500) var(--bg-main);
 }
 
+#notes-container {
+    padding: 0;
+}
+
 #notes-section {
     grid-area: notes;
     height: calc(100vh - 25rem);
     margin-bottom: 1rem;
-    /* TODO switch to an ease-in animation in mobile */
 }
 
 #stitch-counter {
@@ -63,17 +66,41 @@
     }
 
     #display-notes {
+        display: block;
         grid-area: notes-btn;
         justify-self: end;
     }
 
-    #notes-section {
+    #notes-container {
         position: absolute;
         bottom: 3rem;
+        animation: 1s 1 forwards notes-slide-in;
+    }
+
+    #notes-container.hidden {
+        transform: translateY(100vh);
+        transition: ease-in;
+    }
+
+    #notes-section {
         border-bottom-right-radius: 0;
         border-bottom-left-radius: 0;
         width: calc(100vw - 2rem);
         height: fit-content;
+        transition: ease-in;
+        margin-bottom: 0;
+    }
+
+    /* TODO get animation to work in reverse for hiding notes */
+
+    @keyframes notes-slide-in {
+        from {
+            transform: translateY(100vh);
+        }
+
+        to {
+            transform: translateY(0);
+        }
     }
 }
 

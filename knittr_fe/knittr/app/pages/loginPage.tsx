@@ -1,35 +1,45 @@
-import { useState } from "react";
 import { LoginDto } from "../helpers/apiResponseTypes";
 import authService from "../services/authService";
 import type { Route } from "./+types/loginPage";
 import { Form } from "react-router";
 import { redirect, Link } from "react-router-dom";
+import Alert from "react-bootstrap/Alert"
 
 export async function clientAction({ request }: Route.ClientActionArgs) {
+
     const formData = await request.formData();
     const loginInfo = Object.fromEntries(formData) as LoginDto;
-    const res = await authService.login(loginInfo)
-        .then(r => r.data)
-    localStorage.setItem("token", res.token)
-    localStorage.setItem("user", res.username)
 
-    console.log("aaaah")
-    return redirect("/projects")
+    if (loginInfo.username.length === 0 || loginInfo.password.length === 0) {
+        alertMsg = 'Username and password cannot be blank'
+    }
+
+    const res = await authService.login(loginInfo)
+        .then(r => {
+            if (r.status === 200) return r.data
+            alertMsg = "We couldn't log you in. Check username and password and try again"
+        })
+        .catch(e => {
+            alertMsg = "We couldn't log you in. Check username and password and try again"
+        })
+
+    if (res) {
+        localStorage.setItem("token", res.token)
+        localStorage.setItem("user", res.username)
+
+        return redirect("/projects")
+    }
 }
+
+let alertMsg = ''
 
 const LoginPage = () => {
 
-    const [alertMsg, setAlertMsg] = useState('')
-
     return (
         <main className="auth-page">
-            {alertMsg && (
-                <div className="alert alert-danger" role="alert">
-                    <svg className="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"><use xlinkHref="#exclamation-triangle-fill" /></svg>
-                    <div>{alertMsg}</div>
-                </div>
+            {alertMsg.length > 0 && (
+                <Alert variant='danger' onClose={() => alertMsg = ''} dismissible>{alertMsg}</Alert>
             )}
-            {/* TODO add in error handling to action */}
             <Form method="post" className="auth-form">
                 <div className="form-floating">
                     <input

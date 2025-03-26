@@ -9,6 +9,7 @@ import StartProject from "../../components/startProject"
 import Modal from 'react-bootstrap/Modal'
 import './patternDetailPage.css'
 import { Image } from "../../helpers/apiResponseTypes";
+import PatternImgCarousel from "../../components/patternImgCarousel/patternImgCarousel";
 
 export async function loader({ params }: Route.LoaderArgs) {
     const pattern = await patternService.getById(params.id)
@@ -37,16 +38,25 @@ const PatternDetailsPage = ({ loaderData }: Route.ComponentProps) => {
     const [showProjectStart, setShowProjectStart] = useState(false)
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [selectedImg, setSelectedImg] = useState<Image>()
+    const [showFullImg, setShowFullImg] = useState(false)
 
     useEffect(() => {
         if (localStorage.getItem('token')) setIsLoggedIn(true)
     }, [])
 
+    const handleImgClick = (img: Image) => {
+        setSelectedImg(img)
+        setShowFullImg(true)
+    }
+
     return (<main id="pat-detail">
         <PatternDetailHeader pattern={pattern} isLoggedIn={isLoggedIn} />
         <img
             src={pattern.defaultImage ? pattern.defaultImage.imageLink : '/placeholder.svg'}
-            alt={pattern.defaultImage ? pattern.defaultImage.desc : "No images found"} />
+            alt={pattern.defaultImage ? pattern.defaultImage.desc : "No images found"}
+            onError={e => e.currentTarget.src = '../../placeholder.svg'}
+            onClick={() => handleImgClick(pattern.defaultImage)}
+        />
         <PatternDetailsDesc pattern={pattern}
         />
         {showProjectStart ?
@@ -68,10 +78,24 @@ const PatternDetailsPage = ({ loaderData }: Route.ComponentProps) => {
                 data-bs-target="#project-start"
             >Make it!</button>
         }
-        {/* TODO make so it shows full size img after clicking - carousel or modal maybe? */}
         {images ? <div id="all-pics">
-            {images.map(image => (<img src={image.imageLink} alt={image.desc} key={`img-${image.imageId}`} />))}
+            {images.map((image: Image) => (<img
+                src={image.imageLink}
+                alt={image.desc}
+                key={`img-${image.imageId}`}
+                onError={e => e.currentTarget.src = '../../placeholder.svg'}
+                onClick={() => handleImgClick(image)}
+            />))}
         </div> : null}
+        <Modal
+            show={showFullImg}
+            onHide={() => setShowFullImg(false)}
+            id="carousel-modal"
+        >
+            <Modal.Body>
+                <PatternImgCarousel images={images} selectedImgId={selectedImg?.imageId || 0} />
+            </Modal.Body>
+        </Modal>
     </main>)
 }
 

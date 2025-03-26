@@ -80,15 +80,19 @@ const ProjectLayout = ({ loaderData }: Route.LoaderArgs<Project>) => {
                 </div>
             </Suspense>
 
-            {!showNotes && (
-                <button type="button" id="display-notes" className="btn btn-secondary small-only" onClick={() => setShowNotes(true)}>
-                    <FontAwesomeIcon icon={faEye} />
-                    Notes
-                </button>
-            )}
+            <button type="button" id="display-notes" className="btn btn-secondary small-only" onClick={() => setShowNotes(true)}>
+                <FontAwesomeIcon icon={faEye} />
+                Notes
+            </button>
 
 
-            {project.notes !== null && (viewport.w > 768 || showNotes) ? (<NotesSection projId={project.projectId} onClose={() => setShowNotes(false)} />) : null}
+            {/* {project.notes !== null && (viewport.w > 768 || showNotes) ? (<NotesSection projId={project.projectId} onClose={() => setShowNotes(false)} />) : null} */}
+            <div
+                id="notes-container"
+                className={project.notes !== null && (viewport.w > 768 || showNotes) ? '' : 'hidden'}
+            >
+                <NotesSection projId={project.projectId} onClose={() => setShowNotes(false)} />
+            </div>
 
             <Modal show={showModal} onHide={() => setShowModal(false)}>
                 <Modal.Header closeButton>

@@ -57,6 +57,10 @@
     --primary-text: rgb(233, 219, 230);
     --focus-border-color: var(--color-cannon-pink-400);
     --container-bg-color: var(--color-astronaut-blue-800);
+
+    --alert-danger-bg: var(--color-flush-mahogany-400);
+    --alert-danger-border-color: var(--color-flush-mahogany-600);
+    --alert-danger-text: var(--color-flush-mahogany-900);
     --btn-prim-bg: var(--color-cannon-pink-700);
     --btn-border: var(--color-cannon-pink-900);
     --btn-warning-bg: var(--color-flush-mahogany-500);
@@ -76,7 +80,8 @@
     box-sizing: border-box;
 }
 
-.small-only {
+.small-only,
+.hidden {
     display: none;
 }
 
@@ -382,6 +387,22 @@ legend {
 
 .modal-body {
     padding: 0;
+}
+
+/* Alert styles */
+
+.alert {
+    border-radius: var(--div-border-rad);
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+    }
+}
+
+.alert-danger {
+    background-color: var(--alert-danger-bg);
+    border-color: var(--alert-danger-border-color);
+    color: var(--alert-danger-text)
 }
 
 /* Shared styles for login/register pages */
