@@ -8,7 +8,7 @@ import { Link, Outlet, redirect, useNavigate } from "react-router-dom";
 import type { Route } from "./+types/projectLayout";
 import projectService from "../services/projectService";
 import "./projectLayout.css"
-import ClickableIcon from "../components/clickableIcon";
+import ClickableIcon from "../components/clickableIcon/clickableIcon";
 import { faArrowLeft, faEye } from "@fortawesome/free-solid-svg-icons";
 // import StepAccordion from "../components/stepAccordion/stepAccordion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

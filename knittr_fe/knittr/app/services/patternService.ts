@@ -22,5 +22,8 @@ export default {
     },
     unsave(id: number) {
         return apiAccess.delete(`/patterns/${id}/save`)
+    },
+    update(id: number, pattern: PatternDto) {
+        return apiAccess.put(`/patterns/${id}`, pattern)
     }
 }

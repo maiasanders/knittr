@@ -7,17 +7,12 @@ import { data } from "react-router"
 const useSteps = () => {
 
 
-    const postStep = async (step: StepDto, rows: Row[]) => {
+    const postStep = (step: StepDto) => {
 
-        stepService.createStep(step)
+        const result = stepService.createStep(step)
             .then(res => {
                 if (res.status === 201) {
                     return res.data
-                }
-            }).then(data => {
-                for (let row of rows) {
-                    row.stepId = data.stepId
-                    rowService.createRow(row)
                 }
             })
     }

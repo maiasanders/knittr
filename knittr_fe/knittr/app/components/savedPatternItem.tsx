@@ -1,7 +1,7 @@
 import { Pattern } from "../helpers/apiResponseTypes";
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router";
-import ClickableIcon from "./clickableIcon";
+import ClickableIcon from "./clickableIcon/clickableIcon";
 import usePatterns from "../hooks/usePatterns";
 import { MouseEvent, useState } from "react";
 

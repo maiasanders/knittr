@@ -4,7 +4,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import useNotes from "../../hooks/noteHooks";
 import "./notesSection.css"
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import ClickableIcon from "../clickableIcon";
+import ClickableIcon from "../clickableIcon/clickableIcon";
 
 export default function NotesSection({ projId, onClose }: { projId: number, onClose: React.MouseEventHandler }) {
     const [showNewNote, setShowNewNote] = useState(false)

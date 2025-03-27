@@ -1,0 +1,14 @@
+.filter-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+@media screen and (max-width: 768px) {
+    #cat-filters {
+        gap: .5rem;
+    }
+
+    #cat-filters>div {
+        padding: 0;
+    }
+}

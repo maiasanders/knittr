@@ -1,17 +1,17 @@
 // React Router generated types for route:
-// layouts/createPattern.tsx
+// pages/publicPatternPage/publicPatternPage.tsx
 
 import type * as T from "react-router/route-module"
 
-import type { Info as Parent0 } from "../../+types/root.js"
+import type { Info as Parent0 } from "../../../+types/root.js"
 
-type Module = typeof import("../createPattern.js")
+type Module = typeof import("../publicPatternPage.js")
 
 export type Info = {
   parents: [Parent0],
-  id: "layouts/createPattern"
-  file: "layouts/createPattern.tsx"
-  path: "undefined"
+  id: "pages/publicPatternPage/publicPatternPage"
+  file: "pages/publicPatternPage/publicPatternPage.tsx"
+  path: "/patterns/discover"
   params: {} & { [key: string]: string | undefined }
   module: Module
   loaderData: T.CreateLoaderData<Module>

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import ClickableIcon from "../components/clickableIcon"
+import ClickableIcon from "../components/clickableIcon/clickableIcon"
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 
 const NotFoundPage = () => {

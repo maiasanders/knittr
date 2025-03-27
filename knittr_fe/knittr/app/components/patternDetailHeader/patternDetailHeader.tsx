@@ -1,7 +1,7 @@
 import { faArrowLeft, faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
 import { faStar as emptyStar } from "@fortawesome/free-regular-svg-icons"
 import { Pattern } from "../../helpers/apiResponseTypes";
-import ClickableIcon from "../clickableIcon";
+import ClickableIcon from "../clickableIcon/clickableIcon";
 import usePatterns from "../../hooks/usePatterns";
 import CategoryTag from "../categorytag/categoryTag";
 import './patternDetailHeader.css'

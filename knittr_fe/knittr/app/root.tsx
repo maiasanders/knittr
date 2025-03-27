@@ -9,7 +9,7 @@ import type { Route } from "./+types/root"
 import baseStyleHref from "./base.css?url"
 import LoadingSpinner from './components/loadingSpinner/loadingSpinner'
 import React, { useEffect } from 'react'
-import ClickableIcon from './components/clickableIcon'
+import ClickableIcon from './components/clickableIcon/clickableIcon'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 

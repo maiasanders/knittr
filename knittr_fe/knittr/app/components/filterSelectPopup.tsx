@@ -2,7 +2,7 @@ import { ChangeEventHandler } from "react";
 import { Category, Size, Yarn } from "../helpers/apiResponseTypes"
 import SizeFilterSection from "./sizeFilterSection";
 import YarnFilterSection from "./yarnFilterSection";
-import CatFilterSection from "./catFilterSection";
+import CatFilterSection from "./catFilterSection/catFilterSection";
 
 const FilterSelectPopup = ({ sizes, yarns, cats, selectedSizes, selectedYarns, selectedCats, handleSize, handleYarn, handleCat }: { sizes: Size[], yarns: Yarn[], cats: Category[], selectedSizes: Set<number>, selectedYarns: Set<number>, selectedCats: Set<number>, handleSize: ChangeEventHandler, handleYarn: ChangeEventHandler, handleCat: ChangeEventHandler }) => {
 

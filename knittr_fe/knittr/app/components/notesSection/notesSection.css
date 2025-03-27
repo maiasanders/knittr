@@ -25,6 +25,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    &:hover {
+        filter: drop-shadow(0 0 .5rem var(--color-astronaut-blue-800));
+        background-color: var(--color-astronaut-blue-500);
+        border: 1px solid var(--color-astronaut-blue-900);
+    }
 }
 
 #new-note {

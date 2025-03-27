@@ -22,4 +22,6 @@ public interface PatternDao {
     void unsavePattern(int userId, int patternId);
 
     Pattern getPatternByVariant(int variantId);
+
+    Pattern updatePattern(Pattern updatedPattern);
 }

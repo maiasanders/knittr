@@ -4,8 +4,10 @@ import type { Route } from "./+types/loginPage";
 import { Form } from "react-router";
 import { redirect, Link } from "react-router-dom";
 import Alert from "react-bootstrap/Alert"
+import { useEffect } from "react";
 
 export async function clientAction({ request }: Route.ClientActionArgs) {
+
 
     const formData = await request.formData();
     const loginInfo = Object.fromEntries(formData) as LoginDto;
@@ -16,11 +18,13 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
 
     const res = await authService.login(loginInfo)
         .then(r => {
-            if (r.status === 200) return r.data
-            alertMsg = "We couldn't log you in. Check username and password and try again"
-            return
+            if (r.status === 200) {
+                return r.data
+            } else {
+                alertMsg = "We couldn't log you in. Check username and password and try again"
+            }
         })
-        .catch(e => {
+        .catch(() => {
             alertMsg = "We couldn't log you in. Check username and password and try again"
         })
 
@@ -28,13 +32,16 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
         localStorage.setItem("token", res.token)
         localStorage.setItem("user", res.username)
 
-        return redirect("/projects")
+
+        return redirect("/")
     }
 }
 
 let alertMsg = ''
 
 const LoginPage = () => {
+
+    useEffect(() => console.log('should see once'), [])
 
     return (
         <main className="auth-page">

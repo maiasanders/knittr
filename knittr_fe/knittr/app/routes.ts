@@ -11,11 +11,9 @@ export default [
     route("/login", "pages/loginPage.tsx"),
     route("/register", "pages/registerPage.tsx"),
     route("/patterns/:id", "pages/patternDetailsPage/patternDetailsPage.tsx"),
-    route("/patterns/discover", "pages/publicPatternPage.tsx"),
-    layout("layouts/createPattern.tsx", [
-        route("/patterns/new", "pages/newPatternPage/newPatternPage.tsx"),
-        route("/patterns/new/:id/variants", "pages/createVariant/createVariant.tsx")
-    ]),
+    route("/patterns/discover", "pages/publicPatternPage/publicPatternPage.tsx"),
+    route("/patterns/:id/edit", "pages/newPatternPage/newPatternPage.tsx"),
+    route("/patterns/:id/variants", "pages/createVariant/createVariant.tsx"),
     layout("layouts/projectLayout.tsx", [
         route("/projects/:id/edit", "pages/editProjectPage/editProjectPage.tsx"),
         route("/projects/:id", "pages/projectPage.tsx"),

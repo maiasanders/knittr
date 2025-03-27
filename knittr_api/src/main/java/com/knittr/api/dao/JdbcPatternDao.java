@@ -19,6 +19,7 @@ import java.util.*;
 public class JdbcPatternDao implements PatternDao{
     private JdbcTemplate template;
     private ImageDao imageDao;
+    private CategoryDao catDao;
 
     private final String NOT_FOUND = "Unable to find pattern(s)";
     private final String CONNECT_ERR = "Unable to Connect";
@@ -110,6 +111,17 @@ public class JdbcPatternDao implements PatternDao{
         }
     }
 
+    private void removeCatFromPattern(int id, Category category) {
+        String sql = "DELETE FROM pattern_categories WHERE pattern_id = ? AND category_id = ?";
+        try {
+            template.update(sql, id, category.getCategoryId());
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException(CONNECT_ERR);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Unable to remove category from pattern");
+        }
+    }
+
     @Override
     public List<Pattern> getPatterns() {
         String sql = SELECT_CLAUSE + GROUP_CLAUSE + "ORDER BY p.pattern_id LIMIT 20";
@@ -164,6 +176,60 @@ public class JdbcPatternDao implements PatternDao{
         } catch (EmptyResultDataAccessException e) {
             throw new NotFoundException("Unable to find the variant or pattern");
         }
+    }
+
+    @Override
+    public Pattern updatePattern(Pattern updatedPattern) {
+        String sql = "UPDATE patterns SET pattern_name = ?, \"desc\" = ? WHERE pattern_id = ?";
+        List<Category> existingCats = catDao.getCategoriesByPattern(updatedPattern.getPatternId());
+
+//        Get list of new categories
+        List<Category> newCats = new ArrayList<>();
+        for (int i = 0; i < updatedPattern.getCategories().size(); i++) {
+            boolean isInDb = false;
+            for (Category category : existingCats) {
+                if (category.getCategoryId() == updatedPattern.getCategories().get(i).getCategoryId()) {
+                    isInDb = true;
+                    break;
+                }
+            }
+            if (!isInDb) {
+                newCats.add(updatedPattern.getCategories().get(i));
+            }
+        }
+
+        // Get list of categories to delete
+        List<Category> catsToDel = new ArrayList<>();
+        for (Category existingCat : existingCats) {
+            boolean needsDelete = true;
+            for (Category category : updatedPattern.getCategories()) {
+                if (category.getCategoryId() == existingCat.getCategoryId()) {
+                    needsDelete = false;
+                    break;
+                }
+            }
+            if (needsDelete) catsToDel.add(existingCat);
+        }
+
+        try {
+            int rows = template.update(
+                    sql, updatedPattern.getName(),
+                    updatedPattern.getDesc(),
+                    updatedPattern.getPatternId());
+            if (rows == 1) {
+                for (Category category : newCats) {
+                    addCatToPattern(updatedPattern.getPatternId(), category);
+                }
+                for (Category category : catsToDel) {
+                    removeCatFromPattern(updatedPattern.getPatternId(), category);
+                }
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException(CONNECT_ERR);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Encountered an issue updating pattern, some changes may not have saved");
+        }
+        return getPatternById(updatedPattern.getPatternId());
     }
 
     private Pattern mapRowToPattern(ResultSet set, int rowNum) throws SQLException {

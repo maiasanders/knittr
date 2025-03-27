@@ -1,36 +1,47 @@
 import { Form } from "react-router";
 import { redirect } from "react-router-dom"
 import type { Route } from "./+types/newPatternPage"
-import { PatternDto } from "../../helpers/apiResponseTypes";
+import { Category, PatternDto } from "../../helpers/apiResponseTypes";
 import patternService from "../../services/patternService";
 import { useState, ChangeEvent } from "react";
-import categoryService from "../../services/categoryService";
 
-// TODO update to be able to edit existing pattern?
-export async function loader() {
-    const categories = await categoryService.getAll().then(res => res.data)
-    return { categories }
-}
+import './newPatternPage.css'
+import CategorySelector from "../../components/categorySelector/categorySelector";
 
-export async function clientAction({ request }: Route.ClientActionArgs) {
+export async function clientAction({ request, params }: Route.ClientActionArgs) {
+
     const formData = await request.formData()
     const pattern = Object.fromEntries(formData) as PatternDto
-    const response = await patternService.create(pattern)
 
-    if (response.status === 201) return redirect(`/patterns/new/${response.data.patternId}/variants`)
+    if (params.id === 0) {
+        const response = await patternService.create(pattern)
+        if (response.status === 201) return redirect(`/patterns/${response.data.patternId}/variants`)
+        error = "Error submitting pattern, check things over and try again"
+    } else {
+        const response = await patternService.update(params.id, pattern)
+        if (response.status === 200) return redirect('/patterns/mine')
+        error = "Unable to save some or all updates"
+    }
+}
 
-    error = "Error submitting pattern, check things over and try again"
+export async function clientLoader({ params }: { params: Route.LoaderArgs }) {
+    let pattern
+    if (params.id > 0) {
+        pattern = await patternService.getById(params.id).then(r => r.data)
+    }
+    return { pattern }
 }
 
 let error = '';
 
-export default function NewPatternPage({ loaderData }: Route.loaderData) {
-    const { categories } = loaderData
+export default function NewPatternPage({ loaderData }: Route.ComponentProps) {
 
-    // const [error, setError] = useState("")
-    const [name, setName] = useState("")
-    const [desc, setDesc] = useState("")
-    const [selectedCats, setSelectedCats] = useState<number[]>([]);
+    const { pattern } = loaderData
+
+    const [name, setName] = useState(typeof pattern !== 'undefined' ? pattern.name : "")
+    const [desc, setDesc] = useState(typeof pattern !== 'undefined' ? pattern.desc : "")
+    const [selectedCats, setSelectedCats] = useState<number[]>(typeof pattern !== 'undefined' ? pattern.categories.map((c: Category) => c.categoryId) : []);
+
 
     const handleCheck = (e: ChangeEvent<HTMLInputElement>) => {
         const id = parseInt(e.currentTarget.value)
@@ -69,24 +80,14 @@ export default function NewPatternPage({ loaderData }: Route.loaderData) {
                     />
                     <label htmlFor="pattern-desc">Description</label>
                 </div>
-                {/* TODO add way to create new categories */}
-                <fieldset>
-                    <legend>Categories</legend>
-                    {categories.map(cat => (
-                        <div key={cat.categoryId}>
-                            <input
-                                type="checkbox"
-                                className="btn-check"
-                                id={`cat-${cat.categoryId}-check`}
-                                checked={selectedCats.includes(cat.categoryId)}
-                                onChange={handleCheck}
-                                value={cat.categoryId}
-                            />
-                            <label className="btn btn-primary" htmlFor={`cat-${cat.categoryId}-check`}>{cat.category_name}</label>
-                        </div>
-                    ))}
-                </fieldset>
-                <button type="submit" className="btn btn-primary btn-big" id="create-ptrn">Create Pattern!</button>
+                <CategorySelector
+                    selectedCats={selectedCats}
+                    handleCheck={handleCheck}
+                />
+
+                <button type="submit" className="btn btn-primary btn-big" id="create-ptrn">
+                    {typeof pattern === 'undefined' ? "Create Pattern!" : "Save changes"}
+                </button>
             </Form>
         </main>
     )

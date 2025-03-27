@@ -58,6 +58,10 @@ export interface Category {
     category_name: string;
 }
 
+export interface CategoryDto {
+    categoryName: string;
+}
+
 export type loadingStatus = 'Error' | boolean;
 
 export interface Project {
@@ -106,8 +110,14 @@ export interface Step {
 
 export interface StepDto {
     variantId: number;
-    title: string,
-    stepNum: number
+    title: string;
+    stepNum: number;
+    rows: RowDto[];
+}
+
+export interface RowDto {
+    directions: string;
+    rowNum: number;
 }
 
 export interface Row {

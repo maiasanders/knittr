@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Size, Yarn } from "../../helpers/apiResponseTypes";
 import "./projectHeader.css"
 import useViewport from "../../hooks/useViewport";
-import ClickableIcon from "../clickableIcon";
+import ClickableIcon from "../clickableIcon/clickableIcon";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const ProjectHeader = ({ name, yarn, size }: { name: string, yarn: Yarn, size: Size }) => {

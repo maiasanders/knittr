@@ -2,6 +2,8 @@ import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { MouseEventHandler } from "react";
 
+import './clickableIcon.css'
+
 const ClickableIcon = ({ icon, handleClick }: { icon: IconDefinition, handleClick: MouseEventHandler }) => (
     <div className="icon-btn" onClick={handleClick}><FontAwesomeIcon icon={icon} /></div>
 )

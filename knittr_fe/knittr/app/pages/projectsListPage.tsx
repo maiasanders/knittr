@@ -11,11 +11,12 @@ export async function clientLoader() {
 const ProjectsListPage = ({ loaderData }: Route.ComponentProps) => {
 
     const { projects } = loaderData
+    // TODO add ability to view completed projects
 
     return (
         <div className="saved-and-mine">
             {projects.length > 0 ? (
-                <ProjectList isAuthor={false} projects={projects} />
+                <ProjectList projects={projects} />
             ) : (<p>
                 You have started any projects yet! <Link to="/patterns/discover">Check out some patterns</Link> to start one!
             </p>)}

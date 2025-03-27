@@ -22,7 +22,7 @@ const MyPatternsPage = ({ loaderData }: Route.ComponentProps<Pattern[]>) => {
                 <p>You haven't written any patterns yet</p>
             )}
 
-            <Link to={"/patterns/new"} className="btn btn-primary" id="new-ptrn">Create new Pattern</Link >
+            <Link to={"/patterns/0/edit"} className="btn btn-primary" id="new-ptrn">Create new Pattern</Link >
         </div>
     )
 }

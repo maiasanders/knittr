@@ -16,7 +16,8 @@ const MyPatternItem = ({ pattern }: { pattern: Pattern }) => {
                         </li>
                     ))}
                 </ul>
-                <Link to={`/patterns/new/${pattern.patternId}/variants`} className="add-var">+ Add variant</Link>
+                <Link to={`/patterns/${pattern.patternId}/variants`} className="add-var btn btn-primary">+ Add variant</Link>
+                <Link to={`/patterns/${pattern.patternId}/edit`} className="add-var btn btn-primary">Edit pattern</Link>
             </div>
         </li>
     )

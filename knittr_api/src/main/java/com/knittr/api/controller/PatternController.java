@@ -62,6 +62,12 @@ public class PatternController {
     }
 
     @PreAuthorize("isAuthenticated()")
+    @PutMapping("/patterns/{id}")
+    public Pattern updatePattern(Principal principal, @RequestBody @Valid PatternDto dto, @PathVariable int id) {
+        return service.updatePattern(principal, dto, id);
+    }
+
+    @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/patterns/{id}/save")
     public void savePattern(Principal principal, @PathVariable int id) {

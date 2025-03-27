@@ -1,0 +1,26 @@
+#public-patterns-page {
+    display: grid;
+    grid-template-columns: 1fr 2rem;
+    grid-template-areas: "title filter-toggle" "curr-filters curr-filters" "list list";
+}
+
+#public-pattern-title {
+    grid-area: title;
+    text-align: left;
+}
+
+.filter-toggle,
+.fa-sliders {
+    grid-area: filter-toggle;
+}
+
+#current-filters {
+    grid-area: curr-filters;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+#pub-pattern-list {
+    grid-area: list;
+}

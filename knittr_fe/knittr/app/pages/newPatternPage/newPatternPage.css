@@ -1,0 +1,7 @@
+#new-cat-btn {
+    margin: var(--std-pad);
+}
+
+#new-cat-input {
+    height: fit-content;
+}

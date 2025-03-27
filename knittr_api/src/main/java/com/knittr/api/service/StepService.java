@@ -1,10 +1,8 @@
 package com.knittr.api.service;
 
-import com.knittr.api.dao.PatternDao;
-import com.knittr.api.dao.ProjectDao;
-import com.knittr.api.dao.StepDao;
-import com.knittr.api.dao.UserDao;
+import com.knittr.api.dao.*;
 import com.knittr.api.model.*;
+import com.knittr.api.model.dto.RowDto;
 import com.knittr.api.model.dto.StepDto;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -21,11 +20,23 @@ public class StepService {
     private UserDao userDao;
     private ProjectDao projectDao;
     private PatternDao patternDao;
+    private RowDao rowDao;
 
     public Step addStep(StepDto dto, Principal principal) {
         Pattern pattern = patternDao.getPatternByVariant(dto.getVariantId());
         if (isAuthUser(principal, pattern.getAuthor().getUserId())){
-            return dao.createStep(stepFromDto(dto));
+            Step step = dao.createStep(stepFromDto(dto));
+            List<Row> addedRows = new ArrayList<>();
+            for (RowDto rowDto : dto.getRows()) {
+                Row row = new Row();
+                row.setRowNum(rowDto.getRowNum());
+                row.setStepId(step.getStepId());
+                row.setDirections(rowDto.getDirections());
+                Row addedRow = rowDao.createRow(row);
+                addedRows.add(addedRow);
+            }
+            step.setRows(addedRows);
+            return step;
         } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }

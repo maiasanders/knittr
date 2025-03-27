@@ -30,7 +30,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
             alertMsg = 'We had trouble registering you, check you info and try again'
             return
         }
-    }).catch(e => {
+    }).catch(() => {
         alertMsg = 'We had trouble registering you, check your info and try again'
     })
 

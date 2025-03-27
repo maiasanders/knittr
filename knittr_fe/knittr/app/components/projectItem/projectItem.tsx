@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 const ProjectItem = ({ project }: { project: Project }) => {
     // TODO add in delete functionality
+    //
 
     return (
         <li className="pattern-card">

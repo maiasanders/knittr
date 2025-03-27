@@ -17,8 +17,10 @@ type Params = {
     "id": string;
   };
   "/patterns/discover": {};
-  "/patterns/new": {};
-  "/patterns/new/:id/variants": {
+  "/patterns/:id/edit": {
+    "id": string;
+  };
+  "/patterns/:id/variants": {
     "id": string;
   };
   "/projects/:id/edit": {
