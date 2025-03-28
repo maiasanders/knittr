@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { Suspense, useState } from "react"
 import { ImageDto } from "../../helpers/apiResponseTypes"
 import ImageUploader from "../imageUploader/imageUploader"
 import useImages from "../../hooks/useImages"
@@ -31,14 +31,14 @@ const ImagesForm = ({ patternId }: { patternId: number }) => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        const totalLoaded = postImages(images)
-            .then(r => r === images.length ? setSubmitted(true) : null)
+        postImages(images)
+            .then(r => setSubmitted(true))
     }
 
     return (
         <div id="add-images">
             {submitted ? (<h4>Images saved! Click button to return to your projects.</h4>) : (
-                <>
+                <Suspense>
                     <ImageUploader handleUpload={handleImageUpload} />
                     <form onSubmit={handleSubmit} id="image-form">
                         {images.map((img: ImageDto, i: number) => (
@@ -61,7 +61,7 @@ const ImagesForm = ({ patternId }: { patternId: number }) => {
                         ))}
                         <button type="submit" className="btn btn-primary" disabled={images.length === 0}>Save Pictures</button>
                     </form>
-                </>
+                </Suspense>
 
             )}
         </div>

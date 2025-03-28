@@ -31,8 +31,15 @@ ul.pattern-vars {
     width: 100%;
 }
 
-.add-var {
+.add-var {}
+
+.edit-links {
     margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    flex-wrap: wrap;
+    gap: var(--std-pad);
 }
 
 @media screen and (max-width: 890px) {

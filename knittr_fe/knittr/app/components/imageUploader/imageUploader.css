@@ -4,12 +4,13 @@
 
 /* TODO research how to fix button styles */
 
-#upload-widget {
+#upload_widget {
     display: flex;
     border-radius: 30px;
     gap: .5rem;
     width: fit-content;
-    height: fit-content;
+    height: fit-content !important;
     align-items: center;
     color: var(--primary-text);
+    padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x) !important;
 }

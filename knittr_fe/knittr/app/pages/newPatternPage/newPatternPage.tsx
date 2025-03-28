@@ -13,7 +13,7 @@ export async function clientAction({ request, params }: Route.ClientActionArgs) 
     const formData = await request.formData()
     const pattern = Object.fromEntries(formData) as PatternDto
 
-    if (params.id === 0) {
+    if (params.id === '0') {
         const response = await patternService.create(pattern)
         if (response.status === 201) return redirect(`/patterns/${response.data.patternId}/variants`)
         error = "Error submitting pattern, check things over and try again"

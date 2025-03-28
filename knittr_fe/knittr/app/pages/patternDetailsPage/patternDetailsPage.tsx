@@ -52,10 +52,12 @@ const PatternDetailsPage = ({ loaderData }: Route.ComponentProps) => {
     return (<main id="pat-detail">
         <PatternDetailHeader pattern={pattern} isLoggedIn={isLoggedIn} />
         <img
-            src={pattern.defaultImage ? pattern.defaultImage.imageLink : '/placeholder.svg'}
-            alt={pattern.defaultImage ? pattern.defaultImage.desc : "No images found"}
+            src={pattern.defaultImage ? pattern.defaultImage.imageLink : (
+                images.length > 0 ? images[0].imageLink : '/placeholder.svg')}
+            alt={pattern.defaultImage ? pattern.defaultImage.desc : (
+                images.length > 0 ? images[0].desc : "No images found")}
             onError={e => e.currentTarget.src = '../../placeholder.svg'}
-            onClick={() => handleImgClick(pattern.defaultImage)}
+            onClick={() => handleImgClick(pattern.defaultImage || images[0])}
         />
         <PatternDetailsDesc pattern={pattern}
         />

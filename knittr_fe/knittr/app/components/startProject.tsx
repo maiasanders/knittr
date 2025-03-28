@@ -1,13 +1,16 @@
 import { useState } from "react";
-import { Pattern, ProjectStartDto, Variant } from "../helpers/apiResponseTypes";
+import { Pattern, Project, ProjectStartDto, Variant } from "../helpers/apiResponseTypes";
 import useVariant from "../hooks/useVariant";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "./loadingSpinner/loadingSpinner";
 
 // export async function clientAction({ request }: Route)
 
 export default function StartProject({ pattern }: { pattern: Pattern }) {
     const [sizeId, setSizeId] = useState<number>();
     const [yarnId, setYarnId] = useState<number>();
+    const [projectId, setProjectId] = useState<number>()
+    const [loading, setLoading] = useState(false)
 
     // use a map to filter to unique sizes on pattern in case of overlapping variants
     const uniqueSizes = [...new Map(pattern.variants.map(v => [v.size.sizeId, v.size])).values()]
@@ -18,14 +21,23 @@ export default function StartProject({ pattern }: { pattern: Pattern }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log('entering handler')
+        setLoading(true)
         const variant: Variant = pattern.variants
             .filter(v => v.size.sizeId === sizeId && v.yarn.yarnId === yarnId)[0]
         const dto: ProjectStartDto = {
             variantId: variant.variantId,
             isTemplate: false
         }
-        startProject(dto)
-        if (typeof project !== 'undefined') navigate(`/projects/${project.projectId}`)
+        startProject(dto).then(r => {
+            do {
+                console.log('trying')
+                if (typeof r !== 'undefined') {
+                    setLoading(false)
+                    navigate(`/projects/${r.projectId}`)
+                }
+            } while (loading)
+        })
     }
 
     return (
@@ -37,6 +49,7 @@ export default function StartProject({ pattern }: { pattern: Pattern }) {
                     name="sizeId"
                     onChange={e => setSizeId(parseInt(e.target.value))}
                 >
+                    <option selected disabled>Choose size</option>
                     {uniqueSizes.map(size => (
                         <option
                             value={size.sizeId}
@@ -53,6 +66,7 @@ export default function StartProject({ pattern }: { pattern: Pattern }) {
                         className="form-select"
                         onChange={e => setYarnId(parseInt(e.target.value))}
                     >
+                        <option selected disabled>Choose yarn</option>
                         {pattern.variants.filter(v => v.size.sizeId === sizeId).map(v => (
                             <option
                                 value={v.yarn.yarnId}
@@ -63,7 +77,7 @@ export default function StartProject({ pattern }: { pattern: Pattern }) {
                         ))}
                     </select>
                 ) : null}
-                <button type="submit" className="btn btn-primary">Start!</button>
+                <button type="submit" className="btn btn-primary" disabled={!yarnId || !sizeId}>{loading && (<LoadingSpinner />)} Start!</button>
             </form>
         </div>
     )
