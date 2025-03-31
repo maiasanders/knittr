@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Pattern, Project, ProjectStartDto, Variant } from "../helpers/apiResponseTypes";
 import useVariant from "../hooks/useVariant";
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 import LoadingSpinner from "./loadingSpinner/loadingSpinner";
+import projectService from "../services/projectService";
 
 // export async function clientAction({ request }: Route)
 
@@ -14,8 +15,6 @@ export default function StartProject({ pattern }: { pattern: Pattern }) {
 
     // use a map to filter to unique sizes on pattern in case of overlapping variants
     const uniqueSizes = [...new Map(pattern.variants.map(v => [v.size.sizeId, v.size])).values()]
-
-    const { startProject, project } = useVariant()
 
     const navigate = useNavigate()
 
@@ -29,14 +28,8 @@ export default function StartProject({ pattern }: { pattern: Pattern }) {
             variantId: variant.variantId,
             isTemplate: false
         }
-        startProject(dto).then(r => {
-            do {
-                console.log('trying')
-                if (typeof r !== 'undefined') {
-                    setLoading(false)
-                    navigate(`/projects/${r.projectId}`)
-                }
-            } while (loading)
+        projectService.create(dto).then(r => {
+            navigate(`/projects/${r.data.projectId}`)
         })
     }
 
@@ -77,7 +70,7 @@ export default function StartProject({ pattern }: { pattern: Pattern }) {
                         ))}
                     </select>
                 ) : null}
-                <button type="submit" className="btn btn-primary" disabled={!yarnId || !sizeId}>{loading && (<LoadingSpinner />)} Start!</button>
+                <button type="button" className="btn btn-primary" onClick={handleSubmit} disabled={!yarnId || !sizeId}>{loading && (<LoadingSpinner />)} Start!</button>
             </form>
         </div>
     )

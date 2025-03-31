@@ -33,7 +33,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
         localStorage.setItem("user", res.username)
 
 
-        return redirect("/")
+        return redirect("/patterns/discover")
     }
 }
 

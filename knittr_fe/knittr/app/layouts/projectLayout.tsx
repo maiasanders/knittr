@@ -1,4 +1,4 @@
-import { ChangeEvent, ChangeEventHandler, lazy, Suspense, useState } from "react";
+import { ChangeEvent, ChangeEventHandler, lazy, Suspense, useEffect, useState } from "react";
 import { ImageDto, Project, Step } from "../helpers/apiResponseTypes";
 import ProjectHeader from "../components/projectHeader/projectHeader";
 import NotesSection from "../components/notesSection/notesSection";
@@ -40,9 +40,6 @@ const ProjectLayout = ({ loaderData }: Route.LoaderArgs<Project>) => {
 
     const [showNotes, setShowNotes] = useState(false)
 
-    const [publicId, setPublicId] = useState('')
-    const [images, setImages] = useState<ImageDto[]>([])
-
     const handleStitch = () => {
         projectService.updateProgess(project.projectId, { newRow: currentRow + countStep, makerId: project.makerId })
         setCurrentRow(currentRow + countStep)
@@ -60,7 +57,7 @@ const ProjectLayout = ({ loaderData }: Route.LoaderArgs<Project>) => {
         .flat()
     )
     // checks if current row is same as final row
-    const isOnFinalRow = project.currentRow >= finalRow
+    let isOnFinalRow = currentRow >= finalRow
 
     const handleClick = () => {
         projectService.markCompleted(project.projectId)
@@ -84,9 +81,6 @@ const ProjectLayout = ({ loaderData }: Route.LoaderArgs<Project>) => {
                 <FontAwesomeIcon icon={faEye} />
                 Notes
             </button>
-
-
-            {/* {project.notes !== null && (viewport.w > 768 || showNotes) ? (<NotesSection projId={project.projectId} onClose={() => setShowNotes(false)} />) : null} */}
             <div
                 id="notes-container"
                 className={project.notes !== null && (viewport.w > 768 || showNotes) ? '' : 'hidden'}

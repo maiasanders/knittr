@@ -37,7 +37,6 @@ export async function clientAction({ params, request }: Route.ClientActionArgs) 
 
 export default function CreateVariant({ loaderData }: Route.ClientLoaderArgs) {
     const { yarns, sizes } = loaderData
-    // const [selectedYarn, setSelectedYarn] = useState<Yarn>();
 
     return (
         <main id="variant-creation">
