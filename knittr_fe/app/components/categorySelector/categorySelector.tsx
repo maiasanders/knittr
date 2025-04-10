@@ -17,7 +17,7 @@ const CategorySelector = ({ selectedCats, handleCheck }: {
         setShowNewCatInput(false)
     }
 
-    return (<fieldset>
+    return (<fieldset name="catIds">
         <legend>Categories</legend>
         {categories.map(cat => (
             <div key={cat.categoryId}>

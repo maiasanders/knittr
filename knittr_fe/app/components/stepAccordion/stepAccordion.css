@@ -4,6 +4,7 @@
 
 .accordion {
     border-color: var(--color-astronaut-blue-700);
+    filter: var(--std-drop-shadow);
 }
 
 .accordion-button {

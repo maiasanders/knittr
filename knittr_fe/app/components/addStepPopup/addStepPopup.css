@@ -1,6 +1,6 @@
 #add-edit-step {
     background-color: var(--color-astronaut-blue-600);
-    border: .1rem solid var(--color-astronaut-blue-900);
+    /* border: .1rem solid var(--color-astronaut-blue-900); */
     border-radius: var(--div-border-rad) var(--div-border-rad) 0 0;
     padding: .5rem;
     display: grid;

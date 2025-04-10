@@ -55,4 +55,8 @@
 a.dropdown-item {
     color: var(--primary-text);
     width: 75vw;
+    &:hover, &:active {
+        color: var(--color-cannon-pink-50);
+        background-color: transparent;
+    }
 }

@@ -4,7 +4,8 @@ li.my-ptrn {
     display: flex;
     margin-bottom: 2rem;
     border-radius: var(--div-border-rad);
-    border: 1px solid var(--card-border);
+    border: 1px solid var(--card-border-color);
+    filter: var(--std-drop-shadow);
 }
 
 .my-ptrn>img {
@@ -30,6 +31,7 @@ ul.pattern-vars {
     padding: 0 1rem;
     display: flex;
     flex-direction: column;
+    gap: .5rem;
     width: 100%;
 }
 

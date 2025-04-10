@@ -60,6 +60,7 @@
     --nav-bg: var(--color-astronaut-blue-900);
     --nav-border: 1px solid var(--color-astronaut-blue-950);
     --primary-text: rgb(233, 219, 230);
+    --link-text-color: var(--color-cannon-pink-300);
     --focus-border-color: var(--color-cannon-pink-400);
     --container-bg-color: var(--color-astronaut-blue-800);
     --std-div-border: 1px solid var(--color-astronaut-blue-950);
@@ -76,6 +77,7 @@
     --btn-success-bord-hover: var(--color-shamrock-200);
     --btn-success-glow-col: var(--color-shamrock-200);
     --form-bg: var(--color-astronaut-blue-300);
+    --std-drop-shadow: drop-shadow(0 0 .3rem var(--color-astronaut-blue-1000));
 
     --card-border-color: var(--color-astronaut-blue-500);
 
@@ -87,8 +89,14 @@
     box-sizing: border-box;
 }
 
-div.bordered-dark, img {
+.bordered-dark, img {
     border: var(--std-div-border);
+}
+.bordered-light {
+    border: 1px solid var(--color-astronaut-blue-600);
+}
+.bordered-dark, .bordered-light, img {
+    filter: var(--std-drop-shadow)
 }
 
 .small-only,
@@ -98,6 +106,7 @@ div.bordered-dark, img {
 
 a {
     text-decoration: none;
+    color: var(--link-text-color);
 
     &:hover {
         color: var(--color-cannon-pink-100);
@@ -173,10 +182,17 @@ li {
     align-items: center;
     color: var(--primary-text);
     transition: .5s;
+    filter: var(--std-drop-shadow);
 
     &:hover {
-        filter: drop-shadow(0 0 .5rem var(--color-astronaut-blue-950));
+        filter: drop-shadow(0 0 .5rem var(--color-astronaut-blue-1000));
     }
+}
+
+.btn>svg:hover,
+.btn.btn-secondary>svg:hover,
+.btn.btn-primary>svg:hover {
+    background: transparent;
 }
 
 .btn-big {
@@ -188,7 +204,7 @@ li {
     border-color: var(--btn-border);
 
     & :hover {
-        background-color: var(--color-cannon-pink-600);
+        background-color: var(--color-cannon-pink-500);
     }
 
     &:disabled {
@@ -225,16 +241,14 @@ li {
     background-color: var(--color-astronaut-blue-900);
     border-color: var(--color-astronaut-blue-950);
 
-    & :hover {
-        background-color: var(--color-astronaut-blue-800);
-        border-color: var(--color-astronaut-blue-700)
+    &:hover {
+        background-color: var(--color-astronaut-blue-700);
+        border-color: var(--color-astronaut-blue-600)
     }
 
-    ;
-
-    & :active {
-        background-color: var(--color-astronaut-blue-700);
-        border-color: var(--color-astronaut-blue-600);
+    &:active {
+        background-color: var(--color-astronaut-blue-600);
+        border-color: var(--color-astronaut-blue-500);
     }
 }
 
@@ -287,7 +301,15 @@ li {
     justify-content: space-between;
     padding: var(--std-pad) .75rem;
     transition: .5s;
+    filter: var(--std-drop-shadow);
     &:hover {
+        transform: scale(1.05);
+        background-color: var(--color-astronaut-blue-600);
+        z-index: 98;
+        /* border: 2px solid; */
+        filter: drop-shadow(0 0 .5rem var(--color-astronaut-blue-400));
+    }
+    &:has(+ .icon-btn:hover) {
         transform: scale(1.05);
         background-color: var(--color-astronaut-blue-600);
         z-index: 98;

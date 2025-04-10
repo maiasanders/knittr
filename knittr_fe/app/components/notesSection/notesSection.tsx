@@ -20,7 +20,7 @@ export default function NotesSection({ projId, onClose }: { projId: number, onCl
     }
 
     return (
-        <div id="notes-section">
+        <div id="notes-section" className="bordered-light">
             <div id="notes-head">
                 <h2>Notes</h2>
                 <ClickableIcon icon={faEyeSlash} handleClick={onClose} />

@@ -15,40 +15,7 @@ const PatternImgCarousel = ({ images, selectedImgId }: { images: Image[], select
     const handleSelect = (ind: number) => {
         setActiveIndex(ind)
     }
-    // return
-    // (<div id="pattern-img-carousel" className="carousel slide">
-    //     <div className="carousel-inner">
-    //         {images.map(img => (
-    //             <div
-    //                 className={`carousel-item${img.imageId === selectedImgId ? ' active' : ''}`}
-    //                 key={img.imageId}
-    //             >
-    //                 <img
-    //                     src={img.imageLink}
-    //                     alt={img.desc}
-    //                     className="d-block w-100"
-    //                 />
-    //             </div>))}
-    //         <button
-    //             className="carousel-control-prev"
-    //             type="button"
-    //             data-bs-target="#pattern-img-carousel"
-    //             data-bs-slide="prev"
-    //         >
-    //             <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-    //             <span className="visually-hidden">Previous</span>
-    //         </button>
-    //         <button
-    //             className="carousel-control-next"
-    //             type="button"
-    //             data-bs-target="#pattern-img-carousel"
-    //             data-bs-slide="next"
-    //         >
-    //             <span className="carousel-control-next-icon" aria-hidden="true"></span>
-    //             <span className="visually-hidden">Next</span>
-    //         </button>
-    //     </div>
-    // </div>)
+
     return (
         <Carousel
             activeIndex={activeIndex}
@@ -57,12 +24,12 @@ const PatternImgCarousel = ({ images, selectedImgId }: { images: Image[], select
             slide={false}
             onSelect={handleSelect}
             id="pattern-img-carousel"
+            keyboard={true}
         >
-            {images.map((img, i) => (
+            {images.map((img) => (
                 <Carousel.Item key={img.imageId}>
                     <div className="img-container">
                         <img src={img.imageLink} />
-
                     </div>
                     <Carousel.Caption>
                         <p>Made by {img.submittedBy.username}</p>

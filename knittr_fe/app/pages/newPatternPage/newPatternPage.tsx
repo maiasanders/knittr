@@ -12,6 +12,7 @@ export async function clientAction({ request, params }: Route.ClientActionArgs) 
 
     const formData = await request.formData()
     const pattern = Object.fromEntries(formData) as PatternDto
+    pattern.catIds = catIds
 
     if (params.id === '0') {
         const response = await patternService.create(pattern)
@@ -33,6 +34,7 @@ export async function clientLoader({ params }: { params: Route.LoaderArgs }) {
 }
 
 let error = '';
+let catIds: number[] = [];
 
 export default function NewPatternPage({ loaderData }: Route.ComponentProps) {
 
@@ -45,11 +47,13 @@ export default function NewPatternPage({ loaderData }: Route.ComponentProps) {
 
     const handleCheck = (e: ChangeEvent<HTMLInputElement>) => {
         const id = parseInt(e.currentTarget.value)
-        if (selectedCats.includes(id)) {
+        if (catIds.includes(id)) {
             const updatedCats = selectedCats.filter(n => n !== id)
             setSelectedCats(updatedCats)
+            catIds = updatedCats
         } else {
             setSelectedCats([...selectedCats, id])
+            catIds = [...selectedCats, id]
         }
     }
 

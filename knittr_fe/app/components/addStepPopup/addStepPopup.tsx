@@ -89,7 +89,7 @@ const AddStepPopup = ({ currentStep, stepNum, variantId, onClose, firstRowNum, i
 
     return (
 
-        <form onSubmit={handleSubmit} id="add-edit-step">
+        <form onSubmit={handleSubmit} id="add-edit-step" className="bordered-dark">
             <div className="form-floating" id="title-form">
                 <input
                     type="text"

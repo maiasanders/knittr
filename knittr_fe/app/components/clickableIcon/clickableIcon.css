@@ -1,3 +1,4 @@
 .icon-btn:hover svg {
-    filter: drop-shadow(0 0 1rem var(--color-cannon-pink-100));
+    color: var(--color-cannon-pink-100);
+    filter: drop-shadow(0 0 .1rem var(--color-astronaut-blue-950)) drop-shadow(0 0 1rem var(--color-cannon-pink-100));
 }
