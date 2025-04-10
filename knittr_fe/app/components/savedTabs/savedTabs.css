@@ -11,7 +11,7 @@
 }
 
 #saved-tabs h3,
-a {
+#saved-tabs a {
     color: var(--primary-text);
     opacity: .7;
 
@@ -33,7 +33,9 @@ a {
 
 #mobile-dropdown>button {
     border-radius: 1rem;
-    /* width: 75vw; */
+    width: 75vw;
+    display: flex;
+    justify-content: space-between;
 }
 
 #mobile-dropdown.show>button {
@@ -45,13 +47,12 @@ a {
     background-color: var(--color-cannon-pink-700);
     border-bottom-right-radius: 1rem;
     border-bottom-left-radius: 1rem;
-    /* padding-top: 2rem; */
     position: absolute;
     top: -2rem;
     transform: translate3d(16px, 21px, 0px);
-    /* width: 66vw; */
 }
 
 a.dropdown-item {
     color: var(--primary-text);
+    width: 75vw;
 }

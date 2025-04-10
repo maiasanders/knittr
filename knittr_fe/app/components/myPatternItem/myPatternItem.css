@@ -4,6 +4,7 @@ li.my-ptrn {
     display: flex;
     margin-bottom: 2rem;
     border-radius: var(--div-border-rad);
+    border: 1px solid var(--card-border);
 }
 
 .my-ptrn>img {
@@ -11,6 +12,7 @@ li.my-ptrn {
     width: 10rem;
     object-fit: cover;
     border-radius: calc(var(--div-border-rad) - .5rem);
+    border: var(--std-div-border);
 }
 
 ul.pattern-vars {
@@ -31,7 +33,9 @@ ul.pattern-vars {
     width: 100%;
 }
 
-.add-var {}
+.my-ptrn-name {
+    margin: 0 auto .5rem 0;
+}
 
 .edit-links {
     margin-top: auto;

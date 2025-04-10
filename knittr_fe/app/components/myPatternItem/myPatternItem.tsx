@@ -5,10 +5,10 @@ import './myPatternItem.css'
 const MyPatternItem = ({ pattern }: { pattern: Pattern }) => {
 
     return (
-        <li className="my-ptrn">
+        <li className="my-ptrn bordered-dark">
             <img src={pattern.defaultImage ? pattern.defaultImage.imageLink : '../placeholder.svg'} alt={pattern.defaultImage ? pattern.defaultImage.desc : ""} />
             <div className="ptrn-container">
-                <h3>{pattern.name}</h3>
+                <h3 className="my-ptrn-name">{pattern.name}</h3>
                 <ul className="pattern-vars">
                     {pattern.variants.map(v => (
                         <li key={v.variantId}>

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const ProjectItem = ({ project }: { project: Project }) => {
     // TODO add in delete functionality
-    //
+    // TODO add in percentage completed?
 
     return (
         <li className="pattern-card">

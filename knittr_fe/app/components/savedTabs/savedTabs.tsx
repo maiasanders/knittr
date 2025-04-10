@@ -1,5 +1,7 @@
 import { NavLink } from 'react-router-dom'
+
 import Dropdown from 'react-bootstrap/Dropdown'
+
 import './savedTabs.css'
 
 const SavedTabs = () => {
@@ -12,19 +14,13 @@ const SavedTabs = () => {
                 </Dropdown.Toggle>
                 <Dropdown.Menu id='saved-dropdown-menu'>
                     <Dropdown.Item href='/projects'>
-                        {/* <NavLink to={'/projects'} id='my-proj'> */}
                         In Progress
-                        {/* </NavLink> */}
                     </Dropdown.Item>
                     <Dropdown.Item href='/patterns/saved'>
-                        {/* <NavLink to={'/patterns/saved'} id='saved-ptrns'> */}
                         Saved
-                        {/* </NavLink> */}
                     </Dropdown.Item>
                     <Dropdown.Item href='/patterns/mine'>
-                        {/* <NavLink to={'/patterns/mine'} id='my-ptrns'> */}
                         My Patterns
-                        {/* </NavLink> */}
                     </Dropdown.Item>
 
                 </Dropdown.Menu>

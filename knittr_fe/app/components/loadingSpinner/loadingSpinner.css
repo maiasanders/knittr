@@ -1,4 +1,5 @@
 svg.loading-spinner {
+    justify-self: center;
     animation: spin 2s linear infinite normal;
 }
 
