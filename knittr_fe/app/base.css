@@ -70,7 +70,10 @@
     --alert-danger-text: var(--color-flush-mahogany-900);
     --btn-prim-bg: var(--color-cannon-pink-600);
     --btn-border: var(--color-cannon-pink-900);
-    --btn-warning-bg: var(--color-flush-mahogany-500);
+    --btn-warning-bg: var(--color-flush-mahogany-600);
+    --btn-warning-border: var(--color-flush-mahogany-950);
+    --btn-warning-bg-hov: var(--color-flush-mahogany-500);
+    --btn-warning-border-hov: var(--color-flush-mahogany-400);
     --btn-success-bg: var(--color-shamrock-500);
     --btn-success-bord-col: var(--color-shamrock-700);
     --btn-success-bg-hover: var(--color-shamrock-400);
@@ -253,10 +256,12 @@ li {
 }
 
 .btn.btn-warning {
-    background-color: var(--color-flush-mahogany-600);
-    border-color: var(--color-flush-mahogany-700);
+    background-color: var(--btn-warning-bg);
+    border-color: var(--btn-warning-border);
 
     &:hover {
+        background-color: var(--btn-warning-bg-hov);
+        border-color: var(--btn-warning-border-hov);
         color: var(--primary-text);
     }
 }

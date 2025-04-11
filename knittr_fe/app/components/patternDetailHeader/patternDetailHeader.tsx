@@ -5,7 +5,6 @@ import ClickableIcon from "../clickableIcon/clickableIcon";
 import usePatterns from "../../hooks/usePatterns";
 import CategoryTag from "../categorytag/categoryTag";
 import './patternDetailHeader.css'
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const PatternDetailHeader = ({ pattern, isLoggedIn }: { pattern: Pattern, isLoggedIn: boolean }) => {

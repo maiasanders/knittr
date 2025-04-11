@@ -56,6 +56,7 @@ const PatternDetailsPage = ({ loaderData }: Route.ComponentProps) => {
                 images.length > 0 ? images[0].imageLink : '/placeholder.svg')}
             alt={pattern.defaultImage ? pattern.defaultImage.desc : (
                 images.length > 0 ? images[0].desc : "No images found")}
+                className="bordered-light"
             onError={e => e.currentTarget.src = '../../placeholder.svg'}
             onClick={() => handleImgClick(pattern.defaultImage || images[0])}
         />
@@ -85,6 +86,7 @@ const PatternDetailsPage = ({ loaderData }: Route.ComponentProps) => {
                 src={image.imageLink}
                 alt={image.desc}
                 key={`img-${image.imageId}`}
+                className="bordered-light"
                 onError={e => e.currentTarget.src = '../../placeholder.svg'}
                 onClick={() => handleImgClick(image)}
             />))}
